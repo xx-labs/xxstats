@@ -1,0 +1,50 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "xxstats backend",
+  "author": "Mario Pino Uceda",
+  "license": "Apache-2.0",
+  "main": "built/index.js",
+  "scripts": {
+    "start": "node built/index.js",
+    "tsc": "tsc",
+    "lint": "npx eslint . --ext .js,.ts",
+    "format": "prettier --ignore-path .eslintignore --write \"**/*.+(js|ts|json)\"",
+    "docker:kusama": "docker-compose -p backend -f docker/docker-compose-kusama.yml up -d",
+    "docker:polkadot": "docker-compose -p backend -f docker/docker-compose-polkadot.yml up -d",
+    "docker:build:kusama": "docker-compose -p backend -f docker/docker-compose-kusama.yml build --no-cache",
+    "docker:build:polkadot": "docker-compose -p backend -f docker/docker-compose-polkadot.yml build --no-cache",
+    "docker:clean": "bash docker/scripts/clean-dockers.sh",
+    "docker:stop": "docker stop backend_crawler_1 backend_graphql-engine_1 backend_postgres_1 backend_substrate-node_1",
+    "docker:postgres:backup": "docker exec -t backend_postgres_1 pg_dump polkastats -c -U polkastats > polkastats_dump.sql",
+    "docker:postgres:restore": "docker stop backend_crawler_1 && cat polkastats_dump.sql | docker exec -i backend_postgres_1 psql -U polkastats -d polkastats && docker restart backend_postgres_1 && docker start backend_crawler_1"
+  },
+  "dependencies": {
+    "@polkadot/api": "^8.2.1",
+    "@sentry/node": "^6.17.9",
+    "@sentry/tracing": "^6.17.9",
+    "axios": "^0.21.1",
+    "bignumber.js": "^9.0.1",
+    "dotenv": "^8.2.0",
+    "lodash": "^4.17.21",
+    "pg": "^8.6.0",
+    "pg-format": "^1.0.4",
+    "pg-native": "^3.0.0",
+    "pino": "^6.7.0"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.178",
+    "@types/pg": "^8.6.4",
+    "@types/pino": "^7.0.5",
+    "@typescript-eslint/eslint-plugin": "^5.12.1",
+    "@typescript-eslint/parser": "^5.12.1",
+    "eslint": "^8.10.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-airbnb-typescript": "^16.1.0",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.5.1",
+    "source-map": "^0.7.3",
+    "typescript": "^4.5.5"
+  }
+}

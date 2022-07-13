@@ -1,0 +1,811 @@
+{
+  "common": {
+    "block_details": "Check block information",
+    "event_details": "Check event information",
+    "extrinsic_details": "Check extrinsic information",
+    "account_details": "Check account information",
+    "transfer_details": "Check transfer information",
+    "processing": "Processing",
+    "finalized": "Finalized"
+  },
+  "store":  {
+    "ranking": {
+      "cluster_title": "Cluster already included!",
+      "cluster_not_recommended": "Selecting more than one member of a cluster is not recommended",
+      "cluster_not_allowed": "Selecting more than one member of a cluster is not allowed",
+      "limit_title": "Select up to {validatorSetSize} validators",
+      "limit_message": "Please remove before selecting a new one"
+    }
+  },
+  "components": {
+    "identicon": {
+      "copy_address": "Copy address ",
+      "to_clipboard": " to clipboard",
+      "address": "Address ",
+      "copied_to_the_clipboard": " copied to the clipboard",
+      "click_to_copy": "Click to copy address to clipboard",
+      "address_copied": "Address copied to clipboard!"
+    },
+    "chain": {
+      "last_block": "Last block",
+      "last_block_finalized": "Finalized",
+      "total_extrinsics": "Extrinsics",
+      "extrinsics_details": "View all extrinsics",
+      "total_events": "Events",
+      "events_details": "View all events",
+      "accounts": "Accounts",
+      "accounts_details": "View all accounts",
+      "transfers": "Transfers",
+      "transfers_details": "View all transfers",
+      "active_era": "Active era",
+      "total_issuance": "Total issuance",
+      "total_staked": "Total staked",
+      "current_index": "Current session",
+      "validators": "Validators",
+      "nominators": "Nominators"      
+    },
+    "transfers": {
+      "search": "Search transfer by block number, hash or source address",
+      "no_transfer_found": "No transfer found"
+    },
+    "transfer": {
+      "hash": "Hash",
+      "status": "Status",
+      "block_number": "Block number",
+      "timestamp": "Timestamp",
+      "from": "From",
+      "to": "To",
+      "amount": "Amount",
+      "fee": "Fee",
+      "extrinsic": "Extrinsic",
+      "method": "Method"
+    },
+    "staking_rewards": {
+      "search": "Search reward by block number",
+      "no_reward_found": "No reward found"
+    },
+    "staking_slashes": {
+      "search": "Search slash by block number",
+      "no_slash_found": "No slash found"
+    },
+    "loading": {
+      "loading_data": "Loading data, please be patient..."
+    },
+    "account_transfers": {
+      "no_transfer_found": "No transfer found",
+      "transfer_details": "Check transfer information",
+      "hash": "Hash",
+      "block_number": "Block",
+      "timestamp": "Date",
+      "source": "Source",
+      "destination": "To",
+      "amount": "Amount",
+      "success": "Status"
+    },
+    "extrinsic_events": {
+      "title": "Events",
+      "id": "ID",
+      "section": "Section and method",
+      "data": "Data"
+    },
+    "last_activity": {
+      "title": "Latest activities",
+      "id": "ID",
+      "signer": "Signer",
+      "extrinsic": "Extrinsic"
+    },
+    "last_blocks": {
+      "title": "Latest blocks",
+      "block_number": "Block",
+      "status": "Status",
+      "hash": "Hash",
+      "total_extrinsics": "Extrinsics",
+      "total_events": "Events",
+      "blocks_details": "View all blocks"
+    },
+    "last_events": {
+      "title": "Latest events",
+      "id": "ID",
+      "event": "Event",
+      "events_details":"View all events"
+    },
+    "last_extrinsics": {
+      "title": "Latest extrinsics",
+      "id": "ID",
+      "hash": "Hash",
+      "extrinsic": "Extrinsic",
+      "extrinsics_details": "View all extrinsics",
+      "extrinsic_details": "Extrinsic details"
+    },
+    "last_transfers": {
+      "title": "Latest transfers",
+      "hash": "Hash",
+      "source": "Source",
+      "destination": "To",
+      "amount": "Amount",
+      "transfers_details": "View all transfers"
+    },
+    "whale_alert": {
+      "title": "Whale Alert",
+      "description": "Top 10 transfers in the last 24 hours",
+      "hash": "Hash",
+      "block_number": "Block",
+      "timestamp": "Date",
+      "source": "Source",
+      "destination": "To",
+      "amount": "Amount",
+      "transfers_details": "View all transfers"
+    },
+    "search": {
+      "caption": "Search by block number, block hash, extrinsic hash or account address"
+    },
+    "block": {
+      "not_found": "Block not found!"
+    },
+    "event": {
+      "block_number": "Block number",
+      "timestamp": "Date",
+      "event_index": "Event index",
+      "triggered_by_extrinsic": "Triggered by extrinsic",
+      "section_and_method": "Section and method",
+      "documentation": "Documentation",
+      "phase": "Phase",
+      "data": "Data"
+    },
+    "extrinsics": {
+      "no_extrinsic_found": "No extrinsic found"
+    },
+    "extrinsic": {
+      "hash": "Hash",
+      "status": "Status",
+      "block_number": "Block number",
+      "timestamp": "Date",
+      "extrinsic_index": "Extrinsic index",
+      "signed": "Signed?",
+      "signer": "Signer",
+      "section_and_method": "Section and method",
+      "documentation": "Documentation",
+      "arguments": "Arguments",
+      "weight": "Weight",
+      "fee_class": "Fee class",
+      "fee": "Fee"
+    },
+    "block_events": {
+      "event_details": "Check event information"
+    },
+    "block_extrinsics": {
+      "extrinsic_details": "Check extrinsic information"
+    },
+    "balance_chart": {
+      "title": "balance over the last 7 days",
+      "block": "block"
+    },
+    "transfers_chart": {
+      "title": "transfers in the last 30 days",
+      "date": "date",
+      "balance_transfers": "# of balance transfers"
+    },
+    "staking_rewards_chart": {
+      "title": "staking rewards over the last 7 days",
+      "reward": "reward"
+    },
+    "staking_slashes_chart": {
+      "title": "staking slashes over the last 7 days",
+      "slash": "slash"
+    },
+    "wallet_selector": {
+      "title": "Select your account",
+      "description": "Connect your account to get alerts and suggestions for your current on-chain validator set",
+      "connect": "CONNECT"
+    },
+    "validator": {
+      "score": "Validator score"
+    },
+    "total_issuance_chart": {
+      "title": "total issuance over the last 30 days",
+      "block": "block",
+      "total_issuance": "total issuance"
+    },
+    "status": {
+      "success": "Success",
+      "error": "Error"
+    },
+    "selected_validators": {
+      "loading": "Loading",
+      "no_validators_selected": "No validators selected",
+      "clear": "Clear",
+      "nominate": "Nominate"
+    },
+    "rating": {
+      "very_good": "Very good",
+      "good": "Good",
+      "neutral": "Neutral",
+      "bad": "Bad",
+      "loading": "Loading"
+    },
+    "ranking": {
+      "exclude_from_search": "Exclude from search",
+      "exclude_description": "You can exclude groups of validators based on your preferences",
+      "allow_only_one_cluster_member": "Allow only one cluster member",
+      "search_results": "Search results",
+      "elected_validator": "Elected validator",
+      "not_elected_validator": "Not elected validator",
+      "all": "All",
+      "elected": "Elected",
+      "name": "Name",
+      "relative_performance": "Performance",
+      "self_stake": "Self stake",
+      "active_eras": "Active eras",
+      "score": "Score",
+      "selected": "Selected",
+      "inactive": "Not elected",
+      "greedy": "100% commission",
+      "slashed": "Slashed",
+      "oversubscribed": "Oversubscribed",
+      "no_identity": "No identity",
+      "no_verified_identity": "No verified identity",
+      "no_auto_payout": "No auto-payout",
+      "below_average_era_points": "Below average era points",
+      "no_participate_governance": "No participation in governance",
+      "part_of_cluster": "Cluster member excess",
+      "select_unselect": "Select / unselect validator",
+      "search_placeholder": "Search validator by address or name"
+    },
+    "metric_weights": {
+      "help": "You can customize the weights of the VRC score and thereby deviate from the default option (equal weight of each metric)",
+      "customize_validator_score": "Customize validator score",
+      "elected": "ELECTED",
+      "commission_changes": "COMMISSION CHANGES",
+      "era_points_avg": "ERA POINTS AVG",
+      "governance_participation": "GOVERNANCE PARTICIPATION",
+      "identity": "IDENTITY",
+      "number_of_nominators": "NUMBER OF NOMINATORS",
+      "address_creation": "ADDRESS CREATION",
+      "payout_frequency": "PAYOUT FREQUENCY",
+      "slashes": "SLASHES",
+      "subaccounts": "SUBACCOUNTS",
+      "updating_score": "updating score"
+    },
+    "header": {
+      "connect": "Connect",
+      "selected": "selected"
+    },
+    "staking_stats": {
+      "active_waiting_validators": "Active/waiting val",
+      "current_era": "Current era",
+      "nominators": "Nominators",
+      "minimum_stake": "Minimum stake",
+      "goto_validators": "Check validators information"
+    },
+    "suggestions": {
+      "increased_commission": "Validator {validatorName}, which is included in your current on-chain set, increased its commission from {firstCommission}% to {lastCommission}%",
+      "pending_payouts": "Validator {validatorName}, which is included in your current on-chain set, has {pendingPayouts} pending rewards and some of them are next to expire in the next 24h",
+      "slashed": "Validator {validatorName}, which is included in your current on-chain set, was slashed in the last 84 eras",
+      "performance": "Validator {validatorName}, which is included in your current on-chain set, performs below network average"
+    },
+    "featured": {
+      "title": "Featured waiting validator",
+      "description": "Including some waiting validators in your set incentivize the decentralization of the network, also waiting validators can produce increased rewards when they become active.",
+      "add": "Add to your set"
+    },
+    "fiat_conversion": {
+      "historic_value": "Estimated value at the day of transaction",
+      "current_value": "Current value"
+    },
+    "dashboard_commission": {
+      "title": "Average commission",
+      "avg_commission": "avg. commission (%)"
+    },
+    "dashboard_era_points": {
+      "title": "Average era points",
+      "avg_era_points": "avg. era points"
+    },
+    "dashboard_performance": {
+      "title": "Average performance",
+      "avg_performance": "avg. performance"
+    },
+    "dashboard_self_stake": {
+      "title": "Average elected self stake",
+      "avg_self_stake": "avg. elected self stake"
+    },
+    "dashboard_vrc_score": {
+      "title": "Validator score",
+      "vrc_score": "score"
+    },
+    "commission_chart": {
+      "title": "commission",
+      "commission": "commission"
+    },
+    "era_points_chart": {
+      "title": "era points",
+      "era_points": "era points"
+    },
+    "payouts_chart": {
+      "title": "payouts",
+      "payments": "payments"
+    },
+    "relative_performance_chart": {
+      "title": "relative performance",
+      "relative_performance": "relative performance"
+    },
+    "stake_chart": {
+      "title": "elected own stake ({tokenSymbol})",
+      "elected_own_stake": "elected own stake"
+    },
+    "address": {
+      "title": "Address creation",
+      "help": "Evaluate how old is the validator address",
+      "description_1": "Stash address was created at block",
+      "description_2": "and parent identity address was created at block"
+    },
+    "commission": {
+      "title": "Commission",
+      "help": "Evaluate validator commission over time",
+      "description_1": "Current commission is"
+    },
+    "era_points": {
+      "title": "Era points",
+      "help": "Evaluate if the era points earned by the validator in the history are below or above average",
+      "description_1": "Above average! Validator got {percent}% of the total era points in the last 21 days while average was {average}%",
+      "description_2": "Below average! Validator got {percent}% of the total era points in the last 21 days while average was {average}%"
+    },
+    "governance": {
+      "title": "Governance",
+      "help": "Evaluate if the validator is backing a council member and if is participating in a current proposal or referendum (as proposer or voter)",
+      "description_1": "The validator is backing a council member and is participating in a active democracy proposal or refererendum",
+      "description_2": "The validator is backing a council member",
+      "description_3": "The validator is participating in a active democracy proposal or refererendum",
+      "description_4": "The validator is not participating in governance"
+    },
+    "identity": {
+      "title": "Identity",
+      "help": "Evaluate the quality of the identity data provided by the validator",
+      "description_1": "Validator has a verified identity and provide all possible information",
+      "description_2": "Validator has a verified identity but doesn't provide all possible information",
+      "description_3": "Validator did set an identity but didn't verify",
+      "description_4": "Validator has no identity set"
+    },
+    "nominators": {
+      "title": "Nominators",
+      "help": "Evaluate nominators and if the validator is oversubscribed",
+      "description_1": "Detected {nominators} nominator",
+      "description_2": "validator is not oversubscribed",
+      "description_3": "Validator is oversubscribed ({nominators} nominators)",
+      "description_4": "Validator doesn't have any nominators"
+    },
+    "payouts": {
+      "title": "Frequency of payouts",
+      "help": "Evaluate frequency of rewards distribution",
+      "description_1": "Very good, validator has {pending} unclaimed era rewards",
+      "description_2": "Good, validator has {pending} unclaimed era rewards",
+      "description_3": "Neutral, validator has {pending} unclaimed era rewards",
+      "description_4": "No payouts detected in the last week"
+    },
+    "slashes": {
+      "title": "Slashes",
+      "help": "Evaluate if the validator was slashed in the last 28 eras (1 week)",
+      "description_1": "No slashes detected",
+      "description_2": "Validator was slashed"
+    },
+    "subaccounts": {
+      "title": "Subaccounts",
+      "help": "Evaluate if the validator uses sub-accounts",
+      "description_1": "Detected sub-identity",
+      "description_2": ", the validator is part of a cluster of {clusterMembers} validators",
+      "description_3": "No sub-identity detected"
+    },
+    "thousand": {
+      "title": "Thousand Validator Program",
+      "description_1": "Validator is ranked #{thousandRank} in the",
+      "description_2": "{networkName} 1KV Program",
+      "description_3": ", check its",
+      "description_4": "1KV program profile page"
+    },
+    "nominations": {
+      "who": "Nominator",
+      "value": "Amount"
+    },
+    "account_links": {
+      "check_account": "Check account in"
+    },
+    "validator_links": {
+      "check_validator": "Check validator in"
+    }
+  },
+  "layout": {
+    "default": {
+      "system_message": "using polkadot v",
+      "validators": "Validators",
+      "intentions": "Intentions",
+      "favorites": "Favorites",
+      "targets": "Targets",
+      "election-prediction": "Election prediction",
+      "nominators": "Nominators",
+      "accounts": "Accounts",
+      "get_in_contact": "Get in contact",
+      "about_us": "About us",
+      "support_polkastats": "Support Polkastats",
+      "how_to": "How to include your validator info",
+      "built_for": "Built for",
+      "the_wild_cousin_of": "the wild cousin of",
+      "made_by": "Made by PolkaStats Team in Colmena Labs",
+      "built_with": "Built with",
+      "view_source_code_on_github": "View source code on GitHub",
+      "dashboard": "Dashboard",
+      "blockchain": "Blockchain",
+      "blocks": "Blocks",
+      "extrinsics": "Extrinsics",
+      "transfers": "Transfers",
+      "events": "Events",
+      "validator": "Validator",
+      "how_to_stake": "How to stake",
+      "staking_dashboard": "Dashboard",
+      "economics": "Economics"
+    },
+    "error": {
+      "page_not_found": "Page not found!",
+      "an_error_occurred": "An error occurred"
+    }
+  },
+  "pages": {
+    "home": {
+      "title": "Home"
+    },
+    "accounts": {
+      "account": "Account",
+      "active_accounts": "Active accounts",
+      "search_placeholder": "Search account by address or identity",
+      "sort": "Sort",
+      "account_details": "Account details",
+      "rank": "Rank",
+      "free_balance": "Free Balance",
+      "available_balance": "Available Balance",
+      "locked_balance": "Locked Balance",
+      "reserved_balance": "Reserved Balance",
+      "total_balance": "Total Balance",
+      "remove_from_favorites": "Remove from Favorites",
+      "add_to_favorites": "Add to Favorites",
+      "identity": "Identity",
+      "head_title": "PolkaStats - {networkName} accounts",
+      "head_content": "{networkName} accounts",
+      "loading_data": "Loading data, it can take a long time. Be patient, please",
+      "download_csv": "Download in CSV format"
+    },
+    "account": {
+      "head_title": "PolkaStats - {networkName} account {address}",
+      "head_content": "{networkName} account {address}",
+      "sent_transfers": "Sent transfers",
+      "received_transfers": "Received transfers"
+    },
+    "favorites": {
+      "hi_there": "Hi there!",
+      "you_can_click_TEXT": "You can click on the star icon",
+      "of_a_validator_TEXT": "of a validator or intention to track it on this page",
+      "elected_for_next_session": "Elected for next session",
+      "not_elected_for_next_session": "Not elected for next session",
+      "unset_as_favorite": "Unset as Favorite",
+      "set_as_favorite": "Set as Favorite",
+      "rank": "rank",
+      "active_validator": "Active validator",
+      "total_bonded": "Total bonded",
+      "self_bonded": "Self bonded",
+      "active_bonded": "Active bonded",
+      "bonded_by_nominators": "Bonded by nominator",
+      "percentage_over_total_bonded_stake": "Percentage over total bonded stake",
+      "of_total_stake": "of total stake",
+      "era_points": "era points",
+      "produced_blocks": "produced blocks",
+      "validator_details": "Validator details",
+      "stash": "Stash",
+      "controller": "Controller",
+      "session_id": "Session id",
+      "next_session_id": "Next session id",
+      "commission": "Commission",
+      "reward_destination": "Reward destination",
+      "nominators": "nominators",
+      "intention": "Intention",
+      "head_title": "PolkaStats - {networkName} favorite validators and intentions",
+      "head_content": "{networkName} favorite validators and intentions"
+    },
+    "index": {
+      "we_have_a_new_TEXT": "We have a new awesome dedicated server graciously sponsored by",
+      "thanks": "Thanks!",
+      "total_issuance_is": "Total issuance is",
+      "total_stake_bonded_is": "total stake bonded is",
+      "of_total": "of total",
+      "currently_there_are": "Currently there are",
+      "active_validators_of": "active validators of",
+      "available_slots_and": "available slots and",
+      "waiting": "waiting",
+      "search_placeholder": "Search validator by account or identity display name",
+      "sort": "Sort",
+      "rank": "Rank",
+      "elected_for_next_session": "Elected for next session",
+      "not_elected_for_next_session": "Not elected for next session",
+      "remove_from_favorites": "Remove from Favorites",
+      "add_to_favorites": "Add to Favorites",
+      "validator_details": "Validator details",
+      "total_bonded": "Total bonded",
+      "percentage_over_total_bonded_stake": "Percentage over total bonded stake",
+      "validator": "Validator",
+      "stakers": "Stakers",
+      "total_stake": "Total stake",
+      "stake": "Stake",
+      "commission": "Commission",
+      "era_points": "Era points",
+      "loading_data": "Loading data"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "recent_blocks": "Last blocks",
+      "top_rich": "Top 10 rich accounts",
+      "recent_extrinsics": "Last extrinsics",
+      "recent_events": "Last events",
+      "recent_transfers": "Last transfers"
+    },
+    "blocks": {
+      "title": "Blocks",
+      "head_title": "PolkaStats - {networkName} blocks",
+      "head_content": "{networkName} blocks",
+      "search_placeholder": "Search by block number",
+      "block_number": "Block",
+      "finalized": "Status",
+      "timestamp": "Date",
+      "block_hash": "Hash",
+      "total_extrinsics": "Extrinsics",
+      "total_events": "Events",
+      "block_author": "Author"
+    },
+    "block": {
+      "title": "Block",
+      "head_title": "PolkaStats - {networkName} block",
+      "head_content": "{networkName} block"
+    },
+    "extrinsics": {
+      "title": "Extrinsics",
+      "head_title": "PolkaStats - {networkName} extrinsics",
+      "head_content": "{networkName} extrinsics",
+      "id": "ID",
+      "timestamp": "Date",
+      "hash": "Hash",
+      "extrinsic": "Extrinsic",
+      "success": "Status"
+    },
+    "extrinsic": {
+      "title": "Extrinsic",
+      "head_title": "PolkaStats - {networkName} extrinsic",
+      "head_content": "{networkName} extrinsic",
+      "extrinsic_not_found": "Extrinsic not found!",
+      "extrinsic": "Extrinsic"
+    },
+    "transfers": {
+      "title": "Transfers",
+      "head_title": "PolkaStats - {networkName} transfers",
+      "head_content": "{networkName} transfers",
+      "search_placeholder": "Search transfer by block number, hash or address",
+      "transfer_details": "Check transfer information",
+      "hash": "Hash",
+      "block_number": "Block",
+      "timestamp": "Date",
+      "source": "Source",
+      "destination": "To",
+      "amount": "Amount",
+      "success": "Status"
+    },
+    "transfer": {
+      "title": "Transfer",
+      "head_title": "PolkaStats - {networkName} transfer {hash}",
+      "head_content": "{networkName} transfer {hash}",
+      "not_found": "Transfer not found!"
+    },
+    "activity": {
+      "title": "Activity",
+      "head_title": "PolkaStats - {networkName} activity",
+      "head_content": "{networkName} activity",
+      "search_placeholder": "Search activity by block number, hash or source address"
+    },
+    "events": {
+      "title": "Events",
+      "head_title": "PolkaStats - {networkName} events",
+      "head_content": "{networkName} events",
+      "search_placeholder": "Search by block number"
+    },
+    "event": {
+      "title": "Event",
+      "head_title": "PolkaStats - {networkName} event",
+      "head_content": "{networkName} event",
+      "event_not_found": "Event not found!",
+      "event": "Event"
+    },
+    "support-us": {
+      "support_polkastats": "SUPPORT POLKASTATS",
+      "polkastats_software_TEXT": "PolkaStats software is open source and the services hosted at https://polkastats.io are provided for free (as in free beer).",
+      "i_enjoy_developing_TEXT": "I enjoy developing PolkaStats and providing the services without annoying ads and I plan to continue doing it in that way :-).",
+      "if_you_like_TEXT": "If you like my work and want to support the hosting payments or the time I spend developing and maintaining the server, you can do it in several ways.",
+      "feedback": "FeedBack!",
+      "we_love_feedback_TEXT": "We love getting feedback from the community, if you find a bug, want to comment some behaviour or want a feature being added please place an Issue in our",
+      "github_repository": "GitHub repository",
+      "stake_in_our_validator": "Stake in our validators",
+      "this_is_an_TEXT": "This is the easiest way you can support PolkaStats, please check it out our staking guides for Polkadot and Kusama.",
+      "follow_polkastats_on_twitter": "Follow @PolkaStats on Twitter",
+      "are_you_a_TEXT": "Are you a happy PolkaStats user? Make sure you follow",
+      "on_twitter_to_get_TEXT": "on Twitter to get the last platform updates",
+      "head_title": "PolkaStats - Support us",
+      "head_content": "Support us"
+    },
+    "how_to_stake": {
+      "title": "How to stake",
+      "head_title": "PolkaStats - How to stake",
+      "head_content": "How to stake",
+      "kusama": {
+        "title": "How to stake in Kusama",
+        "head_title": "PolkaStats - How to stake in Kusama",
+        "head_content": "How to stake in Kusama",
+        "lunie": {
+          "title": "How to stake in Kusama using Lunie",
+          "head_title": "PolkaStats - How to stake in Kusama using Lunie",
+          "head_content": "How to stake in Kusama using Lunie"
+        },
+        "polkadotjs": {
+          "title": "How to stake in Kusama using Polkadot JS",
+          "head_title": "PolkaStats - How to stake in Kusama using Polkadot JS",
+          "head_content": "How to stake in Kusama using Polkadot JS"
+        },
+        "polkastats": {
+          "title": "How to stake in Kusama using PolkaStats",
+          "head_title": "PolkaStats - How to stake in Kusama using PolkaStats",
+          "head_content": "How to stake in Kusama using PolkaStats"
+        }
+      },
+      "polkadot": {
+        "title": "How to stake in Polkadot",
+        "head_title": "PolkaStats - How to stake in Polkadot",
+        "head_content": "How to stake in Polkadot",
+        "lunie": {
+          "title": "How to stake in Polkadot using Lunie",
+          "head_title": "PolkaStats - How to stake in Polkadot using Lunie",
+          "head_content": "How to stake in Polkadot using Lunie"
+        },
+        "polkadotjs": {
+          "title": "How to stake in Polkadot using Polkadot JS",
+          "head_title": "PolkaStats - How to stake in Polkadot using Polkadot JS",
+          "head_content": "How to stake in Polkadot using Polkadot JS"
+        },
+        "polkastats": {
+          "title": "How to stake in Polkadot using PolkaStats",
+          "head_title": "PolkaStats - How to stake in Polkadot using PolkaStats",
+          "head_content": "How to stake in Polkadot using PolkaStats"
+        }
+      }
+    },
+    "polkastats_validator": {
+      "title": "PolkaStats validator",
+      "head_title": "PolkaStats - {networkName} PolkaStats validator",
+      "head_content": "{networkName} PolkaStats validator"
+    },
+    "validators": {
+      "title": "Validators",
+      "head_title": "PolkaStats - {networkName} proof of stake validators",
+      "head_content": "{networkName} proof of stake validators"
+    },
+    "validator": {
+      "title": "Validator",
+      "head_title": "PolkaStats - {networkName} validator {address}",
+      "head_content": "{networkName} validator {address}",
+      "selected": "selected",
+      "metrics_description": "This information is verified and provided by historical data on the {networkName} blockchain",
+      "metrics": "Metrics",
+      "charts": "Charts",
+      "nominations": "Nominations"
+    },
+    "team": {
+      "title": "Team",
+      "head_title": "PolkaStats - The team",
+      "head_content": "The people behind PolkaStats block explorer"
+    },
+    "nominate": {
+      "title": "Nominate validators",
+      "head_title": "PolkaStats - Nominate validators",
+      "head_content": "Nominate validators",
+      "extension_agent": "PolkaStats block explorer for {networkName}"
+    },
+    "staking_dashboard": {
+      "title": "Staking dashboard",
+      "head_title": "PolkaStats - {networkName} staking dashboard",
+      "head_content": "{networkName} staking dashboard"
+    }
+  },
+  "details": {
+    "account": {
+      "account": "Account",
+      "free_balance": "Free Balance",
+      "account_id": "Account ID",
+      "account_nonce": "Account Nonce",
+      "total_balance": "Total Balance",
+      "available_balance": "Available Balance",
+      "locked_balance": "Locked Balance",
+      "reserved_balance": "Reserved Balance",
+      "is_vesting": "Is Vesting?",
+      "vested_balance": "Vested Balance",
+      "vesting_total": "Vesting Total",
+      "voting_balance": "Voting Balance"
+    },
+    "block": {
+      "block": "block",
+      "block_author": "Block author",
+      "block_hash": "Block hash",
+      "finalized": "Finalized",
+      "extrinsic_root": "Extrinsic root",
+      "parent_hash": "Parent hash",
+      "state_root": "State root",
+      "spec_name": "Spec name",
+      "spec_version": "Spec version",
+      "current_index": "Session",
+      "active_era": "Era",
+      "events": "Events",
+      "extrinsics": "Extrinsics",
+      "section": "Section",
+      "method": "Method",
+      "hash": "Hash",
+      "signer": "Signer",
+      "args": "Arguments",
+      "phase": "Phase",
+      "data": "Data",
+      "account_details": "Account details",
+      "timestamp": "Timestamp",
+      "timeago": "Time ago",
+      "genesis": "🎁 Genesis block",
+      "success": "Success",
+      "logs": "Logs",
+      "index": "Index",
+      "engine": "Engine",
+      "total_issuance": "Total issuance",
+      "event": "Event",
+      "status": "Status"
+    },
+    "extrinsic": {
+      "extrinsic_details": "Extrinsic details"
+    },
+    "validator": {
+      "previous_validator": "Previous validator: ",
+      "next_validator": "Next validator: ",
+      "validator": "Validador",
+      "elected_for_next_session": "Elected for next session",
+      "not_elected_for_next_session": "Not elected for next session",
+      "in_favorites": "In Favorites",
+      "not_in_favorites": "Not in Favorites",
+      "total_bonded": "Total bonded",
+      "self_bonded": "Self bonded",
+      "bonded_by_nominators": "Bonded by nominators",
+      "percentage_over_total_bonded_stake": "Percentage over total bonded stake",
+      "of_total_stake": "of total stake",
+      "era_points": "era points",
+      "session_id": "Session id",
+      "next_session_id": "Next session id",
+      "commission": "Commission",
+      "reward_destination": "Reward destination",
+      "name": "Name",
+      "email": "Email",
+      "legal": "Legal",
+      "riot": "Riot",
+      "nominators": "Nominators",
+      "search_placeholder": "Search staker by address",
+      "nominator_details": "Nominator details",
+      "monthly": "Monthly",
+      "weekly": "Weekly",
+      "daily": "Daily",
+      "rank": "Rank",
+      "staker": "Staker",
+      "percentage": "Percentage",
+      "amount": "Amount",
+      "reward": "Reward",
+      "slashes": "Slashes",
+      "produced_blocks": "Produced Block",
+      "status": "Status",
+      "date_time": "Date and Time",
+      "charts": "Charts",
+      "stash": "Stash",
+      "controller": "Controller"
+    }
+  }
+}

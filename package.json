@@ -1,0 +1,25 @@
+{
+  "private": true,
+  "name": "xxstats",
+  "description": "PolkaStats block explorer for xx.network",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xx-labs/xxstats.git"
+  },
+  "keywords": [
+    "blockchain",
+    "xx.network",
+    "substrate",
+    "PoS",
+    "validator"
+  ],
+  "author": "Mario Pino Uceda",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/xx-labs/xxstats/issues"
+  },
+  "homepage": "https://github.com/xx-labs/xxstats#readme",
+  "workspaces": ["frontend", "backend"],
+  "scripts": {}
+ }
+ 

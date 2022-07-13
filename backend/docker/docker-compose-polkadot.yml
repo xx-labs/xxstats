@@ -1,0 +1,187 @@
+version: '3.7'
+
+services:
+  #
+  # Blockchain archive node
+  #
+  substrate-node:
+    image: substrate-node
+    hostname: substrate-node
+    build:
+      context: ./substrate-node
+      args:
+        POLKADOT_VERSION: v0.9.23
+    volumes:
+      - 'substrate-data:/data'
+    ports:
+      - '30333:30333'
+      - '9933:9933'
+      - '9944:9944'
+    command: -d /data --ws-max-out-buffer-capacity 256 --unsafe-ws-external --unsafe-rpc-external --rpc-cors all --pruning archive --name 'PolkaStats NG' --chain polkadot --state-cache-size 8192000000 --max-runtime-instances 256 --db-cache 8192
+    restart: always
+  #
+  # SQL data base
+  #
+  postgres:
+    image: postgres:14
+    restart: always
+    shm_size: 1gb
+    volumes:
+      - 'db-data:/var/lib/postgresql/data'
+      - '../sql/backend.sql:/docker-entrypoint-initdb.d/backend.sql'
+    environment:
+      POSTGRES_USER: 'polkastats'
+      POSTGRES_PASSWORD: 'polkastats'
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U polkastats']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    # 
+    # https://pgtune.leopard.in.ua/#/
+    #
+    # Optimized for:
+    #
+    # DB Version: 13
+    # OS Type: linux
+    # DB Type: web
+    # Total Memory (RAM): 128 GB
+    # CPUs num: 32
+    # Connections num: 200
+    # Data Storage: ssd
+
+    command:
+      - "postgres"
+      - "-c"
+      - "max_connections=200"
+      - "-c"
+      - "shared_buffers=32GB"
+      - "-c"
+      - "effective_cache_size=96GB"
+      - "-c"
+      - "maintenance_work_mem=2GB"
+      - "-c"
+      - "checkpoint_completion_target=0.9"
+      - "-c"
+      - "wal_buffers=16MB"
+      - "-c"
+      - "default_statistics_target=100"
+      - "-c"
+      - "random_page_cost=1.1"
+      - "-c"
+      - "effective_io_concurrency=200"
+      - "-c"
+      - "work_mem=41943kB"
+      - "-c"
+      - "min_wal_size=1GB"
+      - "-c"
+      - "max_wal_size=4GB"
+      - "-c"
+      - "max_worker_processes=32"
+      - "-c"
+      - "max_parallel_workers_per_gather=4"
+      - "-c"
+      - "max_parallel_workers=32"
+      - "-c"
+      - "max_parallel_maintenance_workers=4"
+      - "-c"
+      - "password_encryption=md5"
+
+  #
+  # Hasura
+  #
+  graphql-engine:
+    image: hasura/graphql-engine:v1.3.3.cli-migrations-v2
+    ports:
+      - '8082:8080'
+    volumes:
+      - '../hasura/metadata:/hasura-metadata'
+    depends_on:
+      - 'postgres'
+    restart: always
+    environment:
+      HASURA_GRAPHQL_DATABASE_URL: 'postgres://polkastats:polkastats@postgres:5432/polkastats'
+      HASURA_GRAPHQL_ENABLE_CONSOLE: 'true' # set to 'false' to disable console
+      HASURA_GRAPHQL_ENABLED_LOG_TYPES: 'startup, http-log, webhook-log, websocket-log, query-log'
+      HASURA_GRAPHQL_CORS_DOMAIN: http://localhost:3000, https://polkastats.io, https://polkadot.polkastats.io, https://dev.polkadot.polkastats.io, http://polkastats.io:8082
+      HASURA_GRAPHQL_UNAUTHORIZED_ROLE: public
+      HASURA_GRAPHQL_ADMIN_SECRET: ${HASURA_GRAPHQL_ADMIN_SECRET}
+  
+  #
+  # Block crawler
+  #
+  crawler:
+    image: crawler:latest
+    build:
+      context: ../
+      dockerfile: ./docker/crawler/Dockerfile
+    depends_on:
+      - 'postgres'
+      - 'substrate-node'
+    restart: always
+    environment:
+      NODE_ENV: 'production'
+      NODE_OPTIONS: '--max-old-space-size=8192'
+      WS_PROVIDER_URL: 'ws://substrate-node:9944'
+      SUBSTRATE_NETWORK: 'kusama'
+      # RANKING_DISABLE: 'true'
+      # ACTIVE_ACCOUNTS_DISABLE: 'true'
+      # BLOCK_LISTENER_DISABLE: 'true'
+      # BLOCK_FINALIZER_DISABLE: 'true'
+      # BLOCK_HARVESTER_DISABLE: 'true'
+      NODE_PG_FORCE_NATIVE: 'true'
+      #
+      #   Available modes:
+      #
+      #   chunks:     Process batchs of 'BLOCK_HARVESTER_CHUNK_SIZE' blocks in parallel (faster)
+      #   sequential: Slower but less resource-intensive
+      #
+      BLOCK_HARVESTER_MODE: 'chunks'
+      BLOCK_HARVESTER_CHUNK_SIZE: '10'
+      BACKEND_STATS_PRECISION: '2'
+      LOG_LEVEL: 'info'
+      BLOCK_HARVESTER_START_DELAY_MS: '120000' # 2 min
+      BLOCK_FINALIZER_START_DELAY_MS: '60000' # 1 min
+      RANKING_START_DELAY_MS: '1800000' # 30 min
+      ACTIVE_ACCOUNTS_START_DELAY_MS: '300000' # 5 min
+      ACTIVE_ACCOUNTS_CHUNK_SIZE: '100'
+      SENTRY_DSN: ${SENTRY_DSN}
+
+  #
+  # API
+  #
+  api:
+    image: api:latest
+    ports:
+      - '8000:8000'
+    build:
+      context: ../../api
+      dockerfile: Dockerfile
+    depends_on:
+      - 'postgres'
+    restart: always
+    environment:
+      - NODE_ENV=production
+      - NODE_PORT=8000
+
+  #
+  # Substrate API Sidecar
+  #
+  sidecar:
+    image: parity/substrate-api-sidecar
+    ports:
+      - '9090:9090'
+    depends_on:
+      - 'substrate-node'
+    restart: always
+    environment:
+      - SAS_SUBSTRATE_WS_URL=ws://substrate-node:9944
+      - SAS_EXPRESS_BIND_HOST=sidecar
+      - SAS_EXPRESS_PORT=9090  
+
+#
+# Persistent volumes
+#
+volumes:
+  db-data: {}
+  substrate-data: {}
