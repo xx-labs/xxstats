@@ -19,7 +19,7 @@
     "url": "https://github.com/xx-labs/xxstats/issues"
   },
   "homepage": "https://github.com/xx-labs/xxstats#readme",
-  "workspaces": ["frontend", "backend"],
+  "workspaces": ["frontend", "backend", "api"],
   "scripts": {}
  }
  
