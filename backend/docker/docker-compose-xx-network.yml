@@ -10,14 +10,14 @@ services:
     build:
       context: ./substrate-node
       args:
-        POLKADOT_VERSION: v0.9.23
+        XXNETWORK_VERSION: v0.2.4
     volumes:
       - 'substrate-data:/data'
     ports:
-      - '30333:30333'
+      - '15974:15974'
       - '9933:9933'
       - '9944:9944'
-    command: -d /data --ws-max-out-buffer-capacity 256 --unsafe-ws-external --unsafe-rpc-external --rpc-cors all --pruning archive --name 'PolkaStats NG' --chain kusama --state-cache-size 8192000000 --max-runtime-instances 256 --db-cache 8192
+    command: --base-path /data --name xxstats --port 15974 --ws-port 9944 --rpc-port 9933 --rpc-cors all --rpc-methods Safe --ws-max-connections 8192 --pruning=archive
     restart: always
   #
   # SQL data base
@@ -30,10 +30,10 @@ services:
       - 'db-data:/var/lib/postgresql/data'
       - '../sql/backend.sql:/docker-entrypoint-initdb.d/backend.sql'
     environment:
-      POSTGRES_USER: 'polkastats'
-      POSTGRES_PASSWORD: 'polkastats'
+      POSTGRES_USER: 'xxstats'
+      POSTGRES_PASSWORD: 'xxstats'
     healthcheck:
-      test: ['CMD-SHELL', 'pg_isready -U polkastats']
+      test: ['CMD-SHELL', 'pg_isready -U xxstats']
       interval: 5s
       timeout: 5s
       retries: 5
@@ -100,10 +100,10 @@ services:
       - 'postgres'
     restart: always
     environment:
-      HASURA_GRAPHQL_DATABASE_URL: 'postgres://polkastats:polkastats@postgres:5432/polkastats'
+      HASURA_GRAPHQL_DATABASE_URL: 'postgres://xxstats:xxstats@postgres:5432/xxstats'
       HASURA_GRAPHQL_ENABLE_CONSOLE: 'true' # set to 'false' to disable console
       HASURA_GRAPHQL_ENABLED_LOG_TYPES: 'startup, http-log, webhook-log, websocket-log, query-log'
-      HASURA_GRAPHQL_CORS_DOMAIN: http://localhost:3000, https://kusama.polkastats.io, https://dev.kusama.polkastats.io, http://kusama.polkastats.io:8082
+      HASURA_GRAPHQL_CORS_DOMAIN: http://localhost:3000, https://explorer.xx.network, https://dev.xx-network.xxstats.io
       HASURA_GRAPHQL_UNAUTHORIZED_ROLE: public
       HASURA_GRAPHQL_ADMIN_SECRET: ${HASURA_GRAPHQL_ADMIN_SECRET}
   
@@ -123,9 +123,8 @@ services:
       NODE_ENV: 'production'
       NODE_OPTIONS: '--max-old-space-size=8192'
       WS_PROVIDER_URL: 'ws://substrate-node:9944'
-      SUBSTRATE_NETWORK: 'kusama'
-      API_CUSTOM_TYPES: 'kusama_custom_types.json'
-      # RANKING_DISABLE: 'true'
+      SUBSTRATE_NETWORK: 'xx-network'
+      RANKING_DISABLE: 'true'
       # ACTIVE_ACCOUNTS_DISABLE: 'true'
       # BLOCK_LISTENER_DISABLE: 'true'
       # BLOCK_FINALIZER_DISABLE: 'true'

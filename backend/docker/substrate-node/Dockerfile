@@ -1,11 +1,11 @@
-FROM phusion/baseimage:impish
-ARG POLKADOT_VERSION
-LABEL maintainer "@mariopino"
-LABEL description="Parity Polkadot client"
+FROM phusion/baseimage:jammy-1.0.0
+ARG XXNETWORK_VERSION
+LABEL maintainer "@xx-labs"
+LABEL description="xx network public node"
 RUN apt-get update && apt-get install wget -y
 WORKDIR /usr/local/bin
-RUN wget https://github.com/paritytech/polkadot/releases/download/$POLKADOT_VERSION/polkadot \
-    && chmod +x polkadot
-EXPOSE 30333 9933 9944
+RUN wget https://github.com/xx-labs/xxchain/releases/download/$XXNETWORK_VERSION/xxnetwork-chain \
+    && chmod +x xxnetwork-chain
+EXPOSE 15974 30334 9933
 VOLUME ["/data"]
-ENTRYPOINT ["polkadot"]
+ENTRYPOINT ["xxnetwork-chain"]

@@ -4,13 +4,13 @@ exports.backendConfig = void 0;
 // @ts-check
 require('dotenv').config();
 exports.backendConfig = {
-    substrateNetwork: process.env.SUBSTRATE_NETWORK || 'kusama',
+    substrateNetwork: process.env.SUBSTRATE_NETWORK || 'xx-network',
     wsProviderUrl: process.env.WS_PROVIDER_URL || 'ws://substrate-node:9944',
     postgresConnParams: {
-        user: process.env.POSTGRES_USER || 'polkastats',
+        user: process.env.POSTGRES_USER || 'xxstats',
         host: process.env.POSTGRES_HOST || 'postgres',
-        database: process.env.POSTGRES_DATABASE || 'polkastats',
-        password: process.env.POSTGRES_PASSWORD || 'polkastats',
+        database: process.env.POSTGRES_DATABASE || 'xxstats',
+        password: process.env.POSTGRES_PASSWORD || 'xxstats',
         port: parseInt(process.env.POSTGRES_PORT, 10) || 5432,
     },
     logLevel: process.env.LOG_LEVEL || 'info',

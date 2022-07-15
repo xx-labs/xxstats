@@ -1,4 +1,4 @@
-GRANT ALL PRIVILEGES ON DATABASE polkastats TO polkastats;
+GRANT ALL PRIVILEGES ON DATABASE xxstats TO xxstats;
 
 CREATE TABLE IF NOT EXISTS block (  
   block_number BIGINT NOT NULL,
@@ -349,29 +349,29 @@ CREATE INDEX IF NOT EXISTS staking_reward_account_id_idx ON staking_reward (acco
 CREATE INDEX IF NOT EXISTS staking_slash_block_number_idx ON staking_slash (block_number);
 CREATE INDEX IF NOT EXISTS staking_slash_account_id_idx ON staking_slash (account_id);
 
-GRANT ALL PRIVILEGES ON TABLE block TO polkastats;
-GRANT ALL PRIVILEGES ON TABLE harvest_error TO polkastats;
-GRANT ALL PRIVILEGES ON TABLE event TO polkastats;
-GRANT ALL PRIVILEGES ON TABLE staking_reward TO polkastats;
-GRANT ALL PRIVILEGES ON TABLE staking_slash TO polkastats;
-GRANT ALL PRIVILEGES ON TABLE extrinsic TO polkastats;
-GRANT ALL PRIVILEGES ON TABLE signed_extrinsic TO polkastats;
-GRANT ALL PRIVILEGES ON TABLE transfer TO polkastats;
-GRANT ALL PRIVILEGES ON TABLE ranking TO polkastats;
+GRANT ALL PRIVILEGES ON TABLE block TO xxstats;
+GRANT ALL PRIVILEGES ON TABLE harvest_error TO xxstats;
+GRANT ALL PRIVILEGES ON TABLE event TO xxstats;
+GRANT ALL PRIVILEGES ON TABLE staking_reward TO xxstats;
+GRANT ALL PRIVILEGES ON TABLE staking_slash TO xxstats;
+GRANT ALL PRIVILEGES ON TABLE extrinsic TO xxstats;
+GRANT ALL PRIVILEGES ON TABLE signed_extrinsic TO xxstats;
+GRANT ALL PRIVILEGES ON TABLE transfer TO xxstats;
+GRANT ALL PRIVILEGES ON TABLE ranking TO xxstats;
 
-GRANT ALL PRIVILEGES ON TABLE era_vrc_score TO polkastats;
-GRANT ALL PRIVILEGES ON TABLE era_commission TO polkastats;
-GRANT ALL PRIVILEGES ON TABLE era_commission_avg TO polkastats;
-GRANT ALL PRIVILEGES ON TABLE era_self_stake TO polkastats;
-GRANT ALL PRIVILEGES ON TABLE era_self_stake_avg TO polkastats;
-GRANT ALL PRIVILEGES ON TABLE era_relative_performance TO polkastats;
-GRANT ALL PRIVILEGES ON TABLE era_relative_performance_avg TO polkastats;
-GRANT ALL PRIVILEGES ON TABLE era_points TO polkastats;
-GRANT ALL PRIVILEGES ON TABLE era_points_avg TO polkastats;
-GRANT ALL PRIVILEGES ON TABLE featured TO polkastats;
-GRANT ALL PRIVILEGES ON TABLE account TO polkastats;
-GRANT ALL PRIVILEGES ON TABLE runtime TO polkastats;
-GRANT ALL PRIVILEGES ON TABLE total TO polkastats;
+GRANT ALL PRIVILEGES ON TABLE era_vrc_score TO xxstats;
+GRANT ALL PRIVILEGES ON TABLE era_commission TO xxstats;
+GRANT ALL PRIVILEGES ON TABLE era_commission_avg TO xxstats;
+GRANT ALL PRIVILEGES ON TABLE era_self_stake TO xxstats;
+GRANT ALL PRIVILEGES ON TABLE era_self_stake_avg TO xxstats;
+GRANT ALL PRIVILEGES ON TABLE era_relative_performance TO xxstats;
+GRANT ALL PRIVILEGES ON TABLE era_relative_performance_avg TO xxstats;
+GRANT ALL PRIVILEGES ON TABLE era_points TO xxstats;
+GRANT ALL PRIVILEGES ON TABLE era_points_avg TO xxstats;
+GRANT ALL PRIVILEGES ON TABLE featured TO xxstats;
+GRANT ALL PRIVILEGES ON TABLE account TO xxstats;
+GRANT ALL PRIVILEGES ON TABLE runtime TO xxstats;
+GRANT ALL PRIVILEGES ON TABLE total TO xxstats;
 
 --
 -- Fast counters
