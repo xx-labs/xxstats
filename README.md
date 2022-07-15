@@ -7,15 +7,14 @@ Polkastats block explorer for [xx-network](https://xx.network/)
 In Ubuntu 20.04 server you can do:
 
 ```
-apt update
-apt upgrade
-apt install git build-essential apt-transport-https ca-certificates curl software-properties-common libpq-dev
+apt update && apt upgrade -y && apt autoremove -y
+apt install -y git build-essential apt-transport-https ca-certificates gpg-agent curl software-properties-common libpq-dev
 
 # docker
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
 add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
 apt update
-apt install docker-ce
+apt install -y docker-ce
 
 # docker-compose
 sudo curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
@@ -24,7 +23,7 @@ chmod +x /usr/local/bin/docker-compose
 # node v16
 curl -fsSL https://deb.nodesource.com/setup_16.x -o nodesource_setup.sh
 bash nodesource_setup.sh
-apt install nodejs
+apt install -y nodejs
 
 # yarn
 npm install --global yarn
