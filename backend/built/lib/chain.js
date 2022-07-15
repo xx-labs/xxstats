@@ -43,7 +43,7 @@ const getPolkadotAPI = async (loggerOptions, apiCustomTypes) => {
     logger_1.logger.debug(loggerOptions, `Connecting to ${backend_config_1.backendConfig.wsProviderUrl}`);
     const provider = new api_1.WsProvider(backend_config_1.backendConfig.wsProviderUrl);
     provider.on('disconnected', () => logger_1.logger.error(loggerOptions, `Got disconnected from provider ${backend_config_1.backendConfig.wsProviderUrl}`));
-    provider.on('error', (error) => logger_1.logger.error(loggerOptions, `Got error from provider: ${error}!`));
+    provider.on('error', (error) => logger_1.logger.error(loggerOptions, `Got error from provider: ${JSON.stringify(error)}!`));
     if (apiCustomTypes && apiCustomTypes !== '') {
         const types = JSON.parse(fs_1.default.readFileSync(`./src/types/${apiCustomTypes}`, 'utf8'));
         api = new api_1.ApiPromise({ provider, types });
@@ -52,7 +52,7 @@ const getPolkadotAPI = async (loggerOptions, apiCustomTypes) => {
         api = new api_1.ApiPromise({ provider });
     }
     api.on('disconnected', () => logger_1.logger.error(loggerOptions, 'Got disconnected from API!'));
-    api.on('error', (error) => logger_1.logger.error(loggerOptions, `Got error from API: ${error}`));
+    api.on('error', (error) => logger_1.logger.error(loggerOptions, `Got error from API: ${JSON.stringify(error)}`));
     await api.isReady;
     return api;
 };

@@ -27,7 +27,7 @@ export const getPolkadotAPI = async (
     ),
   );
   provider.on('error', (error) =>
-    logger.error(loggerOptions, `Got error from provider: ${error}!`),
+    logger.error(loggerOptions, `Got error from provider: ${JSON.stringify(error)}!`),
   );
 
   if (apiCustomTypes && apiCustomTypes !== '') {
@@ -43,7 +43,7 @@ export const getPolkadotAPI = async (
     logger.error(loggerOptions, 'Got disconnected from API!'),
   );
   api.on('error', (error) =>
-    logger.error(loggerOptions, `Got error from API: ${error}`),
+    logger.error(loggerOptions, `Got error from API: ${JSON.stringify(error)}`),
   );
 
   await api.isReady;
