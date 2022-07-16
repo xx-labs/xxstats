@@ -17,7 +17,7 @@ services:
       - '15974:15974'
       - '9933:9933'
       - '9944:9944'
-    command: --base-path /data --name xxstats --port 15974 --ws-port 9944 --rpc-port 9933 --rpc-cors all --rpc-methods Safe --ws-max-connections 8192 --pruning=archive
+    command: --base-path /data --name xxstats --port 15974 --ws-port 9944 --rpc-port 9933 --rpc-cors all --unsafe-ws-external --unsafe-rpc-external --pruning archive
     restart: always
   #
   # SQL data base
