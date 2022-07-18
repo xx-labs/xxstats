@@ -22,14 +22,10 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateFinalizedBlock = exports.harvestBlocks = exports.harvestBlocksSeq = exports.harvestBlock = exports.storeMetadata = exports.healthCheck = exports.logHarvestError = exports.updateFinalized = exports.getDisplayName = void 0;
 // @ts-check
 const Sentry = __importStar(require("@sentry/node"));
-const axios_1 = __importDefault(require("axios"));
 const utils_1 = require("./utils");
 const db_1 = require("./db");
 const backend_config_1 = require("../backend.config");
@@ -107,11 +103,10 @@ const healthCheck = async (config, client, loggerOptions) => {
     logger_1.logger.debug(loggerOptions, `Health check finished in ${((endTime - startTime) / 1000).toFixed(config.statsPrecision)}s`);
 };
 exports.healthCheck = healthCheck;
-const storeMetadata = async (client, blockNumber, blockHash, specName, specVersion, timestamp, loggerOptions) => {
+const storeMetadata = async (client, api, blockNumber, blockHash, specName, specVersion, timestamp, loggerOptions) => {
     let metadata;
     try {
-        const response = await axios_1.default.get(`${backend_config_1.backendConfig.substrateApiSidecar}/runtime/metadata?at=${blockHash}`);
-        metadata = response.data;
+        metadata = await api.rpc.state.getMetadata(blockHash);
         logger_1.logger.debug(loggerOptions, `Got runtime metadata at ${blockHash}!`);
     }
     catch (error) {
@@ -124,9 +119,9 @@ const storeMetadata = async (client, blockNumber, blockHash, specName, specVersi
         blockNumber,
         specName,
         specVersion,
-        Object.keys(metadata.metadata)[0],
+        Object.keys(metadata.toJSON().metadata)[0],
         metadata.magicNumber,
-        metadata.metadata,
+        metadata.toJSON().metadata,
         timestamp,
     ];
     const query = `
@@ -264,7 +259,7 @@ const harvestBlock = async (config, api, client, blockNumber, doUpdateAccountsIn
             // TODO: enable again
             // see: https://github.com/polkadot-js/api/issues/4596
             // const metadata = await api.rpc.state.getMetadata(blockHash);
-            await (0, exports.storeMetadata)(client, blockNumber, blockHash.toString(), specName.toString(), specVersion.toNumber(), timestamp, loggerOptions);
+            await (0, exports.storeMetadata)(client, api, blockNumber, blockHash.toString(), specName.toString(), specVersion.toNumber(), timestamp, loggerOptions);
         }
         await Promise.all([
             // Store block extrinsics

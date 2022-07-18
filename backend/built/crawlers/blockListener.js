@@ -68,7 +68,7 @@ const crawler = async () => {
                 const timestamp = await apiAt.query.timestamp.now();
                 const specName = runtimeVersion.toJSON().specName;
                 const specVersion = runtimeVersion.specVersion;
-                await (0, block_1.storeMetadata)(client, blockNumber, blockHash.toString(), specName.toString(), specVersion.toNumber(), timestamp.toNumber(), loggerOptions);
+                await (0, block_1.storeMetadata)(client, api, blockNumber, blockHash.toString(), specName.toString(), specVersion.toNumber(), timestamp.toNumber(), loggerOptions);
             }
         }
         catch (error) {
