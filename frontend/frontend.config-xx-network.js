@@ -6,9 +6,9 @@ export const config = {
   ss58Format: 55,
   coinGeckoDenom: 'xx-network',
   nodeWs: 'wss://mainnet.xxnet.io',
-  backendWs: 'wss://xx-network.polkastats.io/graphql',
-  backendHttp: 'https://xx-network.polkastats.io/graphql',
-  backendAPI: 'https://xx-network.polkastats.io',
+  backendWs: 'wss://dev.xx-network.polkastats.io/graphql',
+  backendHttp: 'https://dev.xx-network.polkastats.io/graphql',
+  backendAPI: 'https://dev.xx-network.polkastats.io',
   googleAnalytics: '',
   theme: '@/assets/scss/themes/polkastats.scss',
   // ranking
