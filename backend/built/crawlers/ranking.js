@@ -351,7 +351,9 @@ const crawler = async (delayedStart) => {
                         eraPayoutState = 'pending';
                     }
                     // era performance
+                    // TODO: check undefined
                     const eraTotalStake = new bignumber_js_1.BigNumber(((_a = erasExposure.find((eraExposure) => eraExposure.era === era).validators[stashAddress]) === null || _a === void 0 ? void 0 : _a.total) || 0);
+                    // TODO: check undefined
                     const eraSelfStake = new bignumber_js_1.BigNumber(((_b = erasExposure.find((eraExposure) => eraExposure.era === era).validators[stashAddress]) === null || _b === void 0 ? void 0 : _b.own) || 0);
                     const eraOthersStake = eraTotalStake.minus(eraSelfStake);
                     stakeHistory.push({
@@ -599,20 +601,22 @@ const crawler = async (delayedStart) => {
         logger_1.logger.debug(loggerOptions, 'Cleaning old data');
         await (0, db_1.dbQuery)(client, `DELETE FROM ranking WHERE block_height != '${blockHeight}';`, loggerOptions);
         // featured validator
-        const sql = 'SELECT stash_address, timestamp FROM featured ORDER BY timestamp DESC LIMIT 1';
-        const res = await (0, db_1.dbQuery)(client, sql, loggerOptions);
-        if (res.rows.length === 0) {
-            await (0, staking_1.addNewFeaturedValidator)(config, client, ranking, loggerOptions);
-        }
-        else {
-            const currentFeatured = res.rows[0];
-            const currentTimestamp = new Date().getTime();
-            if (currentTimestamp - currentFeatured.timestamp >
-                config.featuredTimespan) {
-                // timespan passed, let's add a new featured validator
-                await (0, staking_1.addNewFeaturedValidator)(config, client, ranking, loggerOptions);
-            }
-        }
+        // const sql =
+        //   'SELECT stash_address, timestamp FROM featured ORDER BY timestamp DESC LIMIT 1';
+        // const res = await dbQuery(client, sql, loggerOptions);
+        // if (res.rows.length === 0) {
+        //   await addNewFeaturedValidator(config, client, ranking, loggerOptions);
+        // } else {
+        //   const currentFeatured = res.rows[0];
+        //   const currentTimestamp = new Date().getTime();
+        //   if (
+        //     currentTimestamp - currentFeatured.timestamp >
+        //     config.featuredTimespan
+        //   ) {
+        //     // timespan passed, let's add a new featured validator
+        //     await addNewFeaturedValidator(config, client, ranking, loggerOptions);
+        //   }
+        // }
         logger_1.logger.debug(loggerOptions, 'Disconnecting from API');
         await api
             .disconnect()
