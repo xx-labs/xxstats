@@ -10,7 +10,7 @@ export const config = {
   backendHttp: 'https://dev.xx-network.polkastats.io/graphql',
   backendAPI: 'https://dev.xx-network.polkastats.io',
   googleAnalytics: '',
-  theme: '@/assets/scss/themes/polkastats.scss',
+  theme: '@/assets/scss/themes/xxstats.scss',
   // ranking
   historySize: 84, // 84 days
   erasPerDay: 1,
