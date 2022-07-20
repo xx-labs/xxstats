@@ -16,7 +16,7 @@ const logger = pino({
 });
 
 const runCrawler = async (crawler: string) => {
-  const child = spawn('node', [`${crawler}`]);
+  const child = spawn('node', [`${backendConfig.nodeOptions}`, `${crawler}`]);
   child.stdout.pipe(process.stdout);
   child.stderr.pipe(process.stderr);
   const loggerOptions = {
