@@ -4,7 +4,7 @@ import { getClient, dbQuery } from '../lib/db';
 import { getPolkadotAPI, isNodeSynced } from '../lib/chain';
 import {
   getLastEraInDb,
-  getThousandValidators,
+  // getThousandValidators,
   getAddressCreation,
   parseIdentity,
   getClusterInfo,
@@ -82,15 +82,15 @@ const crawler = async (delayedStart: boolean) => {
     logger.debug(loggerOptions, `Last era in DB is ${lastEraInDb}`);
 
     // thousand validators program data
-    logger.debug(
-      loggerOptions,
-      'Fetching thousand validator program validators ...',
-    );
-    const thousandValidators = await getThousandValidators(loggerOptions);
-    logger.debug(
-      loggerOptions,
-      `Got info of ${thousandValidators.length} validators from Thousand Validators program API`,
-    );
+    // logger.debug(
+    //   loggerOptions,
+    //   'Fetching thousand validator program validators ...',
+    // );
+    // const thousandValidators = await getThousandValidators(loggerOptions);
+    // logger.debug(
+    //   loggerOptions,
+    //   `Got info of ${thousandValidators.length} validators from Thousand Validators program API`,
+    // );
 
     // chain data
     logger.debug(loggerOptions, 'Fetching chain data ...');
@@ -347,14 +347,16 @@ const crawler = async (delayedStart: boolean) => {
         }
 
         // thousand validators program
-        const includedThousandValidators = thousandValidators.some(
-          ({ stash }: { stash: any }) => stash === stashAddress,
-        );
-        const thousandValidator = includedThousandValidators
-          ? thousandValidators.find(
-            ({ stash }: { stash: any }) => stash === stashAddress,
-          )
-          : '';
+        // const includedThousandValidators = thousandValidators.some(
+        //   ({ stash }: { stash: any }) => stash === stashAddress,
+        // );
+        // const thousandValidator = includedThousandValidators
+        //   ? thousandValidators.find(
+        //     ({ stash }: { stash: any }) => stash === stashAddress,
+        //   )
+        //   : '';
+        const thousandValidator = '';
+        const includedThousandValidators = false;
 
         // controller
         const controllerAddress = validator.controllerId.toString();
