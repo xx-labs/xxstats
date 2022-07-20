@@ -888,10 +888,10 @@ const crawler = async (delayedStart: boolean) => {
       loggerOptions,
       `Next execution in ${(config.pollingTime / 60000).toFixed(0)}m...`,
     );
-  } catch (error) {
+  } catch (error: any) {
     logger.error(
       loggerOptions,
-      `General error in ranking crawler: ${JSON.stringify(error)}`,
+      `General error in ranking crawler: ${JSON.stringify(error.message)}`,
     );
     Sentry.captureException(error);
   }

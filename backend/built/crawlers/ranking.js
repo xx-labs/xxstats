@@ -627,7 +627,7 @@ const crawler = async (delayedStart) => {
         logger_1.logger.info(loggerOptions, `Next execution in ${(config.pollingTime / 60000).toFixed(0)}m...`);
     }
     catch (error) {
-        logger_1.logger.error(loggerOptions, `General error in ranking crawler: ${JSON.stringify(error)}`);
+        logger_1.logger.error(loggerOptions, `General error in ranking crawler: ${JSON.stringify(error.message)}`);
         Sentry.captureException(error);
     }
     setTimeout(() => crawler(false), config.pollingTime);
