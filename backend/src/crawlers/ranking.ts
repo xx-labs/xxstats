@@ -14,7 +14,7 @@ import {
   insertEraValidatorStats,
   insertEraValidatorStatsAvg,
   insertRankingValidator,
-  addNewFeaturedValidator,
+  // addNewFeaturedValidator,
 } from '../lib/staking';
 import { wait, getRandom } from '../lib/utils';
 import { BigNumber } from 'bignumber.js';
