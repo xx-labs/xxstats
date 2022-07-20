@@ -333,6 +333,7 @@ const crawler = async (delayedStart) => {
             let performance = 0;
             // eslint-disable-next-line
             erasPoints.forEach((eraPoints) => {
+                var _a, _b;
                 const { era } = eraPoints;
                 let eraPayoutState = 'inactive';
                 let eraPerformance = 0;
@@ -350,8 +351,8 @@ const crawler = async (delayedStart) => {
                         eraPayoutState = 'pending';
                     }
                     // era performance
-                    const eraTotalStake = new bignumber_js_1.BigNumber(erasExposure.find((eraExposure) => eraExposure.era === era).validators[stashAddress].total);
-                    const eraSelfStake = new bignumber_js_1.BigNumber(erasExposure.find((eraExposure) => eraExposure.era === era).validators[stashAddress].own);
+                    const eraTotalStake = new bignumber_js_1.BigNumber(((_a = erasExposure.find((eraExposure) => eraExposure.era === era).validators[stashAddress]) === null || _a === void 0 ? void 0 : _a.total) || 0);
+                    const eraSelfStake = new bignumber_js_1.BigNumber(((_b = erasExposure.find((eraExposure) => eraExposure.era === era).validators[stashAddress]) === null || _b === void 0 ? void 0 : _b.own) || 0);
                     const eraOthersStake = eraTotalStake.minus(eraSelfStake);
                     stakeHistory.push({
                         era: new bignumber_js_1.BigNumber(era.toString()).toString(10),

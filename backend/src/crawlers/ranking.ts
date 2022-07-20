@@ -497,12 +497,12 @@ const crawler = async (delayedStart: boolean) => {
             const eraTotalStake = new BigNumber(
               erasExposure.find(
                 (eraExposure: any) => eraExposure.era === era,
-              ).validators[stashAddress].total,
+              ).validators[stashAddress]?.total || 0,
             );
             const eraSelfStake = new BigNumber(
               erasExposure.find(
                 (eraExposure: any) => eraExposure.era === era,
-              ).validators[stashAddress].own,
+              ).validators[stashAddress]?.own || 0,
             );
             const eraOthersStake = eraTotalStake.minus(eraSelfStake);
             stakeHistory.push({
