@@ -217,6 +217,7 @@ const crawler = async (delayedStart) => {
                 stashAddressesCreation[stashParentAddress] = await (0, staking_1.getAddressCreation)(client, stashParentAddress, loggerOptions);
             }
         }
+        logger_1.logger.debug(loggerOptions, 'Processing data: starting validator loop');
         let ranking = validators
             .map((validator) => {
             var _a, _b;

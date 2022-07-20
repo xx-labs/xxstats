@@ -306,6 +306,8 @@ const crawler = async (delayedStart: boolean) => {
       }
     }
 
+    logger.debug(loggerOptions, 'Processing data: starting validator loop');
+
     let ranking = validators
       .map((validator: any) => {
         // active
