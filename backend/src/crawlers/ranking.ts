@@ -364,7 +364,9 @@ const crawler = async (delayedStart: boolean) => {
         const controllerAddress = validator.controllerId.toString();
 
         // cmix id
-        const cmixId = validator.cmixId.toString();
+        const cmixId = validator?.cmixId.toString() || '';
+
+        logger.debug(loggerOptions, 'cmixId:', cmixId);
 
         // TODO: location
         const location = '';
