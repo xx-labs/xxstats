@@ -287,6 +287,9 @@ const crawler = async (delayedStart: boolean) => {
     // Merge validators and intentions
     validators = validators.concat(intentions);
 
+    // debug
+    validators.map((validator: any) => logger.debug(loggerOptions, JSON.stringify(validator)));
+
     // stash & identity parent address creation block
     const stashAddressesCreation: any = [];
     for (const validator of validators) {
