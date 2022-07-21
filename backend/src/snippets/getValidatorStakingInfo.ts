@@ -3,7 +3,7 @@ const { ApiPromise, WsProvider } = require('@polkadot/api');
 
 async function main() {
 
-  const wsProvider = 'wss://mainnet.xxnet.io';
+  const wsProvider = 'ws://substrate-node:9944';
   const authorityId = '6YJNRiCq8za9aYDFL3nzDZxsE72CqciVDptvirLesDBk4Fks';
   const stakingQueryFlags = {
     withController: true,
