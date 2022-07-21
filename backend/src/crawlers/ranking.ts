@@ -364,7 +364,7 @@ const crawler = async (delayedStart: boolean) => {
         const controllerAddress = validator.controllerId.toString();
 
         // cmix id
-        const cmixId = validator?.cmixId.toString() || '';
+        const cmixId = validator?.cmixId ? validator?.cmixId.toString() : '';
 
         logger.debug(loggerOptions, 'cmixId:', cmixId);
 
@@ -885,6 +885,10 @@ const crawler = async (delayedStart: boolean) => {
     logger.error(
       loggerOptions,
       `General error in ranking crawler: ${JSON.stringify(error.message)}`,
+    );
+    logger.error(
+      loggerOptions,
+      `Error stack: ${JSON.stringify(error.stack)}`,
     );
     Sentry.captureException(error);
   }

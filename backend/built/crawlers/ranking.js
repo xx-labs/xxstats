@@ -268,7 +268,7 @@ const crawler = async (delayedStart) => {
             // controller
             const controllerAddress = validator.controllerId.toString();
             // cmix id
-            const cmixId = (validator === null || validator === void 0 ? void 0 : validator.cmixId.toString()) || '';
+            const cmixId = (validator === null || validator === void 0 ? void 0 : validator.cmixId) ? validator === null || validator === void 0 ? void 0 : validator.cmixId.toString() : '';
             logger_1.logger.debug(loggerOptions, 'cmixId:', cmixId);
             // TODO: location
             const location = '';
@@ -629,6 +629,7 @@ const crawler = async (delayedStart) => {
     }
     catch (error) {
         logger_1.logger.error(loggerOptions, `General error in ranking crawler: ${JSON.stringify(error.message)}`);
+        logger_1.logger.error(loggerOptions, `Error stack: ${JSON.stringify(error.stack)}`);
         Sentry.captureException(error);
     }
     setTimeout(() => crawler(false), config.pollingTime);
