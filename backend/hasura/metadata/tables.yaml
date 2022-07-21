@@ -305,6 +305,8 @@
       - commission_history
       - commission_rating
       - controller_address
+      - cmix_id
+      - location
       - council_backing
       - dominated
       - era_points_history

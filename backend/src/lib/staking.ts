@@ -295,6 +295,8 @@ export const insertRankingValidator = async (
       stash_parent_address_creation_block,
       address_creation_rating,
       controller_address,
+      cmix_id,
+      location,
       included_thousand_validators,
       thousand_validator,
       part_of_cluster,
@@ -380,7 +382,9 @@ export const insertRankingValidator = async (
       $47,
       $48,
       $49,
-      $50
+      $50,
+      $51,
+      $52
     )
     ON CONFLICT ON CONSTRAINT ranking_pkey 
     DO NOTHING`;
@@ -400,6 +404,8 @@ export const insertRankingValidator = async (
     validator.stashParentCreatedAtBlock,
     validator.addressCreationRating,
     validator.controllerAddress,
+    validator.cmixId,
+    validator.location,
     validator.includedThousandValidators,
     JSON.stringify(validator.thousandValidator),
     validator.partOfCluster,

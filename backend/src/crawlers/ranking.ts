@@ -306,7 +306,7 @@ const crawler = async (delayedStart: boolean) => {
       }
     }
 
-    logger.debug(loggerOptions, 'Processing data: starting validator loop');
+    logger.debug(loggerOptions, 'Starting validator loop...');
 
     let ranking = validators
       .map((validator: any) => {
@@ -348,8 +348,6 @@ const crawler = async (delayedStart: boolean) => {
           addressCreationRating = 1;
         }
 
-        logger.debug(loggerOptions, 'Validator loop step #1');
-
         // thousand validators program
         // const includedThousandValidators = thousandValidators.some(
         //   ({ stash }: { stash: any }) => stash === stashAddress,
@@ -365,14 +363,16 @@ const crawler = async (delayedStart: boolean) => {
         // controller
         const controllerAddress = validator.controllerId.toString();
 
-        logger.debug(loggerOptions, 'Validator loop step #2');
+        // cmix id
+        const cmixId = validator.cmixId.toString();
+
+        // TODO: location
+        const location = '';
 
         // identity
         const { verifiedIdentity, hasSubIdentity, name, identityRating } =
           parseIdentity(validator.identity);
         const identity = JSON.parse(JSON.stringify(validator.identity));
-
-        logger.debug(loggerOptions, 'Validator loop step #3');
 
         // sub-accounts
         const { clusterMembers, clusterName } = getClusterInfo(
@@ -385,8 +385,6 @@ const crawler = async (delayedStart: boolean) => {
         }
         const partOfCluster = clusterMembers > 1;
         const subAccountsRating = hasSubIdentity ? 2 : 0;
-
-        logger.debug(loggerOptions, 'Validator loop step #4');
 
         // nominators
         // eslint-disable-next-line
@@ -409,8 +407,6 @@ const crawler = async (delayedStart: boolean) => {
               (target: any) => target === validator.accountId.toString(),
             ),
           );
-        
-        logger.debug(loggerOptions, 'Validator loop step #5');
 
         // slashes
         const slashes =
@@ -421,8 +417,6 @@ const crawler = async (delayedStart: boolean) => {
           ) || [];
         const slashed = slashes.length > 0;
         const slashRating = slashed ? 0 : 2;
-
-        logger.debug(loggerOptions, 'Validator loop step #6');
 
         // commission
         const commission =
@@ -436,8 +430,6 @@ const crawler = async (delayedStart: boolean) => {
           commission,
           commissionHistory,
         );
-
-        logger.debug(loggerOptions, 'Validator loop step #7');
 
         // governance
         const councilBacking = validator.identity?.parent
@@ -463,8 +455,6 @@ const crawler = async (delayedStart: boolean) => {
         } else if (councilBacking || activeInGovernance) {
           governanceRating = 2;
         }
-
-        logger.debug(loggerOptions, 'Validator loop step #8');
 
         // era points and frecuency of payouts
         const eraPointsHistory: any = [];
@@ -559,8 +549,6 @@ const crawler = async (delayedStart: boolean) => {
           eraPointsHistoryValidator > eraPointsAverage ? 2 : 0;
         const payoutRating = getPayoutRating(config, payoutHistory);
 
-        logger.debug(loggerOptions, 'Validator loop step #9');
-
         // stake
         const selfStake = active
           ? new BigNumber(validator.exposure.own.toString())
@@ -572,8 +560,6 @@ const crawler = async (delayedStart: boolean) => {
           ? totalStake.minus(selfStake)
           : new BigNumber(0);
 
-        logger.debug(loggerOptions, 'Validator loop step #10');
-
         // performance
         if (performance > maxPerformance) {
           maxPerformance = performance;
@@ -583,8 +569,6 @@ const crawler = async (delayedStart: boolean) => {
         }
 
         const showClusterMember = true;
-
-        logger.debug(loggerOptions, 'Validator loop step #11');
 
         // VRC score
         const totalRating =
@@ -613,6 +597,8 @@ const crawler = async (delayedStart: boolean) => {
           stashParentCreatedAtBlock,
           addressCreationRating,
           controllerAddress,
+          cmixId,
+          location,
           includedThousandValidators,
           thousandValidator,
           partOfCluster,
@@ -863,20 +849,20 @@ const crawler = async (delayedStart: boolean) => {
     logger.debug(loggerOptions, 'Disconnecting from API');
     await api
       .disconnect()
-      .catch((error) =>
+      .catch((error: any) =>
         logger.error(
           loggerOptions,
-          `API disconnect error: ${JSON.stringify(error)}`,
+          `API disconnect error: ${JSON.stringify(error.message)}`,
         ),
       );
 
     logger.debug(loggerOptions, 'Disconnecting from DB');
     await client
       .end()
-      .catch((error) =>
+      .catch((error: any) =>
         logger.error(
           loggerOptions,
-          `DB disconnect error: ${JSON.stringify(error)}`,
+          `DB disconnect error: ${JSON.stringify(error.message)}`,
         ),
       );
 
