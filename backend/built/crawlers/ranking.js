@@ -270,7 +270,7 @@ const crawler = async (delayedStart) => {
             // controller
             const controllerAddress = validator.info.controllerId.toString();
             // TODO: store node id
-            const nodeId = validator.info.stakingLedger.cmixId;
+            const nodeId = validator.info.stakingLedger.cmixId.toString();
             logger_1.logger.debug(loggerOptions, 'nodeId:', nodeId);
             // cmix id
             const cmixId = validator.info.stakingLedger.cmixId.isSome ? (0, staking_1.transformCmixId)(validator.info.stakingLedger.cmixId) : '';

@@ -23,12 +23,17 @@ async function main() {
     const api = await api_1.ApiPromise.create({ provider });
     /// Get waiting nodes info
     const waiting = await api.derive.staking.waitingInfo(stakingQueryFlags);
+    const intentions = await Promise.all(waiting.info.map((intention) => api.derive.accounts.info(intention.accountId).then(({ identity }) => ({
+        info: intention,
+        identity,
+        active: false,
+    }))));
     // Get staking info for active validators
     // const validatorAddresses = await api.query.session.validators();
     // const validators: DeriveStakingQueryWithCmixId[] = await api.derive.staking.queryMulti(validatorAddresses, stakingQueryFlags);
     //console.log(JSON.stringify(waiting.info[0].stashId, null, 2));
     //console.log(JSON.stringify(validators[0], null, 2));
-    waiting.info.map((validator) => console.log(transformCmixAddress(validator.stakingLedger.cmixId)));
-    waiting.info.map((validator) => console.log(validator.stakingLedger.cmixId.toString()));
+    intentions.map((validator) => console.log(transformCmixAddress(validator.info.stakingLedger.cmixId)));
+    intentions.map((validator) => console.log(validator.info.stakingLedger.cmixId.isSome ? validator.info.stakingLedger.cmixId : ''));
 }
 main().catch(console.error).finally(() => process.exit());
