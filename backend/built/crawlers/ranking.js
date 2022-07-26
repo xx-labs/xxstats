@@ -270,8 +270,8 @@ const crawler = async (delayedStart) => {
             // controller
             const controllerAddress = validator.info.controllerId.toString();
             // TODO: store node id
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const nodeId = validator.info.stakingLedger.cmixId;
+            logger_1.logger.debug(loggerOptions, 'nodeId:', nodeId);
             // cmix id
             const cmixId = validator.info.stakingLedger.cmixId.isSome ? (0, staking_1.transformCmixId)(validator.info.stakingLedger.cmixId) : '';
             logger_1.logger.debug(loggerOptions, 'cmixId:', cmixId);
