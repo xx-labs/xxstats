@@ -15,7 +15,7 @@ import {
   insertRankingValidator,
   transformCmixId,
 } from '../lib/staking';
-import { wait, getRandom } from '../lib/utils';
+import { wait, getRandom, transformCmixAddress } from '../lib/utils';
 import { BigNumber } from 'bignumber.js';
 import { backendConfig } from '../backend.config';
 import { CrawlerConfig, StakingQueries, ValidatorOrIntention } from '../lib/types';
@@ -365,8 +365,12 @@ const crawler = async (delayedStart: boolean) => {
         // controller
         const controllerAddress = validator.info.controllerId.toString();
 
+        // TODO: store node id
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const nodeId = validator.info.stakingLedger.cmixId;
+
         // cmix id
-        const cmixId = validator.info.stakingLedger.cmixId?.isSome ? transformCmixId(validator.info.stakingLedger.cmixId.unwrap()) : '';
+        const cmixId = validator.info.stakingLedger.cmixId.isSome ? transformCmixId(validator.info.stakingLedger.cmixId) : '';
 
         logger.debug(loggerOptions, 'cmixId:', cmixId);
 

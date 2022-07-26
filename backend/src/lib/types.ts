@@ -72,9 +72,11 @@ export interface LedgerWithCmixId extends PalletStakingStakingLedger {
 }
 export interface DeriveStakingQueryWithCmixId extends DeriveStakingQuery {
   stakingLedger: LedgerWithCmixId,
+  cmixId?: string,
 }
 export interface DeriveStakingWaitingWithCmixId extends DeriveStakingWaiting {
   info: DeriveStakingQueryWithCmixId[],
+  cmixId?: string,
 }
 export type StakingQueries = [
   { block: Block },

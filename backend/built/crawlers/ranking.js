@@ -222,7 +222,7 @@ const crawler = async (delayedStart) => {
         logger_1.logger.debug(loggerOptions, 'Starting validator loop...');
         let ranking = validators
             .map((validator) => {
-            var _a, _b, _c;
+            var _a, _b;
             // active
             const { active } = validator;
             const activeRating = active ? 2 : 0;
@@ -269,8 +269,11 @@ const crawler = async (delayedStart) => {
             const includedThousandValidators = false;
             // controller
             const controllerAddress = validator.info.controllerId.toString();
+            // TODO: store node id
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            const nodeId = validator.info.stakingLedger.cmixId;
             // cmix id
-            const cmixId = ((_a = validator.info.stakingLedger.cmixId) === null || _a === void 0 ? void 0 : _a.isSome) ? (0, staking_1.transformCmixId)(validator.info.stakingLedger.cmixId.unwrap()) : '';
+            const cmixId = validator.info.stakingLedger.cmixId.isSome ? (0, staking_1.transformCmixId)(validator.info.stakingLedger.cmixId) : '';
             logger_1.logger.debug(loggerOptions, 'cmixId:', cmixId);
             // TODO: location
             const location = '';
@@ -308,11 +311,11 @@ const crawler = async (delayedStart) => {
             const commissionHistory = (0, staking_1.getCommissionHistory)(validator.info.accountId.toString(), erasPreferences);
             const commissionRating = (0, staking_1.getCommissionRating)(commission, commissionHistory);
             // governance
-            const councilBacking = ((_b = validator.identity) === null || _b === void 0 ? void 0 : _b.parent)
+            const councilBacking = ((_a = validator.identity) === null || _a === void 0 ? void 0 : _a.parent)
                 ? councilVotes.some((vote) => vote[0].toString() === validator.info.accountId.toString()) ||
                     councilVotes.some((vote) => vote[0].toString() === validator.identity.parent.toString())
                 : councilVotes.some((vote) => vote[0].toString() === validator.info.accountId.toString());
-            const activeInGovernance = ((_c = validator.identity) === null || _c === void 0 ? void 0 : _c.parent)
+            const activeInGovernance = ((_b = validator.identity) === null || _b === void 0 ? void 0 : _b.parent)
                 ? participateInGovernance.includes(validator.info.accountId.toString()) ||
                     participateInGovernance.includes(validator.identity.parent.toString())
                 : participateInGovernance.includes(validator.info.accountId.toString());

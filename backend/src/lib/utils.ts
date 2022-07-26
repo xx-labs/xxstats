@@ -1,3 +1,6 @@
+import type { Option } from '@polkadot/types-codec';
+import type { H256 } from '@polkadot/types/interfaces/runtime';
+
 export const shortHash = (hash: string): string =>
   `${hash.substring(0, 6)}…${hash.substring(hash.length - 4, hash.length)}`;
 
@@ -29,3 +32,12 @@ export const reverseRange = (
 // Return filled array from range
 export const range = (start: number, stop: number, step: number): number[] =>
   Array.from({ length: (stop - start) / step + 1 }, (_, i) => start + i * step);
+
+//
+// xx.network related utils
+//
+export const toByteArray = (nodeId: H256) => Buffer.concat([nodeId.toU8a(true), new Uint8Array([2])]);
+
+export const toBase64 = (cmixId: Buffer) => cmixId.toString('base64');
+
+export const transformCmixAddress = (nodeId?: Option<H256>): string | undefined => (nodeId?.isSome && Number(nodeId) !== 0) ? toBase64(toByteArray(nodeId.unwrap())) : '';
