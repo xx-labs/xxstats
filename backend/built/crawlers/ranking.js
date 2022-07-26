@@ -129,9 +129,6 @@ const crawler = async (delayedStart) => {
         }
         logger_1.logger.debug(loggerOptions, 'Step #7');
         validators = await Promise.all(validatorAddresses.map((authorityId) => api.derive.staking.query(authorityId, stakingQueryFlags).then((validator) => ({ info: validator }))));
-        // debug
-        validators.map((validator) => console.log((0, utils_1.transformCmixAddress)(validator.info.stakingLedger.cmixId)));
-        validators.map((validator) => console.log(validator.info.stakingLedger.cmixId.isSome ? validator.info.stakingLedger.cmixId : ''));
         logger_1.logger.debug(loggerOptions, 'Step #8');
         validators = await Promise.all(validators.map((validator) => api.derive.accounts.info(validator.info.accountId).then(({ identity }) => ({
             info: validator.info,
@@ -211,7 +208,7 @@ const crawler = async (delayedStart) => {
         // Merge validators and intentions
         const validatorsAndIntentions = validators.concat(intentions);
         // debug
-        validatorsAndIntentions.map((validator) => logger_1.logger.debug(loggerOptions, JSON.stringify(validator)));
+        // validatorsAndIntentions.map((validator: ValidatorOrIntention) => logger.debug(loggerOptions, JSON.stringify(validator)));
         // stash & identity parent address creation block
         const stashAddressesCreation = [];
         for (const validator of validatorsAndIntentions) {
@@ -223,7 +220,7 @@ const crawler = async (delayedStart) => {
             }
         }
         logger_1.logger.debug(loggerOptions, 'Starting validator loop...');
-        let ranking = validators
+        let ranking = validatorsAndIntentions
             .map((validator) => {
             var _a, _b;
             // active
