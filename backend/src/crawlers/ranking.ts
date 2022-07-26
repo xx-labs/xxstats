@@ -351,9 +351,9 @@ const crawler = async (delayedStart: boolean) => {
         // dashboard info
         const dashboardInfo = dashboardApiInfo.find(
           ({ walletAddress }: { walletAddress: any }) => walletAddress === stashAddress,
-        ) || '';
+        ) || {};
 
-        logger.info(loggerOptions, `dashboardInfo: ${dashboardInfo}`);
+        logger.info(loggerOptions, `dashboardInfo: ${JSON.stringify(dashboardInfo)}`);
 
         // thousand validator
         const thousandValidator = '';
