@@ -26,7 +26,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.transformCmixId = exports.insertEraValidatorStatsAvg = exports.getLastEraInDb = exports.getAddressCreation = exports.insertEraValidatorStats = exports.insertRankingValidator = exports.addNewFeaturedValidator = exports.getClusterInfo = exports.getPayoutRating = exports.getCommissionRating = exports.getCommissionHistory = exports.parseIdentity = exports.getIdentityRating = exports.subIdentity = exports.getClusterName = exports.getName = exports.isVerifiedIdentity = exports.getThousandValidators = exports.getDashboardApiInfo = void 0;
+exports.transformCmixId = exports.insertEraValidatorStatsAvg = exports.getLastEraInDb = exports.getAddressCreation = exports.insertEraValidatorStats = exports.insertRankingValidator = exports.addNewFeaturedValidator = exports.getClusterInfo = exports.getPayoutRating = exports.getCommissionRating = exports.getCommissionHistory = exports.parseIdentity = exports.getIdentityRating = exports.subIdentity = exports.getClusterName = exports.getName = exports.isVerifiedIdentity = exports.getDashboardApiInfo = void 0;
 // @ts-check
 const Sentry = __importStar(require("@sentry/node"));
 const axios_1 = __importDefault(require("axios"));
@@ -52,18 +52,6 @@ const getDashboardApiInfo = async (loggerOptions) => {
     }
 };
 exports.getDashboardApiInfo = getDashboardApiInfo;
-const getThousandValidators = async (loggerOptions) => {
-    try {
-        const response = await axios_1.default.get('https://kusama.w3f.community/candidates');
-        return response.data;
-    }
-    catch (error) {
-        logger_1.logger.error(loggerOptions, `Error fetching Thousand Validator Program stats: ${JSON.stringify(error)}`);
-        Sentry.captureException(error);
-        return [];
-    }
-};
-exports.getThousandValidators = getThousandValidators;
 const isVerifiedIdentity = (identity) => {
     if (identity.judgements.length === 0) {
         return false;

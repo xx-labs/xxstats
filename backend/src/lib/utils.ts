@@ -1,6 +1,3 @@
-import type { Option } from '@polkadot/types-codec';
-import type { H256 } from '@polkadot/types/interfaces/runtime';
-
 export const shortHash = (hash: string): string =>
   `${hash.substring(0, 6)}…${hash.substring(hash.length - 4, hash.length)}`;
 
