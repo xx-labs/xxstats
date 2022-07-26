@@ -31,8 +31,9 @@ async function main() {
   // const validatorAddresses = await api.query.session.validators();
   // const validators: DeriveStakingQueryWithCmixId[] = await api.derive.staking.queryMulti(validatorAddresses, stakingQueryFlags);
 
-  console.log(JSON.stringify(waiting.info[0].stashId, null, 2));
+  //console.log(JSON.stringify(waiting.info[0].stashId, null, 2));
   //console.log(JSON.stringify(validators[0], null, 2));
+  waiting.info.map((validator) => console.log(JSON.stringify(validator.exposure, null, 2)));
 }
 
 main().catch(console.error).finally(() => process.exit());

@@ -130,8 +130,8 @@ const crawler = async (delayedStart) => {
         logger_1.logger.debug(loggerOptions, 'Step #7');
         validators = await Promise.all(validatorAddresses.map((authorityId) => api.derive.staking.query(authorityId, stakingQueryFlags).then((validator) => ({ info: validator }))));
         logger_1.logger.debug(loggerOptions, 'Step #8');
-        validators = await Promise.all(validators.map((validator) => api.derive.accounts.info(validator.accountId).then(({ identity }) => ({
-            info: validator,
+        validators = await Promise.all(validators.map((validator) => api.derive.accounts.info(validator.info.accountId).then(({ identity }) => ({
+            info: validator.info,
             identity,
             active: true,
         }))));

@@ -162,9 +162,9 @@ const crawler = async (delayedStart: boolean) => {
 
     logger.debug(loggerOptions, 'Step #8');
     validators = await Promise.all(
-      validators.map((validator: any) =>
-        api.derive.accounts.info(validator.accountId).then(({ identity }) => ({
-          info: validator,
+      validators.map((validator: ValidatorOrIntention) =>
+        api.derive.accounts.info(validator.info.accountId).then(({ identity }) => ({
+          info: validator.info,
           identity,
           active: true,
         })),
@@ -173,7 +173,7 @@ const crawler = async (delayedStart: boolean) => {
 
     logger.debug(loggerOptions, 'Step #9');
     intentions = await Promise.all(
-      waitingInfo.info.map((intention: any) =>
+      waitingInfo.info.map((intention) =>
         api.derive.accounts.info(intention.accountId).then(({ identity }) => ({
           info: intention,
           identity,
