@@ -32,9 +32,9 @@ export const getDashboardApiInfo = async (
     const response = await axios.get(backendConfig.dashboardApiUrl);
     logger.error(
       loggerOptions,
-      `Response: ${JSON.stringify(response, null, 2)}`,
+      `Response: ${JSON.stringify(response.data.nodes, null, 2)}`,
     );
-    return response.data;
+    return response.data.nodes;
   } catch (error: any) {
     logger.error(
       loggerOptions,

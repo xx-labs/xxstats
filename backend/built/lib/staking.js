@@ -42,8 +42,8 @@ const getDashboardApiInfo = async (loggerOptions) => {
     try {
         logger_1.logger.error(loggerOptions, `Fetching dashboard API info from ${backend_config_1.backendConfig.dashboardApiUrl}`);
         const response = await axios_1.default.get(backend_config_1.backendConfig.dashboardApiUrl);
-        logger_1.logger.error(loggerOptions, `Response: ${JSON.stringify(response, null, 2)}`);
-        return response.data;
+        logger_1.logger.error(loggerOptions, `Response: ${JSON.stringify(response.data.nodes, null, 2)}`);
+        return response.data.nodes;
     }
     catch (error) {
         logger_1.logger.error(loggerOptions, `Error fetching dashboard API info: ${JSON.stringify(error.message)}`);
