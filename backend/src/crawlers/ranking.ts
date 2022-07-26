@@ -353,8 +353,6 @@ const crawler = async (delayedStart: boolean) => {
           ({ walletAddress }: { walletAddress: any }) => walletAddress === stashAddress,
         ) || {};
 
-        logger.info(loggerOptions, `dashboardInfo: ${JSON.stringify(dashboardInfo)}`);
-
         // thousand validator
         const thousandValidator = '';
         const includedThousandValidators = false;
