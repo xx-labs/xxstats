@@ -128,16 +128,16 @@ const crawler = async (delayedStart) => {
             erasExposure = erasExposure.concat(eraExposure);
         }
         logger_1.logger.debug(loggerOptions, 'Step #7');
-        validators = await Promise.all(validatorAddresses.map((authorityId) => api.derive.staking.query(authorityId, stakingQueryFlags)));
+        validators = await Promise.all(validatorAddresses.map((authorityId) => api.derive.staking.query(authorityId, stakingQueryFlags).then((validator) => ({ info: validator }))));
         logger_1.logger.debug(loggerOptions, 'Step #8');
         validators = await Promise.all(validators.map((validator) => api.derive.accounts.info(validator.accountId).then(({ identity }) => ({
-            ...validator,
+            info: validator,
             identity,
             active: true,
         }))));
         logger_1.logger.debug(loggerOptions, 'Step #9');
         intentions = await Promise.all(waitingInfo.info.map((intention) => api.derive.accounts.info(intention.accountId).then(({ identity }) => ({
-            ...intention,
+            info: intention,
             identity,
             active: false,
         }))));
@@ -168,7 +168,7 @@ const crawler = async (delayedStart) => {
         // eslint-disable-next-line
         for (const validator of validators) {
             // eslint-disable-next-line
-            for (const nominatorStake of validator.exposure.others) {
+            for (const nominatorStake of validator.info.exposure.others) {
                 nominatorStakes.push(nominatorStake.value);
             }
         }
@@ -206,13 +206,13 @@ const crawler = async (delayedStart) => {
             votes.forEach(({ accountId }) => participateInGovernance.push(accountId.toString()));
         });
         // Merge validators and intentions
-        validators = validators.concat(intentions);
+        const validatorsAndIntentions = validators.concat(intentions);
         // debug
-        validators.map((validator) => logger_1.logger.debug(loggerOptions, JSON.stringify(validator)));
+        validatorsAndIntentions.map((validator) => logger_1.logger.debug(loggerOptions, JSON.stringify(validator)));
         // stash & identity parent address creation block
         const stashAddressesCreation = [];
-        for (const validator of validators) {
-            const stashAddress = validator.stashId.toString();
+        for (const validator of validatorsAndIntentions) {
+            const stashAddress = validator.info.stashId.toString();
             stashAddressesCreation[stashAddress] = await (0, staking_1.getAddressCreation)(client, stashAddress, loggerOptions);
             if (validator.identity.parent) {
                 const stashParentAddress = validator.identity.parent.toString();
@@ -222,12 +222,12 @@ const crawler = async (delayedStart) => {
         logger_1.logger.debug(loggerOptions, 'Starting validator loop...');
         let ranking = validators
             .map((validator) => {
-            var _a, _b;
+            var _a, _b, _c;
             // active
             const { active } = validator;
             const activeRating = active ? 2 : 0;
             // stash
-            const stashAddress = validator.stashId.toString();
+            const stashAddress = validator.info.stashId.toString();
             // address creation
             let addressCreationRating = 0;
             const stashCreatedAtBlock = parseInt(stashAddressesCreation[stashAddress], 10);
@@ -268,9 +268,9 @@ const crawler = async (delayedStart) => {
             const thousandValidator = '';
             const includedThousandValidators = false;
             // controller
-            const controllerAddress = validator.controllerId.toString();
+            const controllerAddress = validator.info.controllerId.toString();
             // cmix id
-            const cmixId = (validator === null || validator === void 0 ? void 0 : validator.cmixId) ? validator === null || validator === void 0 ? void 0 : validator.cmixId.toString() : '';
+            const cmixId = ((_a = validator.info.stakingLedger.cmixId) === null || _a === void 0 ? void 0 : _a.isSome) ? (0, staking_1.transformCmixId)(validator.info.stakingLedger.cmixId.unwrap()) : '';
             logger_1.logger.debug(loggerOptions, 'cmixId:', cmixId);
             // TODO: location
             const location = '';
@@ -287,35 +287,35 @@ const crawler = async (delayedStart) => {
             // nominators
             // eslint-disable-next-line
             const nominators = active
-                ? validator.exposure.others.length
-                : allNominations.filter((nomination) => nomination.targets.some((target) => target === validator.accountId.toString())).length;
+                ? validator.info.exposure.others.length
+                : allNominations.filter((nomination) => nomination.targets.some((target) => target === validator.info.accountId.toString())).length;
             const nominatorsRating = nominators > 0 &&
                 nominators <= maxNominatorRewardedPerValidator.toNumber()
                 ? 2
                 : 0;
             const nominations = active
-                ? validator.exposure.others
-                : allNominations.filter((nomination) => nomination.targets.some((target) => target === validator.accountId.toString()));
+                ? validator.info.exposure.others
+                : allNominations.filter((nomination) => nomination.targets.some((target) => target === validator.info.accountId.toString()));
             // slashes
             const slashes = erasSlashes.filter(
             // eslint-disable-next-line
-            ({ validators }) => validators[validator.accountId.toString()]) || [];
+            ({ validators }) => validators[validator.info.accountId.toString()]) || [];
             const slashed = slashes.length > 0;
             const slashRating = slashed ? 0 : 2;
             // commission
-            const commission = parseInt(validator.validatorPrefs.commission.toString(), 10) /
+            const commission = parseInt(validator.info.validatorPrefs.commission.toString(), 10) /
                 10000000;
-            const commissionHistory = (0, staking_1.getCommissionHistory)(validator.accountId, erasPreferences);
+            const commissionHistory = (0, staking_1.getCommissionHistory)(validator.info.accountId.toString(), erasPreferences);
             const commissionRating = (0, staking_1.getCommissionRating)(commission, commissionHistory);
             // governance
-            const councilBacking = ((_a = validator.identity) === null || _a === void 0 ? void 0 : _a.parent)
-                ? councilVotes.some((vote) => vote[0].toString() === validator.accountId.toString()) ||
+            const councilBacking = ((_b = validator.identity) === null || _b === void 0 ? void 0 : _b.parent)
+                ? councilVotes.some((vote) => vote[0].toString() === validator.info.accountId.toString()) ||
                     councilVotes.some((vote) => vote[0].toString() === validator.identity.parent.toString())
-                : councilVotes.some((vote) => vote[0].toString() === validator.accountId.toString());
-            const activeInGovernance = ((_b = validator.identity) === null || _b === void 0 ? void 0 : _b.parent)
-                ? participateInGovernance.includes(validator.accountId.toString()) ||
+                : councilVotes.some((vote) => vote[0].toString() === validator.info.accountId.toString());
+            const activeInGovernance = ((_c = validator.identity) === null || _c === void 0 ? void 0 : _c.parent)
+                ? participateInGovernance.includes(validator.info.accountId.toString()) ||
                     participateInGovernance.includes(validator.identity.parent.toString())
-                : participateInGovernance.includes(validator.accountId.toString());
+                : participateInGovernance.includes(validator.info.accountId.toString());
             let governanceRating = 0;
             if (councilBacking && activeInGovernance) {
                 governanceRating = 3;
@@ -343,7 +343,7 @@ const crawler = async (delayedStart) => {
                         era: new bignumber_js_1.BigNumber(era.toString()).toString(10),
                         points,
                     });
-                    if (validator.stakingLedger.claimedRewards.includes(era)) {
+                    if (validator.info.stakingLedger.claimedRewards.includes(era)) {
                         eraPayoutState = 'paid';
                     }
                     else {
@@ -401,10 +401,10 @@ const crawler = async (delayedStart) => {
             const payoutRating = (0, staking_1.getPayoutRating)(config, payoutHistory);
             // stake
             const selfStake = active
-                ? new bignumber_js_1.BigNumber(validator.exposure.own.toString())
-                : new bignumber_js_1.BigNumber(validator.stakingLedger.total.toString());
+                ? new bignumber_js_1.BigNumber(validator.info.exposure.own.toString())
+                : new bignumber_js_1.BigNumber(validator.info.stakingLedger.total.toString());
             const totalStake = active
-                ? new bignumber_js_1.BigNumber(validator.exposure.total.toString())
+                ? new bignumber_js_1.BigNumber(validator.info.exposure.total.toString())
                 : selfStake;
             const otherStake = active
                 ? totalStake.minus(selfStake)

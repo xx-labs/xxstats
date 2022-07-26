@@ -2,8 +2,9 @@
 //
 // docker exec backend_crawler_1 node /usr/app/crawler/built/snippets/getValidatorStakingInfo.js
 //
+Object.defineProperty(exports, "__esModule", { value: true });
 // Required imports
-const { ApiPromise, WsProvider } = require('@polkadot/api');
+const api_1 = require("@polkadot/api");
 async function main() {
     const wsProvider = 'ws://substrate-node:9944';
     const authorityId = '6YJNRiCq8za9aYDFL3nzDZxsE72CqciVDptvirLesDBk4Fks';
@@ -16,9 +17,9 @@ async function main() {
         withPrefs: true,
     };
     // Initialise the provider to connect to the remote node
-    const provider = new WsProvider(wsProvider);
+    const provider = new api_1.WsProvider(wsProvider);
     // Create the API and wait until ready
-    const api = await ApiPromise.create({ provider });
+    const api = await api_1.ApiPromise.create({ provider });
     // Retrieve validator staking information via rpc call
     const validatorStakingInfo = await api.derive.staking.query(authorityId, stakingQueryFlags);
     console.log(JSON.stringify(validatorStakingInfo, null, 2));

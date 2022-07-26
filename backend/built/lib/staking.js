@@ -26,7 +26,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.insertEraValidatorStatsAvg = exports.getLastEraInDb = exports.getAddressCreation = exports.insertEraValidatorStats = exports.insertRankingValidator = exports.addNewFeaturedValidator = exports.getClusterInfo = exports.getPayoutRating = exports.getCommissionRating = exports.getCommissionHistory = exports.parseIdentity = exports.getIdentityRating = exports.subIdentity = exports.getClusterName = exports.getName = exports.isVerifiedIdentity = exports.getThousandValidators = void 0;
+exports.transformCmixId = exports.insertEraValidatorStatsAvg = exports.getLastEraInDb = exports.getAddressCreation = exports.insertEraValidatorStats = exports.insertRankingValidator = exports.addNewFeaturedValidator = exports.getClusterInfo = exports.getPayoutRating = exports.getCommissionRating = exports.getCommissionHistory = exports.parseIdentity = exports.getIdentityRating = exports.subIdentity = exports.getClusterName = exports.getName = exports.isVerifiedIdentity = exports.getThousandValidators = void 0;
 // @ts-check
 const Sentry = __importStar(require("@sentry/node"));
 const axios_1 = __importDefault(require("axios"));
@@ -573,3 +573,7 @@ const insertEraValidatorStatsAvg = async (client, eraIndex, loggerOptions) => {
     }
 };
 exports.insertEraValidatorStatsAvg = insertEraValidatorStatsAvg;
+const transformCmixId = (data) => {
+    return Buffer.concat([data.toU8a(true), new Uint8Array([2])]).toString('base64');
+};
+exports.transformCmixId = transformCmixId;

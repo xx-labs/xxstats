@@ -652,3 +652,7 @@ export const insertEraValidatorStatsAvg = async (
     }
   }
 };
+
+export const transformCmixId = (data: any): string => {
+  return Buffer.concat([data.toU8a(true), new Uint8Array([2])]).toString('base64');
+};

@@ -4,7 +4,6 @@ import { getClient, dbQuery } from '../lib/db';
 import { getPolkadotAPI, isNodeSynced } from '../lib/chain';
 import {
   getLastEraInDb,
-  // getThousandValidators,
   getAddressCreation,
   parseIdentity,
   getClusterInfo,
@@ -14,12 +13,12 @@ import {
   insertEraValidatorStats,
   insertEraValidatorStatsAvg,
   insertRankingValidator,
-  // addNewFeaturedValidator,
+  transformCmixId,
 } from '../lib/staking';
 import { wait, getRandom } from '../lib/utils';
 import { BigNumber } from 'bignumber.js';
 import { backendConfig } from '../backend.config';
-import { CrawlerConfig } from '../lib/types';
+import { CrawlerConfig, StakingQueries, ValidatorOrIntention } from '../lib/types';
 import { logger } from '../lib/logger';
 
 const crawlerName = 'ranking';
@@ -68,8 +67,8 @@ const crawler = async (delayedStart: boolean) => {
   };
   const minMaxEraPerformance: any = [];
   const participateInGovernance: any = [];
-  let validators: any = [];
-  let intentions = [];
+  let validators: ValidatorOrIntention[] = [];
+  let intentions: ValidatorOrIntention[] = [];
   let maxPerformance = 0;
   let minPerformance = 0;
 
@@ -116,7 +115,7 @@ const crawler = async (delayedStart: boolean) => {
       councilVotes,
       proposals,
       referendums,
-    ] = await Promise.all([
+    ]: StakingQueries = await Promise.all([
       api.rpc.chain.getBlock(),
       api.query.session.validators(),
       api.derive.staking.waitingInfo(stakingQueryFlags),
@@ -157,7 +156,7 @@ const crawler = async (delayedStart: boolean) => {
     logger.debug(loggerOptions, 'Step #7');
     validators = await Promise.all(
       validatorAddresses.map((authorityId: any) =>
-        api.derive.staking.query(authorityId, stakingQueryFlags),
+        api.derive.staking.query(authorityId, stakingQueryFlags).then((validator) => ({ info: validator })),
       ),
     );
 
@@ -165,7 +164,7 @@ const crawler = async (delayedStart: boolean) => {
     validators = await Promise.all(
       validators.map((validator: any) =>
         api.derive.accounts.info(validator.accountId).then(({ identity }) => ({
-          ...validator,
+          info: validator,
           identity,
           active: true,
         })),
@@ -174,9 +173,9 @@ const crawler = async (delayedStart: boolean) => {
 
     logger.debug(loggerOptions, 'Step #9');
     intentions = await Promise.all(
-      waitingInfo.info.map((intention) =>
+      waitingInfo.info.map((intention: any) =>
         api.derive.accounts.info(intention.accountId).then(({ identity }) => ({
-          ...intention,
+          info: intention,
           identity,
           active: false,
         })),
@@ -215,7 +214,7 @@ const crawler = async (delayedStart: boolean) => {
     // eslint-disable-next-line
     for (const validator of validators) {
       // eslint-disable-next-line
-      for (const nominatorStake of validator.exposure.others) {
+      for (const nominatorStake of validator.info.exposure.others) {
         nominatorStakes.push(nominatorStake.value);
       }
     }
@@ -285,15 +284,15 @@ const crawler = async (delayedStart: boolean) => {
     });
 
     // Merge validators and intentions
-    validators = validators.concat(intentions);
+    const validatorsAndIntentions: ValidatorOrIntention[]  = validators.concat(intentions);
 
     // debug
-    validators.map((validator: any) => logger.debug(loggerOptions, JSON.stringify(validator)));
+    validatorsAndIntentions.map((validator: ValidatorOrIntention) => logger.debug(loggerOptions, JSON.stringify(validator)));
 
     // stash & identity parent address creation block
     const stashAddressesCreation: any = [];
-    for (const validator of validators) {
-      const stashAddress: string = validator.stashId.toString();
+    for (const validator of validatorsAndIntentions) {
+      const stashAddress: string = validator.info.stashId.toString();
       stashAddressesCreation[stashAddress] = await getAddressCreation(
         client,
         stashAddress,
@@ -312,13 +311,13 @@ const crawler = async (delayedStart: boolean) => {
     logger.debug(loggerOptions, 'Starting validator loop...');
 
     let ranking = validators
-      .map((validator: any) => {
+      .map((validator: ValidatorOrIntention) => {
         // active
         const { active } = validator;
         const activeRating = active ? 2 : 0;
 
         // stash
-        const stashAddress = validator.stashId.toString();
+        const stashAddress = validator.info.stashId.toString();
 
         // address creation
         let addressCreationRating = 0;
@@ -364,10 +363,10 @@ const crawler = async (delayedStart: boolean) => {
         const includedThousandValidators = false;
 
         // controller
-        const controllerAddress = validator.controllerId.toString();
+        const controllerAddress = validator.info.controllerId.toString();
 
         // cmix id
-        const cmixId = validator?.cmixId ? validator?.cmixId.toString() : '';
+        const cmixId = validator.info.stakingLedger.cmixId?.isSome ? transformCmixId(validator.info.stakingLedger.cmixId.unwrap()) : '';
 
         logger.debug(loggerOptions, 'cmixId:', cmixId);
 
@@ -394,10 +393,10 @@ const crawler = async (delayedStart: boolean) => {
         // nominators
         // eslint-disable-next-line
         const nominators = active
-          ? validator.exposure.others.length
+          ? validator.info.exposure.others.length
           : allNominations.filter((nomination) =>
             nomination.targets.some(
-              (target: any) => target === validator.accountId.toString(),
+              (target: any) => target === validator.info.accountId.toString(),
             ),
           ).length;
         const nominatorsRating =
@@ -406,10 +405,10 @@ const crawler = async (delayedStart: boolean) => {
             ? 2
             : 0;
         const nominations = active
-          ? validator.exposure.others
+          ? validator.info.exposure.others
           : allNominations.filter((nomination) =>
             nomination.targets.some(
-              (target: any) => target === validator.accountId.toString(),
+              (target: any) => target === validator.info.accountId.toString(),
             ),
           );
 
@@ -418,17 +417,17 @@ const crawler = async (delayedStart: boolean) => {
           erasSlashes.filter(
             // eslint-disable-next-line
             ({ validators }: { validators: any }) =>
-              validators[validator.accountId.toString()],
+              validators[validator.info.accountId.toString()],
           ) || [];
         const slashed = slashes.length > 0;
         const slashRating = slashed ? 0 : 2;
 
         // commission
         const commission =
-          parseInt(validator.validatorPrefs.commission.toString(), 10) /
+          parseInt(validator.info.validatorPrefs.commission.toString(), 10) /
           10000000;
         const commissionHistory = getCommissionHistory(
-          validator.accountId,
+          validator.info.accountId.toString(),
           erasPreferences,
         );
         const commissionRating = getCommissionRating(
@@ -439,21 +438,21 @@ const crawler = async (delayedStart: boolean) => {
         // governance
         const councilBacking = validator.identity?.parent
           ? councilVotes.some(
-            (vote) => vote[0].toString() === validator.accountId.toString(),
+            (vote) => vote[0].toString() === validator.info.accountId.toString(),
           ) ||
             councilVotes.some(
               (vote) =>
                 vote[0].toString() === validator.identity.parent.toString(),
             )
           : councilVotes.some(
-            (vote) => vote[0].toString() === validator.accountId.toString(),
+            (vote) => vote[0].toString() === validator.info.accountId.toString(),
           );
         const activeInGovernance = validator.identity?.parent
-          ? participateInGovernance.includes(validator.accountId.toString()) ||
+          ? participateInGovernance.includes(validator.info.accountId.toString()) ||
             participateInGovernance.includes(
               validator.identity.parent.toString(),
             )
-          : participateInGovernance.includes(validator.accountId.toString());
+          : participateInGovernance.includes(validator.info.accountId.toString());
         let governanceRating = 0;
         if (councilBacking && activeInGovernance) {
           governanceRating = 3;
@@ -483,7 +482,7 @@ const crawler = async (delayedStart: boolean) => {
               era: new BigNumber(era.toString()).toString(10),
               points,
             });
-            if (validator.stakingLedger.claimedRewards.includes(era)) {
+            if (validator.info.stakingLedger.claimedRewards.includes(era)) {
               eraPayoutState = 'paid';
             } else {
               eraPayoutState = 'pending';
@@ -556,10 +555,10 @@ const crawler = async (delayedStart: boolean) => {
 
         // stake
         const selfStake = active
-          ? new BigNumber(validator.exposure.own.toString())
-          : new BigNumber(validator.stakingLedger.total.toString());
+          ? new BigNumber(validator.info.exposure.own.toString())
+          : new BigNumber(validator.info.stakingLedger.total.toString());
         const totalStake = active
-          ? new BigNumber(validator.exposure.total.toString())
+          ? new BigNumber(validator.info.exposure.total.toString())
           : selfStake;
         const otherStake = active
           ? totalStake.minus(selfStake)
