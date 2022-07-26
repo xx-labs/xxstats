@@ -46,7 +46,8 @@ const getDashboardApiInfo = async (loggerOptions) => {
         return response.data;
     }
     catch (error) {
-        logger_1.logger.error(loggerOptions, `Error fetching dashboard API info: ${JSON.stringify(error)}`);
+        logger_1.logger.error(loggerOptions, `Error fetching dashboard API info: ${JSON.stringify(error.message)}`);
+        logger_1.logger.error(loggerOptions, `Error stack: ${JSON.stringify(error.stack)}`);
         Sentry.captureException(error);
         return [];
     }
