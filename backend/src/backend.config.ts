@@ -14,7 +14,6 @@ export const backendConfig = {
   },
   logLevel: process.env.LOG_LEVEL || 'info',
   sentryDSN: process.env.SENTRY_DSN || '',
-  substrateApiSidecar: 'http://sidecar:9090',
   nodeOptions: process.env.NODE_OPTIONS || '',
   crawlers: [
     {
