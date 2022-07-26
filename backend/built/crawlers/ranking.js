@@ -129,6 +129,9 @@ const crawler = async (delayedStart) => {
         }
         logger_1.logger.debug(loggerOptions, 'Step #7');
         validators = await Promise.all(validatorAddresses.map((authorityId) => api.derive.staking.query(authorityId, stakingQueryFlags).then((validator) => ({ info: validator }))));
+        // debug
+        validators.map((validator) => console.log((0, utils_1.transformCmixAddress)(validator.info.stakingLedger.cmixId)));
+        validators.map((validator) => console.log(validator.info.stakingLedger.cmixId.isSome ? validator.info.stakingLedger.cmixId : ''));
         logger_1.logger.debug(loggerOptions, 'Step #8');
         validators = await Promise.all(validators.map((validator) => api.derive.accounts.info(validator.info.accountId).then(({ identity }) => ({
             info: validator.info,

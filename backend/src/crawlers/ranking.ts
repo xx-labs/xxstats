@@ -160,6 +160,10 @@ const crawler = async (delayedStart: boolean) => {
       ),
     );
 
+    // debug
+    validators.map((validator) => console.log(transformCmixAddress(validator.info.stakingLedger.cmixId)));
+    validators.map((validator) => console.log(validator.info.stakingLedger.cmixId.isSome ? validator.info.stakingLedger.cmixId : ''));
+
     logger.debug(loggerOptions, 'Step #8');
     validators = await Promise.all(
       validators.map((validator: ValidatorOrIntention) =>
