@@ -369,7 +369,7 @@ const crawler = async (delayedStart: boolean) => {
         const cmixId = validator.info.stakingLedger.cmixId.isSome ? transformCmixId(validator.info.stakingLedger.cmixId) : '';
 
         // location
-        const location = dashboardInfo ? dashboardInfo.location : '';
+        const location = dashboardInfo?.location ? dashboardInfo.location : '';
 
         // identity
         const { verifiedIdentity, hasSubIdentity, name, identityRating } =

@@ -261,7 +261,7 @@ const crawler = async (delayedStart) => {
             // cmix id
             const cmixId = validator.info.stakingLedger.cmixId.isSome ? (0, staking_1.transformCmixId)(validator.info.stakingLedger.cmixId) : '';
             // location
-            const location = dashboardInfo ? dashboardInfo.location : '';
+            const location = (dashboardInfo === null || dashboardInfo === void 0 ? void 0 : dashboardInfo.location) ? dashboardInfo.location : '';
             // identity
             const { verifiedIdentity, hasSubIdentity, name, identityRating } = (0, staking_1.parseIdentity)(validator.identity);
             const identity = JSON.parse(JSON.stringify(validator.identity));
