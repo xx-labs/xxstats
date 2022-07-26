@@ -161,6 +161,8 @@ CREATE TABLE IF NOT EXISTS ranking (
   address_creation_rating INT NOT NULL,
   controller_address TEXT NOT NULL,
   cmix_id TEXT NOT NULL,
+  cmix_id_hex TEXT NOT NULL,
+  dashboard_info JSON NOT NULL,
   location TEXT NOT NULL,
   included_thousand_validators BOOLEAN NOT NULL,
   thousand_validator TEXT NOT NULL,

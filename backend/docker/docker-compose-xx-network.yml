@@ -123,6 +123,7 @@ services:
       NODE_ENV: 'production'
       NODE_OPTIONS: '--max-old-space-size=8192'
       WS_PROVIDER_URL: 'ws://substrate-node:9944'
+      DASHBOARD_API_URL: 'https://dashboard-api.xx.network/v1/nodes'
       SUBSTRATE_NETWORK: 'xx-network'
       # RANKING_DISABLE: 'true'
       ACTIVE_ACCOUNTS_DISABLE: 'true'

@@ -306,6 +306,8 @@
       - commission_rating
       - controller_address
       - cmix_id
+      - cmix_id_hex
+      - dashboard_info
       - location
       - council_backing
       - dominated

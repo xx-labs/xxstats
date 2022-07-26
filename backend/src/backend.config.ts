@@ -4,6 +4,7 @@ require('dotenv').config();
 export const backendConfig = {
   substrateNetwork: process.env.SUBSTRATE_NETWORK || 'xx-network',
   wsProviderUrl: process.env.WS_PROVIDER_URL || 'ws://substrate-node:9944',
+  dashboardApiUrl: process.env.DASHBOARD_API_URL || 'https://dashboard-api.xx.network/v1/nodes',
   postgresConnParams: {
     user: process.env.POSTGRES_USER || 'xxstats',
     host: process.env.POSTGRES_HOST || 'postgres',

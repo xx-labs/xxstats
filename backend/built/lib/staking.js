@@ -26,7 +26,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.transformCmixId = exports.insertEraValidatorStatsAvg = exports.getLastEraInDb = exports.getAddressCreation = exports.insertEraValidatorStats = exports.insertRankingValidator = exports.addNewFeaturedValidator = exports.getClusterInfo = exports.getPayoutRating = exports.getCommissionRating = exports.getCommissionHistory = exports.parseIdentity = exports.getIdentityRating = exports.subIdentity = exports.getClusterName = exports.getName = exports.isVerifiedIdentity = exports.getThousandValidators = void 0;
+exports.transformCmixId = exports.insertEraValidatorStatsAvg = exports.getLastEraInDb = exports.getAddressCreation = exports.insertEraValidatorStats = exports.insertRankingValidator = exports.addNewFeaturedValidator = exports.getClusterInfo = exports.getPayoutRating = exports.getCommissionRating = exports.getCommissionHistory = exports.parseIdentity = exports.getIdentityRating = exports.subIdentity = exports.getClusterName = exports.getName = exports.isVerifiedIdentity = exports.getThousandValidators = exports.getDashboardApiInfo = void 0;
 // @ts-check
 const Sentry = __importStar(require("@sentry/node"));
 const axios_1 = __importDefault(require("axios"));
@@ -38,6 +38,18 @@ Sentry.init({
     dsn: backend_config_1.backendConfig.sentryDSN,
     tracesSampleRate: 1.0,
 });
+const getDashboardApiInfo = async (loggerOptions) => {
+    try {
+        const response = await axios_1.default.get(backend_config_1.backendConfig.dashboardApiUrl);
+        return response.data;
+    }
+    catch (error) {
+        logger_1.logger.error(loggerOptions, `Error fetching dashboard API info: ${JSON.stringify(error)}`);
+        Sentry.captureException(error);
+        return [];
+    }
+};
+exports.getDashboardApiInfo = getDashboardApiInfo;
 const getThousandValidators = async (loggerOptions) => {
     try {
         const response = await axios_1.default.get('https://kusama.w3f.community/candidates');
@@ -241,6 +253,8 @@ const insertRankingValidator = async (client, validator, blockHeight, startTime,
       address_creation_rating,
       controller_address,
       cmix_id,
+      cmix_id_hex,
+      dashboard_info,
       location,
       included_thousand_validators,
       thousand_validator,
@@ -329,7 +343,9 @@ const insertRankingValidator = async (client, validator, blockHeight, startTime,
       $49,
       $50,
       $51,
-      $52
+      $52,
+      $53,
+      $54
     )
     ON CONFLICT ON CONSTRAINT ranking_pkey 
     DO NOTHING`;
@@ -350,6 +366,8 @@ const insertRankingValidator = async (client, validator, blockHeight, startTime,
         validator.addressCreationRating,
         validator.controllerAddress,
         validator.cmixId,
+        validator.cmixIdHex,
+        validator.dashboardInfo,
         validator.location,
         validator.includedThousandValidators,
         JSON.stringify(validator.thousandValidator),

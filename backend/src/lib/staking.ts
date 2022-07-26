@@ -21,6 +21,24 @@ Sentry.init({
   tracesSampleRate: 1.0,
 });
 
+export const getDashboardApiInfo = async (
+  loggerOptions: LoggerOptions,
+): Promise<any[]> => {
+  try {
+    const response = await axios.get(backendConfig.dashboardApiUrl);
+    return response.data;
+  } catch (error) {
+    logger.error(
+      loggerOptions,
+      `Error fetching dashboard API info: ${JSON.stringify(
+        error,
+      )}`,
+    );
+    Sentry.captureException(error);
+    return [];
+  }
+};
+
 export const getThousandValidators = async (
   loggerOptions: LoggerOptions,
 ): Promise<any[]> => {
@@ -296,6 +314,8 @@ export const insertRankingValidator = async (
       address_creation_rating,
       controller_address,
       cmix_id,
+      cmix_id_hex,
+      dashboard_info,
       location,
       included_thousand_validators,
       thousand_validator,
@@ -384,7 +404,9 @@ export const insertRankingValidator = async (
       $49,
       $50,
       $51,
-      $52
+      $52,
+      $53,
+      $54
     )
     ON CONFLICT ON CONSTRAINT ranking_pkey 
     DO NOTHING`;
@@ -405,6 +427,8 @@ export const insertRankingValidator = async (
     validator.addressCreationRating,
     validator.controllerAddress,
     validator.cmixId,
+    validator.cmixIdHex,
+    validator.dashboardInfo,
     validator.location,
     validator.includedThousandValidators,
     JSON.stringify(validator.thousandValidator),

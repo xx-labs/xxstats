@@ -76,15 +76,9 @@ const crawler = async (delayedStart) => {
         const lastEraInDb = await (0, staking_1.getLastEraInDb)(client, loggerOptions);
         logger_1.logger.debug(loggerOptions, `Last era in DB is ${lastEraInDb}`);
         // thousand validators program data
-        // logger.debug(
-        //   loggerOptions,
-        //   'Fetching thousand validator program validators ...',
-        // );
-        // const thousandValidators = await getThousandValidators(loggerOptions);
-        // logger.debug(
-        //   loggerOptions,
-        //   `Got info of ${thousandValidators.length} validators from Thousand Validators program API`,
-        // );
+        logger_1.logger.debug(loggerOptions, 'Fetching dashboard API data ...');
+        const dashboardApiInfo = await (0, staking_1.getDashboardApiInfo)(loggerOptions);
+        logger_1.logger.debug(loggerOptions, `Got info of ${dashboardApiInfo.length} validators from dashboard API`);
         // chain data
         logger_1.logger.debug(loggerOptions, 'Fetching chain data ...');
         const withActive = false;
@@ -205,13 +199,8 @@ const crawler = async (delayedStart) => {
         referendums.forEach(({ votes }) => {
             votes.forEach(({ accountId }) => participateInGovernance.push(accountId.toString()));
         });
-        // Merge validators and intentions
+        // merge validators and intentions
         const validatorsAndIntentions = validators.concat(intentions);
-        // debug
-        // validatorsAndIntentions.map((validator) => console.log(transformCmixAddress(validator.info.stakingLedger.cmixId)));
-        // validatorsAndIntentions.map((validator) => console.log(validator.info.stakingLedger.cmixId.isSome ? validator.info.stakingLedger.cmixId : ''));
-        // debug
-        // validatorsAndIntentions.map((validator) => logger.debug(loggerOptions, JSON.stringify(validator)));
         // stash & identity parent address creation block
         const stashAddressesCreation = [];
         for (const validator of validatorsAndIntentions) {
@@ -259,27 +248,19 @@ const crawler = async (delayedStart) => {
             else if (stashCreatedAtBlock <= (blockHeight / 4) * 3) {
                 addressCreationRating = 1;
             }
-            // thousand validators program
-            // const includedThousandValidators = thousandValidators.some(
-            //   ({ stash }: { stash: any }) => stash === stashAddress,
-            // );
-            // const thousandValidator = includedThousandValidators
-            //   ? thousandValidators.find(
-            //     ({ stash }: { stash: any }) => stash === stashAddress,
-            //   )
-            //   : '';
+            // dashboard info
+            const dashboardInfo = dashboardApiInfo.find(({ walletAddress }) => walletAddress === stashAddress) || '';
+            // thousand validator
             const thousandValidator = '';
             const includedThousandValidators = false;
             // controller
             const controllerAddress = validator.info.controllerId.toString();
-            // TODO: store node id
-            const nodeId = validator.info.stakingLedger.cmixId.toString();
-            logger_1.logger.debug(loggerOptions, `nodeId: ${nodeId}`);
+            // cmix id in H256 format
+            const cmixIdHex = validator.info.stakingLedger.cmixId.toString();
             // cmix id
             const cmixId = validator.info.stakingLedger.cmixId.isSome ? (0, staking_1.transformCmixId)(validator.info.stakingLedger.cmixId) : '';
-            logger_1.logger.debug(loggerOptions, `cmixId: ${cmixId}`);
-            // TODO: location
-            const location = '';
+            // location
+            const location = dashboardInfo ? dashboardInfo.location : '';
             // identity
             const { verifiedIdentity, hasSubIdentity, name, identityRating } = (0, staking_1.parseIdentity)(validator.identity);
             const identity = JSON.parse(JSON.stringify(validator.identity));
@@ -449,6 +430,8 @@ const crawler = async (delayedStart) => {
                 addressCreationRating,
                 controllerAddress,
                 cmixId,
+                cmixIdHex,
+                dashboardInfo,
                 location,
                 includedThousandValidators,
                 thousandValidator,
