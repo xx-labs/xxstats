@@ -287,8 +287,8 @@ const crawler = async (delayedStart: boolean) => {
     const validatorsAndIntentions: ValidatorOrIntention[]  = validators.concat(intentions);
 
     // debug
-    validatorsAndIntentions.map((validator) => console.log(transformCmixAddress(validator.info.stakingLedger.cmixId)));
-    validatorsAndIntentions.map((validator) => console.log(validator.info.stakingLedger.cmixId.isSome ? validator.info.stakingLedger.cmixId : ''));
+    // validatorsAndIntentions.map((validator) => console.log(transformCmixAddress(validator.info.stakingLedger.cmixId)));
+    // validatorsAndIntentions.map((validator) => console.log(validator.info.stakingLedger.cmixId.isSome ? validator.info.stakingLedger.cmixId : ''));
 
     // debug
     // validatorsAndIntentions.map((validator) => logger.debug(loggerOptions, JSON.stringify(validator)));
@@ -315,7 +315,7 @@ const crawler = async (delayedStart: boolean) => {
     logger.debug(loggerOptions, 'Starting validator loop...');
 
     let ranking = validatorsAndIntentions
-      .map((validator: ValidatorOrIntention) => {
+      .map((validator) => {
         // active
         const { active } = validator;
         const activeRating = active ? 2 : 0;
@@ -371,11 +371,11 @@ const crawler = async (delayedStart: boolean) => {
 
         // TODO: store node id
         const nodeId = validator.info.stakingLedger.cmixId.toString();
-        logger.debug(loggerOptions, 'nodeId:', nodeId);
+        logger.debug(loggerOptions, `nodeId: ${nodeId}`);
 
         // cmix id
         const cmixId = validator.info.stakingLedger.cmixId.isSome ? transformCmixId(validator.info.stakingLedger.cmixId) : '';
-        logger.debug(loggerOptions, 'cmixId:', cmixId);
+        logger.debug(loggerOptions, `cmixId: ${cmixId}`);
 
         // TODO: location
         const location = '';

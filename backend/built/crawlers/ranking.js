@@ -208,8 +208,8 @@ const crawler = async (delayedStart) => {
         // Merge validators and intentions
         const validatorsAndIntentions = validators.concat(intentions);
         // debug
-        validatorsAndIntentions.map((validator) => console.log((0, utils_1.transformCmixAddress)(validator.info.stakingLedger.cmixId)));
-        validatorsAndIntentions.map((validator) => console.log(validator.info.stakingLedger.cmixId.isSome ? validator.info.stakingLedger.cmixId : ''));
+        // validatorsAndIntentions.map((validator) => console.log(transformCmixAddress(validator.info.stakingLedger.cmixId)));
+        // validatorsAndIntentions.map((validator) => console.log(validator.info.stakingLedger.cmixId.isSome ? validator.info.stakingLedger.cmixId : ''));
         // debug
         // validatorsAndIntentions.map((validator) => logger.debug(loggerOptions, JSON.stringify(validator)));
         // stash & identity parent address creation block
@@ -274,10 +274,10 @@ const crawler = async (delayedStart) => {
             const controllerAddress = validator.info.controllerId.toString();
             // TODO: store node id
             const nodeId = validator.info.stakingLedger.cmixId.toString();
-            logger_1.logger.debug(loggerOptions, 'nodeId:', nodeId);
+            logger_1.logger.debug(loggerOptions, `nodeId: ${nodeId}`);
             // cmix id
             const cmixId = validator.info.stakingLedger.cmixId.isSome ? (0, staking_1.transformCmixId)(validator.info.stakingLedger.cmixId) : '';
-            logger_1.logger.debug(loggerOptions, 'cmixId:', cmixId);
+            logger_1.logger.debug(loggerOptions, `cmixId: ${cmixId}`);
             // TODO: location
             const location = '';
             // identity
