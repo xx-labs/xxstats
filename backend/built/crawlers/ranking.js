@@ -250,6 +250,7 @@ const crawler = async (delayedStart) => {
             }
             // dashboard info
             const dashboardInfo = dashboardApiInfo.find(({ walletAddress }) => walletAddress === stashAddress) || '';
+            logger_1.logger.info(loggerOptions, `dashboardInfo: ${dashboardInfo}`);
             // thousand validator
             const thousandValidator = '';
             const includedThousandValidators = false;

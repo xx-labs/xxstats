@@ -30,10 +30,6 @@ export const getDashboardApiInfo = async (
       `Fetching dashboard API info from ${backendConfig.dashboardApiUrl}`,
     );
     const response = await axios.get(backendConfig.dashboardApiUrl);
-    logger.error(
-      loggerOptions,
-      `Response: ${JSON.stringify(response.data.nodes, null, 2)}`,
-    );
     return response.data.nodes;
   } catch (error: any) {
     logger.error(
