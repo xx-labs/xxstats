@@ -81,7 +81,7 @@ const crawler = async (delayedStart: boolean) => {
     const lastEraInDb = await getLastEraInDb(client, loggerOptions);
     logger.debug(loggerOptions, `Last era in DB is ${lastEraInDb}`);
 
-    // thousand validators program data
+    // dashboard API data
     logger.debug(
       loggerOptions,
       'Fetching dashboard API data ...',
