@@ -171,6 +171,10 @@ const crawler = async (delayedStart: boolean) => {
       ),
     );
 
+    // debug
+    validators.map((validator) => console.log(transformCmixAddress(validator.info.stakingLedger.cmixId)));
+    validators.map((validator) => console.log(validator.info.stakingLedger.cmixId.isSome ? validator.info.stakingLedger.cmixId : ''));
+
     logger.debug(loggerOptions, 'Step #9');
     intentions = await Promise.all(
       waitingInfo.info.map((intention) =>
@@ -287,7 +291,7 @@ const crawler = async (delayedStart: boolean) => {
     const validatorsAndIntentions: ValidatorOrIntention[]  = validators.concat(intentions);
 
     // debug
-    // validatorsAndIntentions.map((validator: ValidatorOrIntention) => logger.debug(loggerOptions, JSON.stringify(validator)));
+    validatorsAndIntentions.map((validator: ValidatorOrIntention) => logger.debug(loggerOptions, JSON.stringify(validator)));
 
     // stash & identity parent address creation block
     const stashAddressesCreation: any = [];
