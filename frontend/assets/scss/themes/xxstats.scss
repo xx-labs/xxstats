@@ -86,6 +86,10 @@ $custom-range-thumb-active-bg: $primary2;
 @import 'bootstrap/scss/bootstrap.scss';
 @import 'bootstrap-vue/src/index.scss';
 
+// workaround: nuxt generate doesn't include font awesome styles for some reason
+// so we need to include here
+@import 'https://pro.fontawesome.com/releases/v5.10.0/css/all.css';
+
 // global styles
 @font-face {
   font-family: 'Poppins';
