@@ -132,7 +132,7 @@ export const getCommissionHistory = (
   accountId: string | number,
   erasPreferences: any[],
 ): CommisionHistoryItem[] => {
-  const commissionHistory: any = [];
+  const commissionHistory: CommisionHistoryItem[] = [];
   erasPreferences.forEach(({ era, validators }) => {
     if (validators[accountId]) {
       commissionHistory.push({

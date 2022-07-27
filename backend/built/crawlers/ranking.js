@@ -25,11 +25,11 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 // @ts-check
 const Sentry = __importStar(require("@sentry/node"));
+const bignumber_js_1 = require("bignumber.js");
 const db_1 = require("../lib/db");
 const chain_1 = require("../lib/chain");
 const staking_1 = require("../lib/staking");
 const utils_1 = require("../lib/utils");
-const bignumber_js_1 = require("bignumber.js");
 const backend_config_1 = require("../backend.config");
 const logger_1 = require("../lib/logger");
 const crawlerName = 'ranking';
@@ -366,9 +366,9 @@ const crawler = async (delayedStart) => {
                     });
                     stakeHistory.push({
                         era: new bignumber_js_1.BigNumber(era.toString()).toString(10),
-                        self: 0,
-                        others: 0,
-                        total: 0,
+                        self: '0',
+                        others: '0',
+                        total: '0',
                     });
                     performanceHistory.push({
                         era: new bignumber_js_1.BigNumber(era.toString()).toString(10),

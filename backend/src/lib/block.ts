@@ -3,7 +3,6 @@ import * as Sentry from '@sentry/node';
 import { ApiPromise } from '@polkadot/api';
 import { DeriveAccountRegistration } from '@polkadot/api-derive/types';
 import { Client } from 'pg';
-// import axios from 'axios';
 import { chunker, range, reverseRange, shortHash } from './utils';
 import { CrawlerConfig, LoggerOptions } from './types';
 import { dbParamQuery, dbQuery } from './db';

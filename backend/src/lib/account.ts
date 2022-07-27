@@ -2,7 +2,6 @@
 import * as Sentry from '@sentry/node';
 import { ApiPromise } from '@polkadot/api';
 import { EventRecord } from '@polkadot/types/interfaces';
-import { Vec } from '@polkadot/types';
 import { Client } from 'pg';
 import _ from 'lodash';
 import { LoggerOptions } from './types';

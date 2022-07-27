@@ -1,3 +1,4 @@
+// @ts-check
 import { AnyTuple } from '@polkadot/types/types';
 import { GenericExtrinsic } from '@polkadot/types';
 import { EventRecord } from '@polkadot/types/interfaces';
@@ -56,6 +57,28 @@ export interface IdentityInfo {
 export interface CommisionHistoryItem {
   era: string;
   commission: string;
+}
+
+export interface EraPointsHistoryItem {
+  era: string;
+  points: number;
+}
+
+export interface PayoutHistoryItem {
+  era: string;
+  status: string;
+}
+
+export interface PerformanceHistoryItem {
+  era: string;
+  performance: number;
+}
+
+export interface StakeHistoryItem {
+  era: string;
+  self: string;
+  others: string;
+  total: string;
 }
 
 export interface ClusterInfo {

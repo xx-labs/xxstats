@@ -5,8 +5,6 @@
 // Required imports
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import { DeriveStakingQueryWithCmixId, DeriveStakingWaitingWithCmixId } from '../lib/types';
-import type { Option } from '@polkadot/types-codec';
-import type { H256 } from '@polkadot/types/interfaces/runtime';
 
 const stakingQueryFlags = {
   withDestination: false,
@@ -16,13 +14,9 @@ const stakingQueryFlags = {
   withPrefs: true,
 };
 
-const toByteArray = (nodeId: H256) => Buffer.concat([nodeId.toU8a(true), new Uint8Array([2])]);
-const toBase64 = (cmixId: Buffer) => cmixId.toString('base64');
-const transformCmixAddress = (nodeId?: Option<H256>): string | undefined => (nodeId?.isSome && Number(nodeId) !== 0) ? toBase64(toByteArray(nodeId.unwrap())) : '';
-
 async function main() {
 
-  const wsProvider = 'ws://116.202.87.211:9944';
+  const wsProvider = 'ws://substrate-node:9944';
 
   // Initialise the provider to connect to the remote node
   const provider = new WsProvider(wsProvider);
@@ -33,24 +27,12 @@ async function main() {
   /// Get waiting nodes info
   const waiting: DeriveStakingWaitingWithCmixId = await api.derive.staking.waitingInfo(stakingQueryFlags);
 
-  const intentions = await Promise.all(
-    waiting.info.map((intention) =>
-      api.derive.accounts.info(intention.accountId).then(({ identity }) => ({
-        info: intention,
-        identity,
-        active: false,
-      })),
-    ),
-  );
-
   // Get staking info for active validators
-  // const validatorAddresses = await api.query.session.validators();
-  // const validators: DeriveStakingQueryWithCmixId[] = await api.derive.staking.queryMulti(validatorAddresses, stakingQueryFlags);
+  const validatorAddresses = await api.query.session.validators();
+  const validators: DeriveStakingQueryWithCmixId[] = await api.derive.staking.queryMulti(validatorAddresses, stakingQueryFlags);
 
-  //console.log(JSON.stringify(waiting.info[0].stashId, null, 2));
-  //console.log(JSON.stringify(validators[0], null, 2));
-  intentions.map((validator) => console.log(transformCmixAddress(validator.info.stakingLedger.cmixId)));
-  intentions.map((validator) => console.log(validator.info.stakingLedger.cmixId.isSome ? validator.info.stakingLedger.cmixId : ''));
+  console.log(JSON.stringify(waiting.info[0].stashId, null, 2));
+  console.log(JSON.stringify(validators[0], null, 2));
 }
 
 main().catch(console.error).finally(() => process.exit());

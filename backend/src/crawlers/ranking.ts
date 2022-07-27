@@ -1,5 +1,6 @@
 // @ts-check
 import * as Sentry from '@sentry/node';
+import { BigNumber } from 'bignumber.js';
 import { getClient, dbQuery } from '../lib/db';
 import { getPolkadotAPI, isNodeSynced } from '../lib/chain';
 import {
@@ -17,9 +18,16 @@ import {
   transformCmixId,
 } from '../lib/staking';
 import { wait, getRandom } from '../lib/utils';
-import { BigNumber } from 'bignumber.js';
 import { backendConfig } from '../backend.config';
-import { CrawlerConfig, StakingQueries, ValidatorOrIntention } from '../lib/types';
+import {
+  CrawlerConfig,
+  EraPointsHistoryItem,
+  PayoutHistoryItem,
+  PerformanceHistoryItem,
+  StakeHistoryItem,
+  StakingQueries,
+  ValidatorOrIntention,
+} from '../lib/types';
 import { logger } from '../lib/logger';
 
 const crawlerName = 'ranking';
@@ -458,10 +466,11 @@ const crawler = async (delayedStart: boolean) => {
         }
 
         // era points and frecuency of payouts
-        const eraPointsHistory: any = [];
-        const payoutHistory: any = [];
-        const performanceHistory: any = [];
-        const stakeHistory: any = [];
+        const eraPointsHistory: EraPointsHistoryItem[] = [];
+        const payoutHistory: PayoutHistoryItem[] = [];
+        const performanceHistory: PerformanceHistoryItem[] = [];
+        const stakeHistory: StakeHistoryItem[] = [];
+
         let activeEras = 0;
         let performance = 0;
         // eslint-disable-next-line
@@ -524,9 +533,9 @@ const crawler = async (delayedStart: boolean) => {
             });
             stakeHistory.push({
               era: new BigNumber(era.toString()).toString(10),
-              self: 0,
-              others: 0,
-              total: 0,
+              self: '0',
+              others: '0',
+              total: '0',
             });
             performanceHistory.push({
               era: new BigNumber(era.toString()).toString(10),

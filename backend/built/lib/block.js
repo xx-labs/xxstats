@@ -26,7 +26,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateFinalizedBlock = exports.harvestBlocks = exports.harvestBlocksSeq = exports.harvestBlock = exports.storeMetadata = exports.healthCheck = exports.logHarvestError = exports.updateFinalized = exports.getDisplayName = void 0;
 // @ts-check
 const Sentry = __importStar(require("@sentry/node"));
-// import axios from 'axios';
 const utils_1 = require("./utils");
 const db_1 = require("./db");
 const backend_config_1 = require("../backend.config");
