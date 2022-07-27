@@ -47,6 +47,8 @@ export default {
     '@nuxtjs/stylelint-module',
     // https://google-analytics.nuxtjs.org/setup
     '@nuxtjs/google-analytics',
+    // https://www.npmjs.com/package/@nuxtjs/svg
+    '@nuxtjs/svg',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
