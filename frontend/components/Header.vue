@@ -71,14 +71,6 @@
               <b-dropdown-item :to="localePath('/staking/validators')">
                 {{ $t('layout.default.validators') }}
               </b-dropdown-item>
-              <b-dropdown-item
-                :to="localePath('/staking/polkastats-validator')"
-              >
-                {{ $t('layout.default.validator') }}
-              </b-dropdown-item>
-              <b-dropdown-item :to="localePath('/staking/how-to-stake')">
-                {{ $t('layout.default.how_to_stake') }}
-              </b-dropdown-item>
             </b-nav-item-dropdown>
             <b-nav-item-dropdown text="Blockchain">
               <b-dropdown-item :to="localePath('/blocks')">
@@ -91,29 +83,6 @@
                 {{ $t('layout.default.events') }}
               </b-dropdown-item>
             </b-nav-item-dropdown>
-            <!-- <b-nav-item-dropdown>
-              <template #button-content>
-                <img
-                  class="network-logo"
-                  :src="`/img/networks/icons/${config.id}.svg`"
-                />
-                {{ config.name }}
-              </template>
-              <b-dropdown-item href="https://kusama.polkastats.io">
-                <img
-                  class="network-logo"
-                  src="/img/networks/icons/kusama.svg"
-                />
-                KUSAMA
-              </b-dropdown-item>
-              <b-dropdown-item href="https://polkastats.io">
-                <img
-                  class="network-logo"
-                  src="/img/networks/icons/polkadot.svg"
-                />
-                POLKADOT
-              </b-dropdown-item>
-            </b-nav-item-dropdown> -->
             <Languages />
           </b-navbar-nav>
         </b-collapse>
