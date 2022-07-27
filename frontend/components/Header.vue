@@ -42,7 +42,7 @@
             class="navbar-brand"
             title="PolkaStats block explorer"
           >
-            <img class="logo" src="/img/networks/icons/xx-network.svg" />
+            <img class="logo" src="~assets/img/xx-network.svg" />
           </nuxt-link>
         </b-navbar-brand>
         <!-- <a
