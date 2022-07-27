@@ -42,10 +42,10 @@
             class="navbar-brand"
             title="PolkaStats block explorer"
           >
-            <img class="logo" src="/img/polkastats_logo_dark@1x.png" />
+            <img class="logo" src="/img/networks/icons/xx-network.svg" />
           </nuxt-link>
         </b-navbar-brand>
-        <a
+        <!-- <a
           v-if="config.coinGeckoDenom && USDConversion && USD24hChange"
           :href="`https://www.coingecko.com/en/coins/${config.coinGeckoDenom}`"
           target="_blank"
@@ -54,7 +54,7 @@
           <strong>{{ config.tokenSymbol }}</strong> ${{ USDConversion }} ({{
             USD24hChange
           }}%)
-        </a>
+        </a> -->
         <b-navbar-toggle target="nav-collapse" />
         <b-collapse id="nav-collapse" is-nav>
           <b-navbar-nav class="ml-auto">
@@ -91,7 +91,7 @@
                 {{ $t('layout.default.events') }}
               </b-dropdown-item>
             </b-nav-item-dropdown>
-            <b-nav-item-dropdown>
+            <!-- <b-nav-item-dropdown>
               <template #button-content>
                 <img
                   class="network-logo"
@@ -113,7 +113,7 @@
                 />
                 POLKADOT
               </b-dropdown-item>
-            </b-nav-item-dropdown>
+            </b-nav-item-dropdown> -->
             <Languages />
           </b-navbar-nav>
         </b-collapse>
@@ -173,12 +173,12 @@ export default {
   },
   created() {
     // Refresh fiat conversion values every minute
-    if (this.config.coinGeckoDenom) {
-      this.$store.dispatch('fiat/update')
-      setInterval(() => {
-        this.$store.dispatch('fiat/update')
-      }, 60000)
-    }
+    // if (this.config.coinGeckoDenom) {
+    //   this.$store.dispatch('fiat/update')
+    //   setInterval(() => {
+    //     this.$store.dispatch('fiat/update')
+    //   }, 60000)
+    // }
   },
 }
 </script>

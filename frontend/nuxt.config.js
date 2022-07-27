@@ -142,6 +142,7 @@ export default {
       '@polkadot/x-textencoder',
       '@polkadot/x-ws',
       '@polkadot/wasm-bridge',
+      '@substrate/smoldot-light',
     ],
     extend(config, ctx) {
       config.module.rules.push({

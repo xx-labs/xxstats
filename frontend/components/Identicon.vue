@@ -7,7 +7,7 @@
   >
     <VueIdenticon
       :key="address"
-      v-clipboard:copy="address"
+      :v-clipboard:copy="address"
       :size="size"
       :theme="'polkadot'"
       :value="address"
