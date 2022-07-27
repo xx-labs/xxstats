@@ -89,6 +89,7 @@ $custom-range-thumb-active-bg: $primary2;
 // workaround: nuxt generate doesn't include font awesome styles for some reason
 // so we need to include here
 @import 'https://pro.fontawesome.com/releases/v5.10.0/css/all.css';
+@import '@fortawesome/fontawesome-svg-core/styles.css';
 
 // global styles
 @font-face {
