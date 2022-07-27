@@ -215,12 +215,12 @@ const crawler = async (delayedStart) => {
         let ranking = validatorsAndIntentions
             .map((validator) => {
             var _a, _b;
+            // stash address
+            const stashAddress = validator.info.stashId.toString();
             // active
             const { active } = validator;
             const activeRating = active ? 2 : 0;
-            // stash
-            const stashAddress = validator.info.stashId.toString();
-            // address creation
+            // stash address creation
             let addressCreationRating = 0;
             const stashCreatedAtBlock = parseInt(stashAddressesCreation[stashAddress], 10);
             let stashParentCreatedAtBlock = 0;
@@ -275,34 +275,34 @@ const crawler = async (delayedStart) => {
             // eslint-disable-next-line
             const nominators = active
                 ? validator.info.exposure.others.length
-                : allNominations.filter((nomination) => nomination.targets.some((target) => target === validator.info.accountId.toString())).length;
+                : allNominations.filter((nomination) => nomination.targets.some((target) => target === stashAddress)).length;
             const nominatorsRating = nominators > 0 &&
                 nominators <= maxNominatorRewardedPerValidator.toNumber()
                 ? 2
                 : 0;
             const nominations = active
                 ? validator.info.exposure.others
-                : allNominations.filter((nomination) => nomination.targets.some((target) => target === validator.info.accountId.toString()));
+                : allNominations.filter((nomination) => nomination.targets.some((target) => target === stashAddress));
             // slashes
             const slashes = erasSlashes.filter(
             // eslint-disable-next-line
-            ({ validators }) => validators[validator.info.accountId.toString()]) || [];
+            ({ validators }) => validators[stashAddress]) || [];
             const slashed = slashes.length > 0;
             const slashRating = slashed ? 0 : 2;
             // commission
             const commission = parseInt(validator.info.validatorPrefs.commission.toString(), 10) /
                 10000000;
-            const commissionHistory = (0, staking_1.getCommissionHistory)(validator.info.accountId.toString(), erasPreferences);
+            const commissionHistory = (0, staking_1.getCommissionHistory)(stashAddress, erasPreferences);
             const commissionRating = (0, staking_1.getCommissionRating)(commission, commissionHistory);
             // governance
             const councilBacking = ((_a = validator.identity) === null || _a === void 0 ? void 0 : _a.parent)
-                ? councilVotes.some((vote) => vote[0].toString() === validator.info.accountId.toString()) ||
+                ? councilVotes.some((vote) => vote[0].toString() === stashAddress) ||
                     councilVotes.some((vote) => vote[0].toString() === validator.identity.parent.toString())
-                : councilVotes.some((vote) => vote[0].toString() === validator.info.accountId.toString());
+                : councilVotes.some((vote) => vote[0].toString() === stashAddress);
             const activeInGovernance = ((_b = validator.identity) === null || _b === void 0 ? void 0 : _b.parent)
-                ? participateInGovernance.includes(validator.info.accountId.toString()) ||
+                ? participateInGovernance.includes(stashAddress) ||
                     participateInGovernance.includes(validator.identity.parent.toString())
-                : participateInGovernance.includes(validator.info.accountId.toString());
+                : participateInGovernance.includes(stashAddress);
             let governanceRating = 0;
             if (councilBacking && activeInGovernance) {
                 governanceRating = 3;

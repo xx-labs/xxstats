@@ -310,14 +310,15 @@ const crawler = async (delayedStart: boolean) => {
 
     let ranking = validatorsAndIntentions
       .map((validator) => {
+
+        // stash address
+        const stashAddress = validator.info.stashId.toString();
+
         // active
         const { active } = validator;
         const activeRating = active ? 2 : 0;
 
-        // stash
-        const stashAddress = validator.info.stashId.toString();
-
-        // address creation
+        // stash address creation
         let addressCreationRating = 0;
         const stashCreatedAtBlock = parseInt(
           stashAddressesCreation[stashAddress],
@@ -392,7 +393,7 @@ const crawler = async (delayedStart: boolean) => {
           ? validator.info.exposure.others.length
           : allNominations.filter((nomination) =>
             nomination.targets.some(
-              (target: any) => target === validator.info.accountId.toString(),
+              (target: any) => target === stashAddress,
             ),
           ).length;
         const nominatorsRating =
@@ -404,7 +405,7 @@ const crawler = async (delayedStart: boolean) => {
           ? validator.info.exposure.others
           : allNominations.filter((nomination) =>
             nomination.targets.some(
-              (target: any) => target === validator.info.accountId.toString(),
+              (target: any) => target === stashAddress,
             ),
           );
 
@@ -413,7 +414,7 @@ const crawler = async (delayedStart: boolean) => {
           erasSlashes.filter(
             // eslint-disable-next-line
             ({ validators }: { validators: any }) =>
-              validators[validator.info.accountId.toString()],
+              validators[stashAddress],
           ) || [];
         const slashed = slashes.length > 0;
         const slashRating = slashed ? 0 : 2;
@@ -423,7 +424,7 @@ const crawler = async (delayedStart: boolean) => {
           parseInt(validator.info.validatorPrefs.commission.toString(), 10) /
           10000000;
         const commissionHistory = getCommissionHistory(
-          validator.info.accountId.toString(),
+          stashAddress,
           erasPreferences,
         );
         const commissionRating = getCommissionRating(
@@ -434,21 +435,21 @@ const crawler = async (delayedStart: boolean) => {
         // governance
         const councilBacking = validator.identity?.parent
           ? councilVotes.some(
-            (vote) => vote[0].toString() === validator.info.accountId.toString(),
+            (vote) => vote[0].toString() === stashAddress,
           ) ||
             councilVotes.some(
               (vote) =>
                 vote[0].toString() === validator.identity.parent.toString(),
             )
           : councilVotes.some(
-            (vote) => vote[0].toString() === validator.info.accountId.toString(),
+            (vote) => vote[0].toString() === stashAddress,
           );
         const activeInGovernance = validator.identity?.parent
-          ? participateInGovernance.includes(validator.info.accountId.toString()) ||
+          ? participateInGovernance.includes(stashAddress) ||
             participateInGovernance.includes(
               validator.identity.parent.toString(),
             )
-          : participateInGovernance.includes(validator.info.accountId.toString());
+          : participateInGovernance.includes(stashAddress);
         let governanceRating = 0;
         if (councilBacking && activeInGovernance) {
           governanceRating = 3;
