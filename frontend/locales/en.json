@@ -696,7 +696,8 @@
       "metrics_description": "This information is verified and provided by historical data on the {networkName} blockchain",
       "metrics": "Metrics",
       "charts": "Charts",
-      "nominations": "Nominations"
+      "nominations": "Nominations",
+      "dashboard_info": "Dashboard info"
     },
     "team": {
       "title": "Team",
@@ -805,7 +806,9 @@
       "date_time": "Date and Time",
       "charts": "Charts",
       "stash": "Stash",
-      "controller": "Controller"
+      "controller": "Controller",
+      "cmix_id": "Cmix id",
+      "location": "Location"
     }
   }
 }

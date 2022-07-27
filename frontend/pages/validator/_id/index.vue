@@ -96,6 +96,22 @@
             </nuxt-link>
           </div>
         </div>
+        <div v-if="validator.cmixId" class="row">
+          <div class="col-md-3 mb-1">
+            <strong>{{ $t('details.validator.cmix_id') }}</strong>
+          </div>
+          <div class="col-md-9 mb-1 fee">
+            {{ shortAddress(validator.cmixId) }}
+          </div>
+        </div>
+        <div v-if="validator.location" class="row">
+          <div class="col-md-3 mb-1">
+            <strong>{{ $t('details.validator.location') }}</strong>
+          </div>
+          <div class="col-md-9 mb-1 fee">
+            {{ validator.location }}
+          </div>
+        </div>
         <!-- identity start -->
         <div v-if="validator.identity.email" class="row">
           <div class="col-md-3 mb-2">
@@ -283,6 +299,20 @@
         <b-tab :title="$t('pages.validator.nominations')">
           <Nominations :nominations="validator.nominations" />
         </b-tab>
+        <b-tab :title="$t('pages.validator.dashboard_info')">
+          <div
+            v-for="(value, name) in validator.dashboardInfo"
+            :key="`${name}-${value}`"
+            class="row"
+          >
+            <div class="col-xl-6 pb-4">
+              <strong>{{ capitalize(name) }}:</strong>
+            </div>
+            <div class="col-xl-6 pb-4">
+              {{ value }}
+            </div>
+          </div>
+        </b-tab>
       </b-tabs>
     </div>
   </div>
@@ -434,6 +464,10 @@ export default {
               total_rating
               total_stake
               verified_identity
+              cmix_id
+              cmix_id_hex
+              location
+              dashboard_info
             }
           }
         `,
@@ -496,6 +530,10 @@ export default {
             totalRating: validator.total_rating,
             totalStake: validator.total_stake,
             verifiedIdentity: validator.verified_identity,
+            cmixId: validator.cmix_id,
+            cmixIdHex: validator.cmix_id_hex,
+            location: validator.location,
+            dashboardInfo: validator.dashboard_info,
             selected: this.isSelected(validator.stashAddress),
           }
         },

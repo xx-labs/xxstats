@@ -696,7 +696,8 @@
       "metrics_description": "Esta información está verificada a partir de los datos históricos de la red {networkName}",
       "metrics": "Métricas",
       "charts": "Gráficas",
-      "nominations": "Nominaciones"
+      "nominations": "Nominaciones",
+      "dashboard_info": "Dashboard info"
     },
     "team": {
       "title": "Equipo",
@@ -805,6 +806,8 @@
     "date_time": "Día y hora",
     "charts": "Gráficas",
     "stash": "Stash",
-    "controller": "Controlador"
+    "controller": "Controlador",
+    "cmix_id": "Id de cmix",
+    "location": "Localización"
   }
 }
