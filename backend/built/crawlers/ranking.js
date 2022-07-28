@@ -471,12 +471,11 @@ const crawler = async (delayedStart) => {
                 stakeHistory,
                 totalRating,
             };
-        });
-        validatorsAndIntentions
+        })
             .sort((a, b) => (a.totalRating < b.totalRating ? 1 : -1))
             .map((validator, rank) => {
-            const relativePerformance = ((validator.performance - minPerformance) /
-                (maxPerformance - minPerformance)).toFixed(6);
+            const relativePerformance = parseFloat(((validator.performance - minPerformance) /
+                (maxPerformance - minPerformance)).toFixed(6));
             // debug
             // logger.debug(loggerOptions, `${validator.stashAddress}, performance: ${validator.performance}, maxPerformance: ${maxPerformance}, minPerformance: ${minPerformance}, rel. performance: ${relativePerformance}`);
             const dominated = false;
