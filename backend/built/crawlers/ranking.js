@@ -272,12 +272,16 @@ const crawler = async (delayedStart) => {
             const partOfCluster = clusterMembers > 1;
             const subAccountsRating = hasSubIdentity ? 2 : 0;
             // nominators
-            // eslint-disable-next-line
-            const nominators = active
+            //
+            // TODO: refactor this!
+            // use a type for nominations and use it for active/inactive validators
+            //
+            // # of nominators the validator has
+            const validatorNominators = active
                 ? validator.info.exposure.others.length
                 : allNominations.filter((nomination) => nomination.targets.some((target) => target === stashAddress)).length;
-            const nominatorsRating = nominators > 0 &&
-                nominators <= maxNominatorRewardedPerValidator.toNumber()
+            const nominatorsRating = validatorNominators > 0 &&
+                validatorNominators <= maxNominatorRewardedPerValidator.toNumber()
                 ? 2
                 : 0;
             const nominations = active
@@ -382,6 +386,8 @@ const crawler = async (delayedStart) => {
                 // total performance
                 performance += eraPerformance;
             });
+            // debug
+            logger_1.logger.debug(loggerOptions, `${validator.stashAddress}, performance: ${validator.performance}`);
             const eraPointsHistoryValidator = eraPointsHistory.reduce((total, era) => total + era.points, 0);
             const eraPointsPercent = (eraPointsHistoryValidator * 100) / eraPointsHistoryTotalsSum;
             const eraPointsRating = eraPointsHistoryValidator > eraPointsAverage ? 2 : 0;
@@ -439,7 +445,7 @@ const crawler = async (delayedStart) => {
                 clusterName,
                 clusterMembers,
                 showClusterMember,
-                nominators,
+                nominators: validatorNominators,
                 nominatorsRating,
                 nominations,
                 commission,
@@ -465,12 +471,14 @@ const crawler = async (delayedStart) => {
                 stakeHistory,
                 totalRating,
             };
-        })
+        });
+        validatorsAndIntentions
             .sort((a, b) => (a.totalRating < b.totalRating ? 1 : -1))
             .map((validator, rank) => {
             const relativePerformance = ((validator.performance - minPerformance) /
                 (maxPerformance - minPerformance)).toFixed(6);
-            logger_1.logger.debug(loggerOptions, `${validator.stashAddress}, performance: ${validator.performance}, maxPerformance: ${maxPerformance}, minPerformance: ${minPerformance}, rel. performance: ${relativePerformance}`);
+            // debug
+            // logger.debug(loggerOptions, `${validator.stashAddress}, performance: ${validator.performance}, maxPerformance: ${maxPerformance}, minPerformance: ${minPerformance}, rel. performance: ${relativePerformance}`);
             const dominated = false;
             const relativePerformanceHistory = [];
             return {
@@ -484,7 +492,8 @@ const crawler = async (delayedStart) => {
         // populate minMaxEraPerformance
         eraIndexes.forEach((eraIndex) => {
             const era = new bignumber_js_1.BigNumber(eraIndex.toString()).toString(10);
-            const eraPerformances = ranking.map(({ performanceHistory }) => performanceHistory.find((performance) => performance.era === era)
+            const eraPerformances = ranking
+                .map(({ performanceHistory }) => performanceHistory.find((performance) => performance.era === era)
                 .performance);
             minMaxEraPerformance.push({
                 era,
@@ -518,7 +527,7 @@ const crawler = async (delayedStart) => {
             let dominated = false;
             for (const opponent of ranking) {
                 if (opponent !== validator &&
-                    parseFloat(opponent.relativePerformance) >=
+                    opponent.relativePerformance >=
                         parseFloat(validator.relativePerformance) &&
                     opponent.selfStake.gte(validator.selfStake) &&
                     opponent.activeEras >= validator.activeEras &&

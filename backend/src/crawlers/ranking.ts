@@ -1,6 +1,7 @@
 // @ts-check
 import * as Sentry from '@sentry/node';
 import { BigNumber } from 'bignumber.js';
+import type { AccountId32 } from '@polkadot/types/interfaces/runtime';
 import { getClient, dbQuery } from '../lib/db';
 import { getPolkadotAPI, isNodeSynced } from '../lib/chain';
 import {
@@ -142,21 +143,21 @@ const crawler = async (delayedStart: boolean) => {
     );
 
     logger.debug(loggerOptions, 'Step #4');
-    let erasPreferences: any = [];
+    let erasPreferences: any[] = [];
     for (const eraIndex of eraIndexes) {
       const eraPrefs = await api.derive.staking.eraPrefs(eraIndex);
       erasPreferences = erasPreferences.concat(eraPrefs);
     }
 
     logger.debug(loggerOptions, 'Step #5');
-    let erasSlashes: any = [];
+    let erasSlashes: any[] = [];
     for (const eraIndex of eraIndexes) {
       const eraSlashes = await api.derive.staking.eraSlashes(eraIndex);
       erasSlashes = erasSlashes.concat(eraSlashes);
     }
 
     logger.debug(loggerOptions, 'Step #6');
-    let erasExposure: any = [];
+    let erasExposure: any[] = [];
     for (const eraIndex of eraIndexes) {
       const eraExposure = await api.derive.staking.eraExposure(eraIndex);
       erasExposure = erasExposure.concat(eraExposure);
@@ -164,7 +165,7 @@ const crawler = async (delayedStart: boolean) => {
 
     logger.debug(loggerOptions, 'Step #7');
     validators = await Promise.all(
-      validatorAddresses.map((authorityId: any) =>
+      validatorAddresses.map((authorityId: AccountId32) =>
         api.derive.staking.query(authorityId, stakingQueryFlags).then((validator) => ({ info: validator })),
       ),
     );
@@ -296,7 +297,7 @@ const crawler = async (delayedStart: boolean) => {
     const validatorsAndIntentions: ValidatorOrIntention[]  = validators.concat(intentions);
 
     // stash & identity parent address creation block
-    const stashAddressesCreation: any = [];
+    const stashAddressesCreation: any[string] = [];
     for (const validator of validatorsAndIntentions) {
       const stashAddress: string = validator.info.stashId.toString();
       stashAddressesCreation[stashAddress] = await getAddressCreation(
@@ -316,7 +317,7 @@ const crawler = async (delayedStart: boolean) => {
 
     logger.debug(loggerOptions, 'Starting validator loop...');
 
-    let ranking = validatorsAndIntentions
+    let ranking: ValidatorOrIntention[] = validatorsAndIntentions
       .map((validator) => {
 
         // stash address
@@ -396,8 +397,14 @@ const crawler = async (delayedStart: boolean) => {
         const subAccountsRating = hasSubIdentity ? 2 : 0;
 
         // nominators
-        // eslint-disable-next-line
-        const nominators = active
+        
+        //
+        // TODO: refactor this!
+        // use a type for nominations and use it for active/inactive validators
+        //
+
+        // # of nominators the validator has
+        const validatorNominators = active
           ? validator.info.exposure.others.length
           : allNominations.filter((nomination) =>
             nomination.targets.some(
@@ -405,10 +412,10 @@ const crawler = async (delayedStart: boolean) => {
             ),
           ).length;
         const nominatorsRating =
-          nominators > 0 &&
-          nominators <= maxNominatorRewardedPerValidator.toNumber()
-            ? 2
-            : 0;
+        validatorNominators > 0 &&
+        validatorNominators <= maxNominatorRewardedPerValidator.toNumber()
+          ? 2
+          : 0;
         const nominations = active
           ? validator.info.exposure.others
           : allNominations.filter((nomination) =>
@@ -549,6 +556,10 @@ const crawler = async (delayedStart: boolean) => {
           // total performance
           performance += eraPerformance;
         });
+
+        // debug
+        logger.debug(loggerOptions, `${validator.stashAddress}, performance: ${validator.performance}`);
+
         const eraPointsHistoryValidator = eraPointsHistory.reduce(
           (total: any, era: any) => total + era.points,
           0,
@@ -617,7 +628,7 @@ const crawler = async (delayedStart: boolean) => {
           clusterName,
           clusterMembers,
           showClusterMember,
-          nominators,
+          nominators: validatorNominators,
           nominatorsRating,
           nominations,
           commission,
@@ -643,14 +654,17 @@ const crawler = async (delayedStart: boolean) => {
           stakeHistory,
           totalRating,
         };
-      })
-      .sort((a: any, b: any) => (a.totalRating < b.totalRating ? 1 : -1))
-      .map((validator: any, rank: number) => {
+      });
+
+    validatorsAndIntentions
+      .sort((a: ValidatorOrIntention, b: ValidatorOrIntention) => (a.totalRating < b.totalRating ? 1 : -1))
+      .map((validator: ValidatorOrIntention, rank: number) => {
         const relativePerformance = (
           (validator.performance - minPerformance) /
           (maxPerformance - minPerformance)
         ).toFixed(6);
-        logger.debug(loggerOptions, `${validator.stashAddress}, performance: ${validator.performance}, maxPerformance: ${maxPerformance}, minPerformance: ${minPerformance}, rel. performance: ${relativePerformance}`);
+        // debug
+        // logger.debug(loggerOptions, `${validator.stashAddress}, performance: ${validator.performance}, maxPerformance: ${maxPerformance}, minPerformance: ${minPerformance}, rel. performance: ${relativePerformance}`);
         const dominated = false;
         const relativePerformanceHistory: any = [];
         return {
@@ -665,11 +679,12 @@ const crawler = async (delayedStart: boolean) => {
     // populate minMaxEraPerformance
     eraIndexes.forEach((eraIndex) => {
       const era = new BigNumber(eraIndex.toString()).toString(10);
-      const eraPerformances = ranking.map(
-        ({ performanceHistory }: { performanceHistory: any }) =>
-          performanceHistory.find((performance: any) => performance.era === era)
-            .performance,
-      );
+      const eraPerformances = ranking
+        .map(
+          ({ performanceHistory }) =>
+            performanceHistory.find((performance) => performance.era === era)
+              .performance,
+        );
       minMaxEraPerformance.push({
         era,
         min: Math.min(...eraPerformances),
@@ -725,7 +740,7 @@ const crawler = async (delayedStart: boolean) => {
       for (const opponent of ranking) {
         if (
           opponent !== validator &&
-          parseFloat(opponent.relativePerformance) >=
+          opponent.relativePerformance >=
             parseFloat(validator.relativePerformance) &&
           opponent.selfStake.gte(validator.selfStake) &&
           opponent.activeEras >= validator.activeEras &&
@@ -745,7 +760,7 @@ const crawler = async (delayedStart: boolean) => {
     logger.debug(
       loggerOptions,
       `Found ${
-        ranking.filter(({ dominated }: { dominated: any }) => dominated).length
+        ranking.filter(({ dominated }) => dominated).length
       } dominated validators in ${(
         (dominatedEnd - dominatedStart) /
         1000
@@ -760,7 +775,7 @@ const crawler = async (delayedStart: boolean) => {
     let validatorsToHide: any = [];
     for (const cluster of clusters) {
       const clusterMembers = ranking.filter(
-        ({ clusterName }: { clusterName: any }) => clusterName === cluster,
+        ({ clusterName }) => clusterName === cluster,
       );
       const clusterSize = clusterMembers[0].clusterMembers;
       // EXTRASMALL: 2 - Show all (2)

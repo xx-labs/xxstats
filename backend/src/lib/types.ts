@@ -6,10 +6,11 @@ import { EventRecord } from '@polkadot/types/interfaces';
 import type { Option, Vec } from '@polkadot/types-codec';
 import { DeriveStakingQuery, DeriveStakingWaiting } from '@polkadot/api-derive/staking/types';
 import { DeriveAccountRegistration } from '@polkadot/api-derive/types';
-import { PalletStakingStakingLedger, PalletStakingNominations } from '@polkadot/types/lookup';
+import { PalletStakingStakingLedger, PalletStakingNominations, PalletStakingIndividualExposure } from '@polkadot/types/lookup';
 import type { DeriveReferendumExt, DeriveCouncilVotes, DeriveProposal } from '@polkadot/api-derive/types';
 import type { AccountId32, H256, Block } from '@polkadot/types/interfaces/runtime';
 import type { StorageKey } from '@polkadot/types';
+import BigNumber from 'bignumber.js';
 
 export interface CrawlerConfig {
   name: string;
@@ -110,7 +111,55 @@ export type StakingQueries = [
 ];
 
 export interface ValidatorOrIntention {
-  info: DeriveStakingQueryWithCmixId,
+  info?: DeriveStakingQueryWithCmixId,
   active?: Boolean,
-  identity?: DeriveAccountRegistration
+  activeRating?: number,
+  name?: string,
+  identity?: DeriveAccountRegistration,
+  hasSubIdentity?: Boolean,
+  subAccountsRating?: number,
+  verifiedIdentity?: Boolean,
+  identityRating?: number,
+  stashAddress?: string,
+  stashCreatedAtBlock?: number,
+  stashParentCreatedAtBlock?: number,
+  addressCreationRating?: number,
+  controllerAddress?: string,
+  cmixId?: string,
+  cmixIdHex?: string,
+  dashboardInfo?: any, // TODO: add type
+  location?: string,
+  includedThousandValidators?: Boolean,
+  thousandValidator?: any,
+  partOfCluster?: Boolean,
+  clusterName?: string,
+  clusterMembers?: number,
+  showClusterMember?: Boolean,
+  nominators?: number,
+  nominatorsRating?: number,
+  nominations?: Vec<PalletStakingIndividualExposure> | { nominator: any; targets: any; }[],
+  commission?: number,
+  commissionHistory?: CommisionHistoryItem[],
+  commissionRating?: number,
+  activeEras?: number,
+  eraPointsHistory?: EraPointsHistoryItem[],
+  eraPointsPercent?: number,
+  eraPointsRating?: number,
+  performance?: number,
+  performanceHistory?: PerformanceHistoryItem[],
+  relativePerformance?: number,
+  slashed?: Boolean,
+  slashRating?: number,
+  slashes?: any, // TODO
+  councilBacking?: Boolean,
+  activeInGovernance?: Boolean,
+  governanceRating?: number,
+  payoutHistory?: PayoutHistoryItem[],
+  payoutRating?: number,
+  selfStake?: BigNumber,
+  otherStake?: BigNumber,
+  totalStake?: BigNumber,
+  stakeHistory?: StakeHistoryItem[],
+  totalRating?: number,
+  dominated?: Boolean,
 }
