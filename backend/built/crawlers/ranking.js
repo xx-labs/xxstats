@@ -470,6 +470,7 @@ const crawler = async (delayedStart) => {
             .map((validator, rank) => {
             const relativePerformance = ((validator.performance - minPerformance) /
                 (maxPerformance - minPerformance)).toFixed(6);
+            logger_1.logger.debug(loggerOptions, `${validator.stashAddress}, performance: ${validator.performance}, maxPerformance: ${maxPerformance}, minPerformance: ${minPerformance}, rel. performance: ${relativePerformance}`);
             const dominated = false;
             const relativePerformanceHistory = [];
             return {
