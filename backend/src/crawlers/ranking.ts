@@ -558,7 +558,7 @@ const crawler = async (delayedStart: boolean) => {
         });
 
         // debug
-        logger.debug(loggerOptions, `${validator.stashAddress}, performance: ${validator.performance}`);
+        logger.debug(loggerOptions, `validator: ${stashAddress}, performance: ${performance}`);
 
         const eraPointsHistoryValidator = eraPointsHistory.reduce(
           (total: any, era: any) => total + era.points,

@@ -387,7 +387,7 @@ const crawler = async (delayedStart) => {
                 performance += eraPerformance;
             });
             // debug
-            logger_1.logger.debug(loggerOptions, `${validator.stashAddress}, performance: ${validator.performance}`);
+            logger_1.logger.debug(loggerOptions, `validator: ${stashAddress}, performance: ${performance}`);
             const eraPointsHistoryValidator = eraPointsHistory.reduce((total, era) => total + era.points, 0);
             const eraPointsPercent = (eraPointsHistoryValidator * 100) / eraPointsHistoryTotalsSum;
             const eraPointsRating = eraPointsHistoryValidator > eraPointsAverage ? 2 : 0;
