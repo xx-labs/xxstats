@@ -25,6 +25,7 @@ import {
   EraPointsHistoryItem,
   PayoutHistoryItem,
   PerformanceHistoryItem,
+  RelativePerformanceHistoryItem,
   StakeHistoryItem,
   StakingQueries,
   ValidatorOrIntention,
@@ -714,10 +715,10 @@ const crawler = async (delayedStart: boolean) => {
     // find Pareto-dominated validators
     logger.debug(loggerOptions, 'Finding dominated validators');
     const dominatedStart = new Date().getTime();
-    ranking = ranking.map((validator: any) => {
+    ranking = ranking.map((validator: ValidatorOrIntention) => {
       // populate relativePerformanceHistory
-      const relativePerformanceHistory: any = [];
-      validator.performanceHistory.forEach((performance: any) => {
+      const relativePerformanceHistory: RelativePerformanceHistoryItem[] = [];
+      validator.performanceHistory.forEach((performance: PerformanceHistoryItem) => {
         const eraMinPerformance = minMaxEraPerformance.find(
           ({ era }: { era: any }) => era === performance.era,
         ).min;
@@ -738,8 +739,7 @@ const crawler = async (delayedStart: boolean) => {
       for (const opponent of ranking) {
         if (
           opponent !== validator &&
-          opponent.relativePerformance >=
-            parseFloat(validator.relativePerformance) &&
+          opponent.relativePerformance >= validator.relativePerformance &&
           opponent.selfStake.gte(validator.selfStake) &&
           opponent.activeEras >= validator.activeEras &&
           opponent.totalRating >= validator.totalRating

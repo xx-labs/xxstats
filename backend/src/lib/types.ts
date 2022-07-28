@@ -75,6 +75,11 @@ export interface PerformanceHistoryItem {
   performance: number;
 }
 
+export interface RelativePerformanceHistoryItem {
+  era: string;
+  relativePerformance: number;
+}
+
 export interface StakeHistoryItem {
   era: string;
   self: string;
@@ -148,6 +153,7 @@ export interface ValidatorOrIntention {
   performance?: number,
   performanceHistory?: PerformanceHistoryItem[],
   relativePerformance?: number,
+  relativePerformanceHistory?: RelativePerformanceHistoryItem[],
   slashed?: Boolean,
   slashRating?: number,
   slashes?: any, // TODO
@@ -162,4 +168,5 @@ export interface ValidatorOrIntention {
   stakeHistory?: StakeHistoryItem[],
   totalRating?: number,
   dominated?: Boolean,
+  rank?: number,
 }

@@ -526,8 +526,7 @@ const crawler = async (delayedStart) => {
             let dominated = false;
             for (const opponent of ranking) {
                 if (opponent !== validator &&
-                    opponent.relativePerformance >=
-                        parseFloat(validator.relativePerformance) &&
+                    opponent.relativePerformance >= validator.relativePerformance &&
                     opponent.selfStake.gte(validator.selfStake) &&
                     opponent.activeEras >= validator.activeEras &&
                     opponent.totalRating >= validator.totalRating) {
