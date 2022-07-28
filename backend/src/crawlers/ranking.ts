@@ -524,11 +524,21 @@ const crawler = async (delayedStart: boolean) => {
               others: eraOthersStake.toString(10),
               total: eraTotalStake.toString(10),
             });
-            eraPerformance =
-              (points * (1 - commission / 100)) /
-              eraTotalStake
-                .div(new BigNumber(10).pow(config.tokenDecimals))
-                .toNumber();
+
+            // edge case when validator has era points but no stake at the era
+            if (eraTotalStake.toNumber() !== 0) {
+              eraPerformance =
+                (points * (1 - commission / 100)) /
+                eraTotalStake
+                  .div(new BigNumber(10).pow(config.tokenDecimals))
+                  .toNumber();
+            } else {
+              eraPerformance = 0;
+            }
+            
+            // debug era performance
+            logger.debug(loggerOptions, `validator: ${stashAddress}, era: ${new BigNumber(era.toString()).toString(10)}, eraPerformance: ${eraPerformance}, eraTotalStake: ${eraTotalStake}`);
+            
             performanceHistory.push({
               era: new BigNumber(era.toString()).toString(10),
               performance: eraPerformance,
