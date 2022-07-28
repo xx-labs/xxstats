@@ -9,7 +9,7 @@
       :key="address"
       :v-clipboard:copy="address"
       :size="size"
-      :theme="'polkadot'"
+      :theme="theme"
       :value="address"
       class="identicon"
     />
@@ -29,7 +29,7 @@ export default {
     },
     theme: {
       type: String,
-      default: () => 'polkadot',
+      default: () => 'jdenticon',
     },
     size: {
       type: Number,
