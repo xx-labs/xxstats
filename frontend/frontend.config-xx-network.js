@@ -12,9 +12,9 @@ export const config = {
   googleAnalytics: '',
   theme: '@/assets/scss/themes/xxstats.scss',
   // ranking
-  historySize: 84, // 84 days
+  historySize: 28, // TODO: take from api.consts.staking.bondingDuration https://polkadot.js.org/docs/substrate/constants#bondingduration-u32
   erasPerDay: 1,
-  validatorSetSize: 24,
+  validatorSetSize: 16, // TODO: take from api.consts.staking.maxNominations (see https://polkadot.js.org/docs/substrate/constants#maxnominations-u32)
 }
 
 export const links = {
