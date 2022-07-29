@@ -355,7 +355,7 @@ const crawler = async (delayedStart) => {
                     // edge case when validator has era points but no stake at the era
                     if (eraTotalStake.toNumber() !== 0 && commission !== 0) {
                         eraPerformance =
-                            (points * (1 - commission / 100)) /
+                            (points * (1 - (commission / 100))) /
                                 eraTotalStake
                                     .div(new bignumber_js_1.BigNumber(10).pow(config.tokenDecimals))
                                     .toNumber();
