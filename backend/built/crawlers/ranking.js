@@ -321,7 +321,6 @@ const crawler = async (delayedStart) => {
             const stakeHistory = [];
             let activeEras = 0;
             let performance = 0;
-            // eslint-disable-next-line
             erasPoints.forEach((eraPoints) => {
                 var _a, _b;
                 const { era } = eraPoints;
@@ -334,7 +333,8 @@ const crawler = async (delayedStart) => {
                         era: new bignumber_js_1.BigNumber(era.toString()).toString(10),
                         points,
                     });
-                    if (validator.info.stakingLedger.claimedRewards.includes(era)) {
+                    const claimedRewards = JSON.parse(validator.info.stakingLedger.claimedRewards.toString());
+                    if (claimedRewards.includes(era.toNumber())) {
                         eraPayoutState = 'paid';
                     }
                     else {
@@ -353,7 +353,7 @@ const crawler = async (delayedStart) => {
                         total: eraTotalStake.toString(10),
                     });
                     // edge case when validator has era points but no stake at the era
-                    if (eraTotalStake.toNumber() !== 0) {
+                    if (eraTotalStake.toNumber() !== 0 && commission !== 0) {
                         eraPerformance =
                             (points * (1 - commission / 100)) /
                                 eraTotalStake
