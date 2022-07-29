@@ -364,7 +364,7 @@ const crawler = async (delayedStart) => {
                         eraPerformance = 0;
                     }
                     // debug era performance
-                    logger_1.logger.debug(loggerOptions, `validator: ${stashAddress}, era: ${new bignumber_js_1.BigNumber(era.toString()).toString(10)}, eraPerformance: ${eraPerformance}, eraTotalStake: ${eraTotalStake}`);
+                    // logger.debug(loggerOptions, `validator: ${stashAddress}, era: ${new BigNumber(era.toString()).toString(10)}, eraPerformance: ${eraPerformance}, eraTotalStake: ${eraTotalStake}`);
                     performanceHistory.push({
                         era: new bignumber_js_1.BigNumber(era.toString()).toString(10),
                         performance: eraPerformance,
@@ -395,7 +395,7 @@ const crawler = async (delayedStart) => {
                 performance += eraPerformance;
             });
             // debug
-            logger_1.logger.debug(loggerOptions, `validator: ${stashAddress}, performance: ${performance}`);
+            // logger.debug(loggerOptions, `validator: ${stashAddress}, performance: ${performance}`);
             const eraPointsHistoryValidator = eraPointsHistory.reduce((total, era) => total + era.points, 0);
             const eraPointsPercent = (eraPointsHistoryValidator * 100) / eraPointsHistoryTotalsSum;
             const eraPointsRating = eraPointsHistoryValidator > eraPointsAverage ? 2 : 0;
