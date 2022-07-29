@@ -211,10 +211,10 @@ const updateAccountInfo = async (api, client, blockNumber, timestamp, address, l
   ;`;
     try {
         await client.query(query, data);
-        logger_1.logger.debug(loggerOptions, `Updated account info for event/s involved address ${address}`);
+        logger_1.logger.debug(loggerOptions, `Updated account info for address ${address}`);
     }
     catch (error) {
-        logger_1.logger.error(loggerOptions, `Error updating account info for event/s involved address: ${JSON.stringify(error)}`);
+        logger_1.logger.error(loggerOptions, `Error updating account info for address: ${JSON.stringify(error)}`);
         Sentry.captureException(error);
     }
 };

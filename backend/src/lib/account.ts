@@ -204,12 +204,12 @@ export const updateAccountInfo = async (
     await client.query(query, data);
     logger.debug(
       loggerOptions,
-      `Updated account info for event/s involved address ${address}`,
+      `Updated account info for address ${address}`,
     );
   } catch (error) {
     logger.error(
       loggerOptions,
-      `Error updating account info for event/s involved address: ${JSON.stringify(
+      `Error updating account info for address: ${JSON.stringify(
         error,
       )}`,
     );

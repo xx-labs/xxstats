@@ -256,9 +256,6 @@ const harvestBlock = async (config, api, client, blockNumber, doUpdateAccountsIn
         if (runtimeUpgrade) {
             const specName = runtimeVersion.toJSON().specName;
             const specVersion = runtimeVersion.specVersion;
-            // TODO: enable again
-            // see: https://github.com/polkadot-js/api/issues/4596
-            // const metadata = await api.rpc.state.getMetadata(blockHash);
             await (0, exports.storeMetadata)(client, api, blockNumber, blockHash.toString(), specName.toString(), specVersion.toNumber(), timestamp, loggerOptions);
         }
         await Promise.all([

@@ -310,10 +310,6 @@ export const harvestBlock = async (
       const specName = runtimeVersion.toJSON().specName;
       const specVersion = runtimeVersion.specVersion;
 
-      // TODO: enable again
-      // see: https://github.com/polkadot-js/api/issues/4596
-      // const metadata = await api.rpc.state.getMetadata(blockHash);
-
       await storeMetadata(
         client,
         api,
