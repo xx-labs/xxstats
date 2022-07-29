@@ -538,7 +538,7 @@ const crawler = async (delayedStart: boolean) => {
             }
             
             // debug era performance
-            logger.debug(loggerOptions, `validator: ${stashAddress}, era: ${new BigNumber(era.toString()).toString(10)}, eraPerformance: ${eraPerformance}, eraTotalStake: ${eraTotalStake}`);
+            // logger.debug(loggerOptions, `validator: ${stashAddress}, era: ${new BigNumber(era.toString()).toString(10)}, eraPerformance: ${eraPerformance}, eraTotalStake: ${eraTotalStake}`);
             
             performanceHistory.push({
               era: new BigNumber(era.toString()).toString(10),
@@ -570,7 +570,7 @@ const crawler = async (delayedStart: boolean) => {
         });
 
         // debug
-        logger.debug(loggerOptions, `validator: ${stashAddress}, performance: ${performance}`);
+        // logger.debug(loggerOptions, `validator: ${stashAddress}, performance: ${performance}`);
 
         const eraPointsHistoryValidator = eraPointsHistory.reduce(
           (total: any, era: any) => total + era.points,
