@@ -162,6 +162,8 @@ CREATE TABLE IF NOT EXISTS ranking (
   controller_address TEXT NOT NULL,
   cmix_id TEXT NOT NULL,
   cmix_id_hex TEXT NOT NULL,
+  session_ids JSON NOT NULL,
+  next_session_ids JSON NOT NULL,
   dashboard_info JSON NOT NULL,
   location TEXT NOT NULL,
   included_thousand_validators BOOLEAN NOT NULL,

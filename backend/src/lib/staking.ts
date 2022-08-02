@@ -11,6 +11,7 @@ import {
   CrawlerConfig,
   IdentityInfo,
   LoggerOptions,
+  ValidatorOrIntention,
 } from './types';
 import { dbParamQuery, dbQuery } from './db';
 import { backendConfig } from '../backend.config';
@@ -282,7 +283,7 @@ export const addNewFeaturedValidator = async (
 
 export const insertRankingValidator = async (
   client: Client,
-  validator: any,
+  validator: ValidatorOrIntention,
   blockHeight: number,
   startTime: number,
   loggerOptions: LoggerOptions,
@@ -305,6 +306,8 @@ export const insertRankingValidator = async (
       controller_address,
       cmix_id,
       cmix_id_hex,
+      session_ids,
+      next_session_ids,
       dashboard_info,
       location,
       included_thousand_validators,
@@ -396,7 +399,9 @@ export const insertRankingValidator = async (
       $51,
       $52,
       $53,
-      $54
+      $54,
+      $55,
+      $56
     )
     ON CONFLICT ON CONSTRAINT ranking_pkey 
     DO NOTHING`;
@@ -418,6 +423,8 @@ export const insertRankingValidator = async (
     validator.controllerAddress,
     validator.cmixId,
     validator.cmixIdHex,
+    JSON.stringify(validator.sessionIds),
+    JSON.stringify(validator.nextSessionIds),
     validator.dashboardInfo,
     validator.location,
     validator.includedThousandValidators,

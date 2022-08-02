@@ -132,6 +132,8 @@ export interface ValidatorOrIntention {
   controllerAddress?: string,
   cmixId?: string,
   cmixIdHex?: string,
+  sessionIds?: string[],
+  nextSessionIds?: string[],
   dashboardInfo?: any, // TODO: add type
   location?: string,
   includedThousandValidators?: Boolean,
