@@ -182,7 +182,19 @@ const crawler = async (delayedStart: boolean) => {
       ),
     );
 
+    // get validator session ids and next session ids
     logger.debug(loggerOptions, 'Step #9');
+    validators = await Promise.all(
+      validators.map((validator: ValidatorOrIntention) =>
+        api.derive.staking.keys(validator.info.accountId).then(({ sessionIds, nextSessionIds }) => ({
+          ...validator,
+          sessionIds: sessionIds.map((sessionId) => sessionId.toString()),
+          nextSessionIds: nextSessionIds.map((nextSessionId) => nextSessionId.toString()),
+        })),
+      ),
+    );
+
+    logger.debug(loggerOptions, 'Step #10');
     intentions = await Promise.all(
       waitingInfo.info.map((intention) =>
         api.derive.accounts.info(intention.accountId).then(({ identity }) => ({
@@ -192,6 +204,19 @@ const crawler = async (delayedStart: boolean) => {
         })),
       ),
     );
+
+    // get intention session ids and next session ids
+    logger.debug(loggerOptions, 'Step #11');
+    intentions = await Promise.all(
+      intentions.map((intention: ValidatorOrIntention) =>
+        api.derive.staking.keys(intention.info.accountId).then(({ sessionIds, nextSessionIds }) => ({
+          ...intention,
+          sessionIds: sessionIds.map((sessionId) => sessionId.toString()),
+          nextSessionIds: nextSessionIds.map((nextSessionId) => nextSessionId.toString()),
+        })),
+      ),
+    );
+
     const dataCollectionEndTime = new Date().getTime();
     const dataCollectionTime = dataCollectionEndTime - startTime;
     logger.debug(loggerOptions, 'Done!');
@@ -377,6 +402,12 @@ const crawler = async (delayedStart: boolean) => {
         // cmix id
         const cmixId = validator.info.stakingLedger.cmixId.isSome ? transformCmixId(validator.info.stakingLedger.cmixId) : '';
 
+        // session ids
+        const sessionIds = validator.sessionIds;
+        
+        // next session ids
+        const nextsessionIds = validator.nextSessionIds;
+
         // location
         const location = dashboardInfo?.location ? dashboardInfo.location : '';
 
@@ -536,10 +567,6 @@ const crawler = async (delayedStart: boolean) => {
             } else {
               eraPerformance = 0;
             }
-            
-            // debug era performance
-            // logger.debug(loggerOptions, `validator: ${stashAddress}, era: ${new BigNumber(era.toString()).toString(10)}, eraPerformance: ${eraPerformance}, eraTotalStake: ${eraTotalStake}`);
-            
             performanceHistory.push({
               era: new BigNumber(era.toString()).toString(10),
               performance: eraPerformance,
@@ -568,9 +595,6 @@ const crawler = async (delayedStart: boolean) => {
           // total performance
           performance += eraPerformance;
         });
-
-        // debug
-        // logger.debug(loggerOptions, `validator: ${stashAddress}, performance: ${performance}`);
 
         const eraPointsHistoryValidator = eraPointsHistory.reduce(
           (total: any, era: any) => total + era.points,
@@ -632,6 +656,8 @@ const crawler = async (delayedStart: boolean) => {
           controllerAddress,
           cmixId,
           cmixIdHex,
+          sessionIds,
+          nextsessionIds,
           dashboardInfo,
           location,
           includedThousandValidators,

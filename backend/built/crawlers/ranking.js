@@ -129,11 +129,25 @@ const crawler = async (delayedStart) => {
             identity,
             active: true,
         }))));
+        // get validator session ids and next session ids
         logger_1.logger.debug(loggerOptions, 'Step #9');
+        validators = await Promise.all(validators.map((validator) => api.derive.staking.keys(validator.info.accountId).then(({ sessionIds, nextSessionIds }) => ({
+            ...validator,
+            sessionIds: sessionIds.map((sessionId) => sessionId.toString()),
+            nextSessionIds: nextSessionIds.map((nextSessionId) => nextSessionId.toString()),
+        }))));
+        logger_1.logger.debug(loggerOptions, 'Step #10');
         intentions = await Promise.all(waitingInfo.info.map((intention) => api.derive.accounts.info(intention.accountId).then(({ identity }) => ({
             info: intention,
             identity,
             active: false,
+        }))));
+        // get intention session ids and next session ids
+        logger_1.logger.debug(loggerOptions, 'Step #11');
+        intentions = await Promise.all(intentions.map((intention) => api.derive.staking.keys(intention.info.accountId).then(({ sessionIds, nextSessionIds }) => ({
+            ...intention,
+            sessionIds: sessionIds.map((sessionId) => sessionId.toString()),
+            nextSessionIds: nextSessionIds.map((nextSessionId) => nextSessionId.toString()),
         }))));
         const dataCollectionEndTime = new Date().getTime();
         const dataCollectionTime = dataCollectionEndTime - startTime;
@@ -259,6 +273,10 @@ const crawler = async (delayedStart) => {
             const cmixIdHex = validator.info.stakingLedger.cmixId.toString();
             // cmix id
             const cmixId = validator.info.stakingLedger.cmixId.isSome ? (0, staking_1.transformCmixId)(validator.info.stakingLedger.cmixId) : '';
+            // session ids
+            const sessionIds = validator.sessionIds;
+            // next session ids
+            const nextsessionIds = validator.nextSessionIds;
             // location
             const location = (dashboardInfo === null || dashboardInfo === void 0 ? void 0 : dashboardInfo.location) ? dashboardInfo.location : '';
             // identity
@@ -363,8 +381,6 @@ const crawler = async (delayedStart) => {
                     else {
                         eraPerformance = 0;
                     }
-                    // debug era performance
-                    // logger.debug(loggerOptions, `validator: ${stashAddress}, era: ${new BigNumber(era.toString()).toString(10)}, eraPerformance: ${eraPerformance}, eraTotalStake: ${eraTotalStake}`);
                     performanceHistory.push({
                         era: new bignumber_js_1.BigNumber(era.toString()).toString(10),
                         performance: eraPerformance,
@@ -394,8 +410,6 @@ const crawler = async (delayedStart) => {
                 // total performance
                 performance += eraPerformance;
             });
-            // debug
-            // logger.debug(loggerOptions, `validator: ${stashAddress}, performance: ${performance}`);
             const eraPointsHistoryValidator = eraPointsHistory.reduce((total, era) => total + era.points, 0);
             const eraPointsPercent = (eraPointsHistoryValidator * 100) / eraPointsHistoryTotalsSum;
             const eraPointsRating = eraPointsHistoryValidator > eraPointsAverage ? 2 : 0;
@@ -445,6 +459,8 @@ const crawler = async (delayedStart) => {
                 controllerAddress,
                 cmixId,
                 cmixIdHex,
+                sessionIds,
+                nextsessionIds,
                 dashboardInfo,
                 location,
                 includedThousandValidators,

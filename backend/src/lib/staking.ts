@@ -305,6 +305,8 @@ export const insertRankingValidator = async (
       controller_address,
       cmix_id,
       cmix_id_hex,
+      session_ids,
+      next_session_ids,
       dashboard_info,
       location,
       included_thousand_validators,
@@ -396,7 +398,9 @@ export const insertRankingValidator = async (
       $51,
       $52,
       $53,
-      $54
+      $54,
+      $55,
+      $56
     )
     ON CONFLICT ON CONSTRAINT ranking_pkey 
     DO NOTHING`;
@@ -418,6 +422,8 @@ export const insertRankingValidator = async (
     validator.controllerAddress,
     validator.cmixId,
     validator.cmixIdHex,
+    validator.sessionIds,
+    validator.nextSessionIds,
     validator.dashboardInfo,
     validator.location,
     validator.includedThousandValidators,
