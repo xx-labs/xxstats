@@ -11,6 +11,7 @@ import {
   CrawlerConfig,
   IdentityInfo,
   LoggerOptions,
+  ValidatorOrIntention,
 } from './types';
 import { dbParamQuery, dbQuery } from './db';
 import { backendConfig } from '../backend.config';
@@ -282,7 +283,7 @@ export const addNewFeaturedValidator = async (
 
 export const insertRankingValidator = async (
   client: Client,
-  validator: any,
+  validator: ValidatorOrIntention,
   blockHeight: number,
   startTime: number,
   loggerOptions: LoggerOptions,
@@ -422,8 +423,8 @@ export const insertRankingValidator = async (
     validator.controllerAddress,
     validator.cmixId,
     validator.cmixIdHex,
-    validator.sessionIds,
-    validator.nextSessionIds,
+    JSON.stringify(validator.sessionIds),
+    JSON.stringify(validator.nextSessionIds),
     validator.dashboardInfo,
     validator.location,
     validator.includedThousandValidators,
