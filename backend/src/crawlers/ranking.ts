@@ -406,7 +406,7 @@ const crawler = async (delayedStart: boolean) => {
         const sessionIds = validator.sessionIds;
         
         // next session ids
-        const nextsessionIds = validator.nextSessionIds;
+        const nextSessionIds = validator.nextSessionIds;
 
         // location
         const location = dashboardInfo?.location ? dashboardInfo.location : '';
@@ -657,7 +657,7 @@ const crawler = async (delayedStart: boolean) => {
           cmixId,
           cmixIdHex,
           sessionIds,
-          nextsessionIds,
+          nextSessionIds,
           dashboardInfo,
           location,
           includedThousandValidators,

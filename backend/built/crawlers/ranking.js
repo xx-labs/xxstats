@@ -276,7 +276,7 @@ const crawler = async (delayedStart) => {
             // session ids
             const sessionIds = validator.sessionIds;
             // next session ids
-            const nextsessionIds = validator.nextSessionIds;
+            const nextSessionIds = validator.nextSessionIds;
             // location
             const location = (dashboardInfo === null || dashboardInfo === void 0 ? void 0 : dashboardInfo.location) ? dashboardInfo.location : '';
             // identity
@@ -460,7 +460,7 @@ const crawler = async (delayedStart) => {
                 cmixId,
                 cmixIdHex,
                 sessionIds,
-                nextsessionIds,
+                nextSessionIds,
                 dashboardInfo,
                 location,
                 includedThousandValidators,
