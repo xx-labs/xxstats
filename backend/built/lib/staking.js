@@ -226,8 +226,6 @@ const addNewFeaturedValidator = async (config, client, ranking, loggerOptions) =
 };
 exports.addNewFeaturedValidator = addNewFeaturedValidator;
 const insertRankingValidator = async (client, validator, blockHeight, startTime, loggerOptions) => {
-    // debug
-    console.log(JSON.stringify(validator, null, 2));
     const sql = `INSERT INTO ranking (
       block_height,
       rank,

@@ -288,8 +288,6 @@ export const insertRankingValidator = async (
   startTime: number,
   loggerOptions: LoggerOptions,
 ): Promise<void> => {
-  // debug
-  console.log(JSON.stringify(validator, null, 2));
   const sql = `INSERT INTO ranking (
       block_height,
       rank,
