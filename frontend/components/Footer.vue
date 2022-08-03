@@ -81,7 +81,6 @@
           <nuxt-link to="/team">
             {{ $t('layout.default.made_by') }}
           </nuxt-link>
-          <span class="mx-2">|</span> {{ $t('layout.default.built_with') }}
           <span class="mx-2">|</span>
           <a
             href="https://github.com/xx-labs/xxstats"
