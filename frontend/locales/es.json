@@ -403,7 +403,8 @@
     },
     "nominations": {
       "who": "Nominador",
-      "value": "Cantidad"
+      "value": "Cantidad",
+      "share": "Porcentaje"
     },
     "account_links": {
       "check_account": "Ver cuenta en"

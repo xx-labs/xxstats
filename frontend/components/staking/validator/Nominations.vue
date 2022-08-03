@@ -27,6 +27,9 @@
             {{ formatAmount(data.item.value) }}
           </p>
         </template>
+        <template #cell(share)="data">
+          <p class="mb-0">{{ getPercentage(data.item.value).toFixed(2) }}%</p>
+        </template>
       </b-table>
       <div class="mt-4 d-flex">
         <b-pagination
@@ -53,9 +56,10 @@
 </template>
 
 <script>
+import { BigNumber } from 'bignumber.js'
 import commonMixin from '@/mixins/commonMixin.js'
 import Identicon from '@/components/Identicon.vue'
-import { paginationOptions } from '@/frontend.config.js'
+import { config } from '@/frontend.config.js'
 
 export default {
   components: {
@@ -74,7 +78,7 @@ export default {
       loading: true,
       sortBy: 'value',
       sortDesc: true,
-      tableOptions: paginationOptions,
+      tableOptions: config.paginationOptions,
       perPage: localStorage.paginationOptions
         ? parseInt(localStorage.paginationOptions)
         : 10,
@@ -88,6 +92,10 @@ export default {
           key: 'value',
           label: this.$t('components.nominations.value'),
         },
+        {
+          key: 'share',
+          label: this.$t('components.nominations.share'),
+        },
       ],
     }
   },
@@ -95,11 +103,28 @@ export default {
     totalRows() {
       return this.nominations.length
     },
+    totalStake() {
+      const totalStake = this.nominations.reduce((accum, nomination) => {
+        const current = new BigNumber(nomination.value)
+          .div(new BigNumber(10).pow(config.tokenDecimals))
+          .toNumber()
+        return accum + current
+      }, 0)
+      // eslint-disable-next-line no-console
+      console.log('total stake:', totalStake)
+      return totalStake
+    },
   },
   methods: {
     setPageSize(num) {
       localStorage.paginationOptions = num
       this.perPage = parseInt(num)
+    },
+    getPercentage(value) {
+      value = new BigNumber(value)
+        .div(new BigNumber(10).pow(config.tokenDecimals))
+        .toNumber()
+      return (value * 100) / this.totalStake
     },
   },
 }
