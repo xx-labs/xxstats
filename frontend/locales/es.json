@@ -697,7 +697,14 @@
       "metrics": "Métricas",
       "charts": "Gráficas",
       "nominations": "Nominaciones",
-      "dashboard_info": "Dashboard info"
+      "dashboard_info": {
+        "title": "Información del dashboard",
+        "description": "Descripción",
+        "location": "Localización",
+        "social": "Social",
+        "internet_provider": "Proveedor de internet",
+        "performance": "Rendimiento"
+      }
     },
     "team": {
       "title": "Equipo",

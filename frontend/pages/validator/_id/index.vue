@@ -352,17 +352,180 @@
         <b-tab :title="$t('pages.validator.nominations')">
           <Nominations :nominations="validator.nominations" />
         </b-tab>
-        <b-tab :title="$t('pages.validator.dashboard_info')">
-          <div
-            v-for="(value, name) in validator.dashboardInfo"
-            :key="`${name}-${value}`"
-            class="row"
+        <b-tab :title="$t('pages.validator.dashboard_info.title')">
+          <h5
+            v-if="validator.dashboardInfo.description"
+            class="mt-3 mb-2 text-primary2"
           >
-            <div class="col-xl-6 pb-4">
-              <strong>{{ capitalize(name) }}:</strong>
+            {{ $t('pages.validator.dashboard_info.description') }}
+          </h5>
+          <p class="mb-0">
+            {{ validator.dashboardInfo.description }}
+          </p>
+
+          <h5 class="mt-3 mb-2 text-primary2">
+            {{ $t('pages.validator.dashboard_info.location') }}
+          </h5>
+          <p v-if="validator.dashboardInfo.location" class="mb-0">
+            {{ validator.dashboardInfo.location }}
+          </p>
+          <p v-if="validator.dashboardInfo.geoBin" class="mb-0">
+            {{ validator.dashboardInfo.geoBin }}
+          </p>
+          <p v-if="validator.dashboardInfo.gpsLocation" class="mb-0">
+            <a
+              target="_blank"
+              :href="`https://www.google.com/maps/@${
+                validator.dashboardInfo.gpsLocation.split(', ')[0]
+              },${validator.dashboardInfo.gpsLocation.split(', ')[1]},11z`"
+              >{{ validator.dashboardInfo.gpsLocation }}</a
+            >
+          </p>
+
+          <h5
+            v-if="
+              validator.dashboardInfo.team !== '' ||
+              validator.dashboardInfo.network !== '' ||
+              validator.dashboardInfo.email !== '' ||
+              validator.dashboardInfo.twitter !== '' ||
+              validator.dashboardInfo.discord !== '' ||
+              validator.dashboardInfo.instagram !== '' ||
+              validator.dashboardInfo.medium !== '' ||
+              validator.dashboardInfo.other !== '' ||
+              validator.dashboardInfo.forum !== ''
+            "
+            class="mt-3 mb-2 text-primary2"
+          >
+            {{ $t('pages.validator.dashboard_info.social') }}
+          </h5>
+          <div v-if="validator.dashboardInfo.team" class="row">
+            <div class="col-xl-4">
+              <strong>Team:</strong>
             </div>
-            <div class="col-xl-6 pb-4">
-              {{ value }}
+            <div class="col-xl-8">
+              {{ validator.dashboardInfo.team }}
+            </div>
+          </div>
+          <div v-if="validator.dashboardInfo.network" class="row">
+            <div class="col-xl-4">
+              <strong>Network:</strong>
+            </div>
+            <div class="col-xl-8">
+              {{ validator.dashboardInfo.network }}
+            </div>
+          </div>
+          <div v-if="validator.dashboardInfo.email" class="row">
+            <div class="col-xl-4">
+              <strong>Email:</strong>
+            </div>
+            <div class="col-xl-8">
+              {{ validator.dashboardInfo.email }}
+            </div>
+          </div>
+          <div v-if="validator.dashboardInfo.twitter" class="row">
+            <div class="col-xl-4">
+              <strong>Twitter:</strong>
+            </div>
+            <div class="col-xl-8">
+              {{ validator.dashboardInfo.twitter }}
+            </div>
+          </div>
+          <div v-if="validator.dashboardInfo.discord" class="row">
+            <div class="col-xl-4">
+              <strong>Discord:</strong>
+            </div>
+            <div class="col-xl-8">
+              {{ validator.dashboardInfo.discord }}
+            </div>
+          </div>
+          <div v-if="validator.dashboardInfo.instagram" class="row">
+            <div class="col-xl-4">
+              <strong>Instagram:</strong>
+            </div>
+            <div class="col-xl-8">
+              {{ validator.dashboardInfo.instagram }}
+            </div>
+          </div>
+          <div v-if="validator.dashboardInfo.medium" class="row">
+            <div class="col-xl-4">
+              <strong>Medium:</strong>
+            </div>
+            <div class="col-xl-8">
+              {{ validator.dashboardInfo.medium }}
+            </div>
+          </div>
+          <div v-if="validator.dashboardInfo.other" class="row">
+            <div class="col-xl-4">
+              <strong>Other:</strong>
+            </div>
+            <div class="col-xl-8">
+              {{ validator.dashboardInfo.other }}
+            </div>
+          </div>
+          <div v-if="validator.dashboardInfo.forum" class="row">
+            <div class="col-xl-4">
+              <strong>Forum:</strong>
+            </div>
+            <div class="col-xl-8">
+              {{ validator.dashboardInfo.forum }}
+            </div>
+          </div>
+
+          <h5
+            v-if="validator.dashboardInfo.whois"
+            class="mt-3 mb-2 text-primary2"
+          >
+            {{ $t('pages.validator.dashboard_info.internet_provider') }}
+          </h5>
+          <p class="mb-0">
+            {{ validator.dashboardInfo.whois }}
+          </p>
+
+          <h5 class="mt-3 mb-2 text-primary2">
+            {{ $t('pages.validator.dashboard_info.performance') }}
+          </h5>
+          <div v-if="validator.dashboardInfo.status" class="row">
+            <div class="col-xl-4">
+              <strong>Status</strong>
+            </div>
+            <div class="col-xl-8">
+              <font-awesome-icon
+                v-if="validator.dashboardInfo.status === 'online'"
+                icon="circle"
+                class="text-success"
+              />
+              <font-awesome-icon v-else icon="circle" class="text-danger" />
+              {{ capitalize(validator.dashboardInfo.status) }}
+            </div>
+          </div>
+          <div v-if="validator.dashboardInfo.uptime" class="row">
+            <div class="col-xl-4">
+              <strong>Uptime</strong>
+            </div>
+            <div class="col-xl-8">{{ validator.dashboardInfo.uptime }}%</div>
+          </div>
+          <div v-if="validator.dashboardInfo.roundFailureAvg" class="row">
+            <div class="col-xl-4">
+              <strong>Round failure average</strong>
+            </div>
+            <div class="col-xl-8">
+              {{ validator.dashboardInfo.roundFailureAvg }}
+            </div>
+          </div>
+          <div v-if="validator.dashboardInfo.realtimeFailureAvg" class="row">
+            <div class="col-xl-4">
+              <strong>Realtime failure average</strong>
+            </div>
+            <div class="col-xl-8">
+              {{ validator.dashboardInfo.realtimeFailureAvg }}
+            </div>
+          </div>
+          <div v-if="validator.dashboardInfo.precompFailureAvg" class="row">
+            <div class="col-xl-4">
+              <strong>Precomp failure average</strong>
+            </div>
+            <div class="col-xl-8">
+              {{ validator.dashboardInfo.precompFailureAvg }}
             </div>
           </div>
         </b-tab>

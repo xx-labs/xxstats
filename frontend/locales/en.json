@@ -697,7 +697,14 @@
       "metrics": "Metrics",
       "charts": "Charts",
       "nominations": "Nominations",
-      "dashboard_info": "Dashboard info"
+      "dashboard_info": {
+        "title": "Dashboard info",
+        "description": "Description",
+        "location": "Location",
+        "social": "Social",
+        "internet_provider": "Internet provider",
+        "performance": "Performance"
+      }
     },
     "team": {
       "title": "Team",
