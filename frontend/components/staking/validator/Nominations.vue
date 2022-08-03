@@ -104,15 +104,12 @@ export default {
       return this.nominations.length
     },
     totalStake() {
-      const totalStake = this.nominations.reduce((accum, nomination) => {
+      return this.nominations.reduce((accum, nomination) => {
         const current = new BigNumber(nomination.value)
           .div(new BigNumber(10).pow(config.tokenDecimals))
           .toNumber()
         return accum + current
       }, 0)
-      // eslint-disable-next-line no-console
-      console.log('total stake:', totalStake)
-      return totalStake
     },
   },
   methods: {

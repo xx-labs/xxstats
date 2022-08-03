@@ -3,16 +3,7 @@
     <h1 class="mb-4 text-center">Nominate</h1>
     <div class="row">
       <div
-        class="
-          col-sm-10
-          offset-sm-1
-          col-md-10
-          offset-md-1
-          col-lg-6
-          offset-lg-3
-          col-xl-4
-          offset-xl-4
-        "
+        class="col-sm-10 offset-sm-1 col-md-10 offset-md-1 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4"
       >
         <div v-if="loading">
           <Loading />

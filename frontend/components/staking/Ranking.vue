@@ -307,6 +307,8 @@
             v-model="currentPage"
             :total-rows="filteredRows"
             :per-page="perPage"
+            limit="4"
+            hide-ellipsis
             aria-controls="my-table"
             variant="dark"
             align="right"
