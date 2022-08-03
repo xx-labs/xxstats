@@ -697,7 +697,14 @@
       "metrics": "Métricas",
       "charts": "Gráficas",
       "nominations": "Nominaciones",
-      "dashboard_info": "Dashboard info"
+      "dashboard_info": {
+        "title": "Información del dashboard",
+        "description": "Descripción",
+        "location": "Localización",
+        "social": "Social",
+        "internet_provider": "Proveedor de internet",
+        "performance": "Rendimiento"
+      }
     },
     "team": {
       "title": "Equipo",
@@ -808,6 +815,11 @@
     "stash": "Stash",
     "controller": "Controlador",
     "cmix_id": "Id de cmix",
-    "location": "Localización"
+    "location": "Localización",
+    "own_stake": "Stake propio",
+    "other_stake": "Stake ajeno",
+    "total_stake": "Stake total",
+    "session_ids": "Claves de sesión",
+    "next_session_ids": "Próximas claves de sesión"
   }
 }

@@ -41,12 +41,12 @@
               {{ shortAddress(accountId) }}
             </span>
           </h1>
-          <h4 v-if="validator.includedThousandValidators">
+          <h4 v-if="validator.cmixId">
             <a
-              :href="`https://thousand-validators.kusama.network/#/leaderboard/${accountId}`"
+              :href="`https://dashboard.xx.network/nodes/${validator.cmixId}`"
               target="_blank"
               class="badge badge-pill badge-info"
-              >1KV Program</a
+              >Dashboard</a
             >
           </h4>
           <p><ValidatorLinks :account-id="accountId" /></p>
@@ -101,7 +101,12 @@
             <strong>{{ $t('details.validator.cmix_id') }}</strong>
           </div>
           <div class="col-md-9 mb-1 fee">
-            {{ shortAddress(validator.cmixId) }}
+            <a
+              :href="`https://dashboard.xx.network/nodes/${validator.cmixId}`"
+              target="_blank"
+            >
+              {{ shortAddress(validator.cmixId) }}
+            </a>
           </div>
         </div>
         <div v-if="validator.location" class="row">
@@ -110,6 +115,66 @@
           </div>
           <div class="col-md-9 mb-1 fee">
             {{ validator.location }}
+          </div>
+        </div>
+        <!-- stake -->
+        <div v-if="validator.selfStake" class="row">
+          <div class="col-md-3 mb-1">
+            <strong>{{ $t('details.validator.own_stake') }}</strong>
+          </div>
+          <div class="col-md-9 mb-1 fee">
+            <span class="amount">{{
+              formatAmount(validator.selfStake, 3, true)
+            }}</span>
+          </div>
+        </div>
+        <div v-if="validator.selfStake" class="row">
+          <div class="col-md-3 mb-1">
+            <strong>{{ $t('details.validator.other_stake') }}</strong>
+          </div>
+          <div class="col-md-9 mb-1 fee">
+            <span class="amount">{{
+              formatAmount(validator.otherStake, 3, true)
+            }}</span>
+          </div>
+        </div>
+        <div v-if="validator.totalStake" class="row">
+          <div class="col-md-3 mb-1">
+            <strong>{{ $t('details.validator.total_stake') }}</strong>
+          </div>
+          <div class="col-md-9 mb-1 fee">
+            <span class="amount">{{
+              formatAmount(validator.totalStake, 3, true)
+            }}</span>
+          </div>
+        </div>
+        <!-- session keys -->
+        <div v-if="validator.sessionIds" class="row">
+          <div class="col-md-3 mb-1">
+            <strong>{{ $t('details.validator.session_ids') }}</strong>
+          </div>
+          <div class="col-md-9 mb-1 fee">
+            <p
+              v-for="sessionId in validator.sessionIds"
+              :key="sessionId"
+              class="mb-0"
+            >
+              {{ sessionId }}
+            </p>
+          </div>
+        </div>
+        <div v-if="validator.nextSessionIds" class="row">
+          <div class="col-md-3 mb-1">
+            <strong>{{ $t('details.validator.next_session_ids') }}</strong>
+          </div>
+          <div class="col-md-9 mb-1 fee">
+            <p
+              v-for="sessionId in validator.nextSessionIds"
+              :key="sessionId"
+              class="mb-0"
+            >
+              {{ sessionId }}
+            </p>
           </div>
         </div>
         <!-- identity start -->
@@ -171,18 +236,6 @@
       </b-card>
       <b-tabs content-class="py-4">
         <b-tab :title="$t('pages.validator.metrics')" active>
-          <b-alert
-            show
-            dismissible
-            variant="info"
-            class="text-center py-3 glitch"
-          >
-            {{
-              $t('pages.validator.metrics_description', {
-                networkName: config.name,
-              })
-            }}
-          </b-alert>
           <div class="row pt-4">
             <div class="col-md-6 mb-5">
               <Identity
@@ -299,17 +352,180 @@
         <b-tab :title="$t('pages.validator.nominations')">
           <Nominations :nominations="validator.nominations" />
         </b-tab>
-        <b-tab :title="$t('pages.validator.dashboard_info')">
-          <div
-            v-for="(value, name) in validator.dashboardInfo"
-            :key="`${name}-${value}`"
-            class="row"
+        <b-tab :title="$t('pages.validator.dashboard_info.title')">
+          <h5
+            v-if="validator.dashboardInfo.description"
+            class="mt-3 mb-2 text-primary2"
           >
-            <div class="col-xl-6 pb-4">
-              <strong>{{ capitalize(name) }}:</strong>
+            {{ $t('pages.validator.dashboard_info.description') }}
+          </h5>
+          <p class="mb-0">
+            {{ validator.dashboardInfo.description }}
+          </p>
+
+          <h5 class="mt-3 mb-2 text-primary2">
+            {{ $t('pages.validator.dashboard_info.location') }}
+          </h5>
+          <p v-if="validator.dashboardInfo.location" class="mb-0">
+            {{ validator.dashboardInfo.location }}
+          </p>
+          <p v-if="validator.dashboardInfo.geoBin" class="mb-0">
+            {{ validator.dashboardInfo.geoBin }}
+          </p>
+          <p v-if="validator.dashboardInfo.gpsLocation" class="mb-0">
+            <a
+              target="_blank"
+              :href="`https://www.google.com/maps/@${
+                validator.dashboardInfo.gpsLocation.split(', ')[0]
+              },${validator.dashboardInfo.gpsLocation.split(', ')[1]},11z`"
+              >{{ validator.dashboardInfo.gpsLocation }}</a
+            >
+          </p>
+
+          <h5
+            v-if="
+              validator.dashboardInfo.team !== '' ||
+              validator.dashboardInfo.network !== '' ||
+              validator.dashboardInfo.email !== '' ||
+              validator.dashboardInfo.twitter !== '' ||
+              validator.dashboardInfo.discord !== '' ||
+              validator.dashboardInfo.instagram !== '' ||
+              validator.dashboardInfo.medium !== '' ||
+              validator.dashboardInfo.other !== '' ||
+              validator.dashboardInfo.forum !== ''
+            "
+            class="mt-3 mb-2 text-primary2"
+          >
+            {{ $t('pages.validator.dashboard_info.social') }}
+          </h5>
+          <div v-if="validator.dashboardInfo.team" class="row">
+            <div class="col-xl-4">
+              <strong>Team:</strong>
             </div>
-            <div class="col-xl-6 pb-4">
-              {{ value }}
+            <div class="col-xl-8">
+              {{ validator.dashboardInfo.team }}
+            </div>
+          </div>
+          <div v-if="validator.dashboardInfo.network" class="row">
+            <div class="col-xl-4">
+              <strong>Network:</strong>
+            </div>
+            <div class="col-xl-8">
+              {{ validator.dashboardInfo.network }}
+            </div>
+          </div>
+          <div v-if="validator.dashboardInfo.email" class="row">
+            <div class="col-xl-4">
+              <strong>Email:</strong>
+            </div>
+            <div class="col-xl-8">
+              {{ validator.dashboardInfo.email }}
+            </div>
+          </div>
+          <div v-if="validator.dashboardInfo.twitter" class="row">
+            <div class="col-xl-4">
+              <strong>Twitter:</strong>
+            </div>
+            <div class="col-xl-8">
+              {{ validator.dashboardInfo.twitter }}
+            </div>
+          </div>
+          <div v-if="validator.dashboardInfo.discord" class="row">
+            <div class="col-xl-4">
+              <strong>Discord:</strong>
+            </div>
+            <div class="col-xl-8">
+              {{ validator.dashboardInfo.discord }}
+            </div>
+          </div>
+          <div v-if="validator.dashboardInfo.instagram" class="row">
+            <div class="col-xl-4">
+              <strong>Instagram:</strong>
+            </div>
+            <div class="col-xl-8">
+              {{ validator.dashboardInfo.instagram }}
+            </div>
+          </div>
+          <div v-if="validator.dashboardInfo.medium" class="row">
+            <div class="col-xl-4">
+              <strong>Medium:</strong>
+            </div>
+            <div class="col-xl-8">
+              {{ validator.dashboardInfo.medium }}
+            </div>
+          </div>
+          <div v-if="validator.dashboardInfo.other" class="row">
+            <div class="col-xl-4">
+              <strong>Other:</strong>
+            </div>
+            <div class="col-xl-8">
+              {{ validator.dashboardInfo.other }}
+            </div>
+          </div>
+          <div v-if="validator.dashboardInfo.forum" class="row">
+            <div class="col-xl-4">
+              <strong>Forum:</strong>
+            </div>
+            <div class="col-xl-8">
+              {{ validator.dashboardInfo.forum }}
+            </div>
+          </div>
+
+          <h5
+            v-if="validator.dashboardInfo.whois"
+            class="mt-3 mb-2 text-primary2"
+          >
+            {{ $t('pages.validator.dashboard_info.internet_provider') }}
+          </h5>
+          <p class="mb-0">
+            {{ validator.dashboardInfo.whois }}
+          </p>
+
+          <h5 class="mt-3 mb-2 text-primary2">
+            {{ $t('pages.validator.dashboard_info.performance') }}
+          </h5>
+          <div v-if="validator.dashboardInfo.status" class="row">
+            <div class="col-xl-4">
+              <strong>Status</strong>
+            </div>
+            <div class="col-xl-8">
+              <font-awesome-icon
+                v-if="validator.dashboardInfo.status === 'online'"
+                icon="circle"
+                class="text-success"
+              />
+              <font-awesome-icon v-else icon="circle" class="text-danger" />
+              {{ capitalize(validator.dashboardInfo.status) }}
+            </div>
+          </div>
+          <div v-if="validator.dashboardInfo.uptime" class="row">
+            <div class="col-xl-4">
+              <strong>Uptime</strong>
+            </div>
+            <div class="col-xl-8">{{ validator.dashboardInfo.uptime }}%</div>
+          </div>
+          <div v-if="validator.dashboardInfo.roundFailureAvg" class="row">
+            <div class="col-xl-4">
+              <strong>Round failure average</strong>
+            </div>
+            <div class="col-xl-8">
+              {{ validator.dashboardInfo.roundFailureAvg }}
+            </div>
+          </div>
+          <div v-if="validator.dashboardInfo.realtimeFailureAvg" class="row">
+            <div class="col-xl-4">
+              <strong>Realtime failure average</strong>
+            </div>
+            <div class="col-xl-8">
+              {{ validator.dashboardInfo.realtimeFailureAvg }}
+            </div>
+          </div>
+          <div v-if="validator.dashboardInfo.precompFailureAvg" class="row">
+            <div class="col-xl-4">
+              <strong>Precomp failure average</strong>
+            </div>
+            <div class="col-xl-8">
+              {{ validator.dashboardInfo.precompFailureAvg }}
             </div>
           </div>
         </b-tab>
@@ -468,6 +684,8 @@ export default {
               cmix_id_hex
               location
               dashboard_info
+              session_ids
+              next_session_ids
             }
           }
         `,
@@ -534,7 +752,9 @@ export default {
             cmixIdHex: validator.cmix_id_hex,
             location: validator.location,
             dashboardInfo: validator.dashboard_info,
-            selected: this.isSelected(validator.stashAddress),
+            sessionIds: validator.session_ids,
+            nextSessionIds: validator.next_session_ids,
+            selected: this.isSelected(validator.stash_address),
           }
         },
       },

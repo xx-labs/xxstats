@@ -697,7 +697,14 @@
       "metrics": "Metrics",
       "charts": "Charts",
       "nominations": "Nominations",
-      "dashboard_info": "Dashboard info"
+      "dashboard_info": {
+        "title": "Dashboard info",
+        "description": "Description",
+        "location": "Location",
+        "social": "Social",
+        "internet_provider": "Internet provider",
+        "performance": "Performance"
+      }
     },
     "team": {
       "title": "Team",
@@ -808,7 +815,12 @@
       "stash": "Stash",
       "controller": "Controller",
       "cmix_id": "Cmix id",
-      "location": "Location"
+      "location": "Location",
+      "own_stake": "Own stake",
+      "other_stake": "Other stake",
+      "total_stake": "Total stake",
+      "session_ids": "Session keys",
+      "next_session_ids": "Next session keys"
     }
   }
 }
