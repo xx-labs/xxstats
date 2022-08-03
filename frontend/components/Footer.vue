@@ -13,14 +13,7 @@
         </div>
         <div class="row mt-4 pt-5">
           <div
-            class="
-              col-xs-12 col-sm-12 col-md-4
-              mt-2
-              mb-4
-              pb-4
-              mt-sm-2
-              text-center text-white
-            "
+            class="col-xs-12 col-sm-12 col-md-4 mt-2 mb-4 pb-4 mt-sm-2 text-center text-white"
             data-testid="footer-getInContact"
           >
             <h3 class="mb-3">
@@ -49,14 +42,7 @@
             </ul>
           </div>
           <div
-            class="
-              col-xs-12 col-sm-12 col-md-4
-              mt-2
-              mb-4
-              pb-4
-              mt-sm-2
-              text-center text-white
-            "
+            class="col-xs-12 col-sm-12 col-md-4 mt-2 mb-4 pb-4 mt-sm-2 text-center text-white"
             data-testid="footer-polkadot"
           >
             <h3 class="mb-3">PolkaStats</h3>
@@ -79,14 +65,7 @@
             </nuxt-link>
           </div>
           <div
-            class="
-              col-xs-12 col-sm-12 col-md-4
-              mt-2
-              mb-4
-              pb-4
-              mt-sm-2
-              text-center text-white
-            "
+            class="col-xs-12 col-sm-12 col-md-4 mt-2 mb-4 pb-4 mt-sm-2 text-center text-white"
             data-testid="footer-builtFor"
           >
             <h3 class="mb-3">

@@ -43,10 +43,7 @@
             >
               <template #cell(account_id)="data">
                 <div
-                  class="
-                    d-block d-sm-block d-md-none d-lg-none d-xl-none
-                    text-center
-                  "
+                  class="d-block d-sm-block d-md-none d-lg-none d-xl-none text-center"
                 >
                   <Identicon :address="data.item.account_id" :size="40" />
                   <nuxt-link
