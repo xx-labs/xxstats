@@ -251,18 +251,25 @@ export default {
         .map(({ name }) => name)
         .sort()
         .map((palletName) => ({
-          value: this.uncapitalize(palletName),
+          value: palletName.startsWith('XX')
+            ? `xx${palletName.substring(2, palletName.length)}`
+            : this.uncapitalize(palletName),
           text: palletName,
         }))
       // console.log('modules:', palletNames)
       return [{ value: null, text: 'All' }].concat(palletNames)
     },
     palletEventOptions() {
-      const vm = this
       let palletEvents = []
       if (this.selectedPalletName) {
+        const selectedPalletName = this.selectedPalletName.startsWith('xx')
+          ? `XX${this.selectedPalletName.substring(
+              2,
+              this.selectedPalletName.length
+            )}`
+          : this.capitalize(this.selectedPalletName)
         const selectedPallet = this.palletsAndEvents.find(
-          ({ name }) => name === vm.capitalize(vm.selectedPalletName)
+          ({ name }) => name === selectedPalletName
         )
         palletEvents = selectedPallet.events.sort().map((moduleEvent) => ({
           value: moduleEvent,
@@ -461,7 +468,9 @@ export default {
               this.metadata.lookup.types
                 .filter(
                   ({ id, type }) =>
-                    type.path.includes('Event') && id === eventsId
+                    (type.path.includes('Event') ||
+                      type.path.includes('RawEvent')) &&
+                    id === eventsId
                 )
                 .forEach(({ type }) => {
                   type.def.variant.variants.forEach((variant) => {
@@ -473,6 +482,7 @@ export default {
           })
         }
         this.palletsAndEvents = palletsAndEvents
+        // console.log('palletsAndEvents:', palletsAndEvents)
       },
     },
   },

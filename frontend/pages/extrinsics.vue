@@ -261,18 +261,24 @@ export default {
         .map(({ name }) => name)
         .sort()
         .map((palletName) => ({
-          value: this.uncapitalize(palletName),
+          value: palletName.startsWith('XX')
+            ? `xx${palletName.substring(2, palletName.length)}`
+            : this.uncapitalize(palletName),
           text: palletName,
         }))
-      // console.log('modules:', palletNames)
       return [{ value: null, text: 'All' }].concat(palletNames)
     },
     palletExtrinsicsOptions() {
-      const vm = this
       let palletExtrinsics = []
       if (this.selectedPalletName) {
+        const selectedPalletName = this.selectedPalletName.startsWith('xx')
+          ? `XX${this.selectedPalletName.substring(
+              2,
+              this.selectedPalletName.length
+            )}`
+          : this.capitalize(this.selectedPalletName)
         const selectedPallet = this.palletsAndExtrinsics.find(
-          ({ name }) => name === vm.capitalize(vm.selectedPalletName)
+          ({ name }) => name === selectedPalletName
         )
         palletExtrinsics = selectedPallet.calls
           .sort()
