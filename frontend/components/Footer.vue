@@ -27,16 +27,9 @@
                   @PolkaStats
                 </a>
               </li>
-              <li class="mr-2" data-testid="footer-pgp">
-                <a target="_blank" href="https://keybase.io/encrypt#polkastats">
-                  <font-awesome-icon :icon="['fab', 'keybase']" />
-                  PGP: 14C5 91D0 8ABA 03B7
-                </a>
-              </li>
               <li data-testid="footer-email">
-                <a target="_blank" href="mailto:polkastats@protonmail.com"
-                  ><font-awesome-icon icon="envelope" />
-                  polkastats@protonmail.com</a
+                <a target="_blank" href="mailto:hello@polkastats.io"
+                  ><font-awesome-icon icon="envelope" /> hello@polkastats.io</a
                 >
               </li>
             </ul>
@@ -89,16 +82,9 @@
             {{ $t('layout.default.made_by') }}
           </nuxt-link>
           <span class="mx-2">|</span> {{ $t('layout.default.built_with') }}
-          <a
-            href="https://basicattentiontoken.org/"
-            target="_blank"
-            data-testid="bat"
-            >Basic Atttention Token
-            <img src="/img/brave/logo-full-color.png" class="img-fluid bat"
-          /></a>
           <span class="mx-2">|</span>
           <a
-            href="https://github.com/Colm3na/polkastats-ng"
+            href="https://github.com/xx-labs/xxstats"
             aria-label="View source on GitHub"
             title="View source code on GitHub"
             target="_blank"
@@ -110,7 +96,7 @@
       </div>
     </footer>
     <a
-      href="https://github.com/Colm3na/polkastats-ng"
+      href="https://github.com/xx-labs/xxstats"
       class="github-corner"
       aria-label="View source on GitHub"
       title="View source code on GitHub"
