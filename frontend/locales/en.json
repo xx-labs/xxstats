@@ -811,7 +811,9 @@
       "location": "Location",
       "own_stake": "Own stake",
       "other_stake": "Other stake",
-      "total_stake": "Total stake"
+      "total_stake": "Total stake",
+      "session_ids": "Session keys",
+      "next_session_ids": "Next session keys"
     }
   }
 }

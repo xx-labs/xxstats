@@ -148,6 +148,35 @@
             }}</span>
           </div>
         </div>
+        <!-- session keys -->
+        <div v-if="validator.sessionIds" class="row">
+          <div class="col-md-3 mb-1">
+            <strong>{{ $t('details.validator.session_ids') }}</strong>
+          </div>
+          <div class="col-md-9 mb-1 fee">
+            <p
+              v-for="sessionId in validator.sessionIds"
+              :key="sessionId"
+              class="mb-0"
+            >
+              {{ sessionId }}
+            </p>
+          </div>
+        </div>
+        <div v-if="validator.nextSessionIds" class="row">
+          <div class="col-md-3 mb-1">
+            <strong>{{ $t('details.validator.next_session_ids') }}</strong>
+          </div>
+          <div class="col-md-9 mb-1 fee">
+            <p
+              v-for="sessionId in validator.nextSessionIds"
+              :key="sessionId"
+              class="mb-0"
+            >
+              {{ sessionId }}
+            </p>
+          </div>
+        </div>
         <!-- identity start -->
         <div v-if="validator.identity.email" class="row">
           <div class="col-md-3 mb-2">
@@ -207,18 +236,6 @@
       </b-card>
       <b-tabs content-class="py-4">
         <b-tab :title="$t('pages.validator.metrics')" active>
-          <!-- <b-alert
-            show
-            dismissible
-            variant="info"
-            class="text-center py-3 glitch"
-          >
-            {{
-              $t('pages.validator.metrics_description', {
-                networkName: config.name,
-              })
-            }}
-          </b-alert> -->
           <div class="row pt-4">
             <div class="col-md-6 mb-5">
               <Identity
@@ -504,6 +521,8 @@ export default {
               cmix_id_hex
               location
               dashboard_info
+              session_ids
+              next_session_ids
             }
           }
         `,
@@ -570,7 +589,9 @@ export default {
             cmixIdHex: validator.cmix_id_hex,
             location: validator.location,
             dashboardInfo: validator.dashboard_info,
-            selected: this.isSelected(validator.stashAddress),
+            sessionIds: validator.session_ids,
+            nextSessionIds: validator.next_session_ids,
+            selected: this.isSelected(validator.stash_address),
           }
         },
       },
