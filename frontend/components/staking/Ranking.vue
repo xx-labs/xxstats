@@ -121,7 +121,7 @@
                 style="
                   font-size: 1.05rem;
                   margin-left: 0.41rem;
-                  margin-top: 0rem;
+                  margin-top: -0.05rem;
                 "
                 transform="shrink-6"
               />
