@@ -808,7 +808,10 @@
       "stash": "Stash",
       "controller": "Controller",
       "cmix_id": "Cmix id",
-      "location": "Location"
+      "location": "Location",
+      "own_stake": "Own stake",
+      "other_stake": "Other stake",
+      "total_stake": "Total stake"
     }
   }
 }

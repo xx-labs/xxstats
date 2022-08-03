@@ -41,12 +41,12 @@
               {{ shortAddress(accountId) }}
             </span>
           </h1>
-          <h4 v-if="validator.includedThousandValidators">
+          <h4 v-if="validator.cmixId">
             <a
-              :href="`https://thousand-validators.kusama.network/#/leaderboard/${accountId}`"
+              :href="`https://dashboard.xx.network/nodes/${validator.cmixId}`"
               target="_blank"
               class="badge badge-pill badge-info"
-              >1KV Program</a
+              >Dashboard</a
             >
           </h4>
           <p><ValidatorLinks :account-id="accountId" /></p>
@@ -101,7 +101,12 @@
             <strong>{{ $t('details.validator.cmix_id') }}</strong>
           </div>
           <div class="col-md-9 mb-1 fee">
-            {{ shortAddress(validator.cmixId) }}
+            <a
+              :href="`https://dashboard.xx.network/nodes/${validator.cmixId}`"
+              target="_blank"
+            >
+              {{ shortAddress(validator.cmixId) }}
+            </a>
           </div>
         </div>
         <div v-if="validator.location" class="row">
@@ -110,6 +115,37 @@
           </div>
           <div class="col-md-9 mb-1 fee">
             {{ validator.location }}
+          </div>
+        </div>
+        <!-- stake -->
+        <div v-if="validator.selfStake" class="row">
+          <div class="col-md-3 mb-1">
+            <strong>{{ $t('details.validator.own_stake') }}</strong>
+          </div>
+          <div class="col-md-9 mb-1 fee">
+            <span class="amount">{{
+              formatAmount(validator.selfStake, 3, true)
+            }}</span>
+          </div>
+        </div>
+        <div v-if="validator.selfStake" class="row">
+          <div class="col-md-3 mb-1">
+            <strong>{{ $t('details.validator.other_stake') }}</strong>
+          </div>
+          <div class="col-md-9 mb-1 fee">
+            <span class="amount">{{
+              formatAmount(validator.otherStake, 3, true)
+            }}</span>
+          </div>
+        </div>
+        <div v-if="validator.totalStake" class="row">
+          <div class="col-md-3 mb-1">
+            <strong>{{ $t('details.validator.total_stake') }}</strong>
+          </div>
+          <div class="col-md-9 mb-1 fee">
+            <span class="amount">{{
+              formatAmount(validator.totalStake, 3, true)
+            }}</span>
           </div>
         </div>
         <!-- identity start -->
@@ -171,7 +207,7 @@
       </b-card>
       <b-tabs content-class="py-4">
         <b-tab :title="$t('pages.validator.metrics')" active>
-          <b-alert
+          <!-- <b-alert
             show
             dismissible
             variant="info"
@@ -182,7 +218,7 @@
                 networkName: config.name,
               })
             }}
-          </b-alert>
+          </b-alert> -->
           <div class="row pt-4">
             <div class="col-md-6 mb-5">
               <Identity

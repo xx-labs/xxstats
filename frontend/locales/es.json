@@ -808,6 +808,9 @@
     "stash": "Stash",
     "controller": "Controlador",
     "cmix_id": "Id de cmix",
-    "location": "Localización"
+    "location": "Localización",
+    "own_stake": "Stake propio",
+    "other_stake": "Stake ajeno",
+    "total_stake": "Stake total"
   }
 }
