@@ -403,7 +403,8 @@
     },
     "nominations": {
       "who": "Nominator",
-      "value": "Amount"
+      "value": "Amount",
+      "share": "Share"
     },
     "account_links": {
       "check_account": "Check account in"
