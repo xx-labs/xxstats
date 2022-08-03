@@ -126,10 +126,14 @@
                   v-model="currentPage"
                   :total-rows="totalRows"
                   :per-page="perPage"
+                  limit="4"
+                  hide-ellipsis
                   aria-controls="my-table"
                   variant="dark"
                   align="right"
-                ></b-pagination>
+                  @input="loading = true"
+                >
+                </b-pagination>
               </div>
             </div>
           </template>

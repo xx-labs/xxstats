@@ -788,3 +788,11 @@ section .section-title {
 .extrinsic-doc h2 {
   font-size: 1rem;
 }
+
+.page-item.active .page-link {
+  z-index: 2;
+  color: #fff;
+  text-decoration: none;
+  background-color: #001c71;
+  border-color: #001c71;
+}
