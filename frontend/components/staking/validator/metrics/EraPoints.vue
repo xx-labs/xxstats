@@ -24,7 +24,7 @@
     <div class="description">
       <p v-if="rating === 2">
         {{
-          $t('components.address.description_1', {
+          $t('components.era_points.description_1', {
             percent: percent.toFixed(2),
             average: average.toFixed(2),
           })
@@ -32,7 +32,7 @@
       </p>
       <p v-else>
         {{
-          $t('components.address.description_2', {
+          $t('components.era_points.description_2', {
             percent: percent.toFixed(2),
             average: average.toFixed(2),
           })
