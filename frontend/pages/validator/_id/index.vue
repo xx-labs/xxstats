@@ -79,7 +79,7 @@
           <div class="col-md-9 mb-1 fee">
             <Identicon :address="validator.stashAddress" :size="20" />
             <nuxt-link :to="localePath(`/account/${validator.stashAddress}`)">
-              {{ shortAddress(validator.stashAddress) }}
+              {{ validator.stashAddress }}
             </nuxt-link>
           </div>
         </div>
@@ -92,7 +92,7 @@
             <nuxt-link
               :to="localePath(`/account/${validator.controllerAddress}`)"
             >
-              {{ shortAddress(validator.controllerAddress) }}
+              {{ validator.controllerAddress }}
             </nuxt-link>
           </div>
         </div>
@@ -114,7 +114,15 @@
             <strong>{{ $t('details.validator.location') }}</strong>
           </div>
           <div class="col-md-9 mb-1 fee">
-            {{ validator.location }}
+            <a
+              target="_blank"
+              :href="`https://www.google.com/maps/@${
+                validator.dashboardInfo.gpsLocation.split(', ')[0]
+              },${validator.dashboardInfo.gpsLocation.split(', ')[1]},11z`"
+            >
+              <font-awesome-icon icon="map-marker" />
+              {{ validator.location }}
+            </a>
           </div>
         </div>
         <!-- stake -->
