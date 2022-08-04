@@ -234,6 +234,7 @@
       "elected": "Elected",
       "name": "Name",
       "relative_performance": "Performance",
+      "relative_performance_help": "The performance of a validator from the point of view of a nominator: determined by the amount of era-points, total stake and commission",
       "self_stake": "Self stake",
       "active_eras": "Active eras",
       "score": "Score",
@@ -325,8 +326,8 @@
       "payments": "payments"
     },
     "relative_performance_chart": {
-      "title": "relative performance",
-      "relative_performance": "relative performance"
+      "title": "performance (nominator POV)",
+      "relative_performance": "performance (nominator POV)"
     },
     "stake_chart": {
       "title": "elected own stake ({tokenSymbol})",

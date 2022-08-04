@@ -234,6 +234,7 @@
       "elected": "Electo",
       "name": "Nombre",
       "relative_performance": "Rendimiento",
+      "relative_performance_help": " Rendimiento de un validador desde el punto de vista del nominador: determinado por los puntos de era, stake total y comisión del validador",
       "self_stake": "Stake propio",
       "active_eras": "Eras activo",
       "score": "Puntuación",
@@ -325,8 +326,8 @@
       "payments": "pagos"
     },
     "relative_performance_chart": {
-      "title": "rendimiento relativo",
-      "relative_performance": "rendimiento relativo"
+      "title": "rendimiento para el nominador",
+      "relative_performance": "rendimiento para el nominador"
     },
     "stake_chart": {
       "title": "stake electo propio ({tokenSymbol})",

@@ -207,7 +207,7 @@
             v-b-tooltip.hover
             :max="100"
             show-progress
-            :title="`${(data.item.relativePerformance * 100).toFixed(2)} %`"
+            :title="$t('components.ranking.relative_performance_help')"
           >
             <b-progress-bar
               :value="data.item.relativePerformance * 100"

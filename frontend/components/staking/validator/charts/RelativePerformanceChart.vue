@@ -70,7 +70,7 @@ export default {
               'components.relative_performance_chart.relative_performance'
             ),
             data: this.relativePerformanceHistory.map(
-              ({ relativePerformance }) => relativePerformance
+              ({ relativePerformance }) => relativePerformance * 100
             ),
             backgroundColor: 'rgba(255, 255, 255, 0.8)',
             borderColor: 'rgba(230, 0, 122, 0.8)',
