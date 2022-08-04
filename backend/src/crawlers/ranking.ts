@@ -2,6 +2,7 @@
 import * as Sentry from '@sentry/node';
 import { BigNumber } from 'bignumber.js';
 import type { AccountId32 } from '@polkadot/types/interfaces/runtime';
+import { PalletStakingIndividualExposure } from '@polkadot/types/lookup';
 import { getClient, dbQuery } from '../lib/db';
 import { getPolkadotAPI, isNodeSynced } from '../lib/chain';
 import {
@@ -448,13 +449,9 @@ const crawler = async (delayedStart: boolean) => {
         validatorNominators <= maxNominatorRewardedPerValidator.toNumber()
           ? 2
           : 0;
-        const nominations = active
-          ? validator.info.exposure.others
-          : allNominations.filter((nomination) =>
-            nomination.targets.some(
-              (target: any) => target === stashAddress,
-            ),
-          );
+        const nominations: PalletStakingIndividualExposure[] = active
+          ? validator.info.exposure.others.toArray()
+          : [];
 
         // slashes
         const slashes =

@@ -303,8 +303,8 @@ const crawler = async (delayedStart) => {
                 ? 2
                 : 0;
             const nominations = active
-                ? validator.info.exposure.others
-                : allNominations.filter((nomination) => nomination.targets.some((target) => target === stashAddress));
+                ? validator.info.exposure.others.toArray()
+                : [];
             // slashes
             const slashes = erasSlashes.filter(
             // eslint-disable-next-line

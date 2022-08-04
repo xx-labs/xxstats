@@ -8,16 +8,18 @@ import { LoggerOptions } from './types';
 import { dbParamQuery } from './db';
 import { logger } from './logger';
 import { backendConfig } from '../backend.config';
+import type { AccountId32 } from '@polkadot/types/interfaces/runtime';
+import type { StorageKey } from '@polkadot/types';
 
 Sentry.init({
   dsn: backendConfig.sentryDSN,
   tracesSampleRate: 1.0,
 });
 
-export const getAccountIdFromArgs = (account: any[]): string[] =>
+export const getAccountIdFromArgs = (account: StorageKey<[AccountId32]>[]): string[] =>
   account.map(({ args }) => args).map(([e]) => e.toHuman());
 
-export const fetchAccountIds = async (api: ApiPromise): Promise<any[]> =>
+export const fetchAccountIds = async (api: ApiPromise): Promise<string[]> =>
   getAccountIdFromArgs(await api.query.system.account.keys());
 
 export const processAccountsChunk = async (

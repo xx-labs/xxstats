@@ -54,7 +54,7 @@ const crawler = async (delayedStart: boolean) => {
   for (const chunk of chunks) {
     const chunkStartTime = Date.now();
     await Promise.all(
-      chunk.map((accountId: any) =>
+      chunk.map((accountId: string) =>
         processAccountsChunk(api, client, accountId, loggerOptions),
       ),
     );

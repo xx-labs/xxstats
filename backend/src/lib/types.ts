@@ -144,7 +144,7 @@ export interface ValidatorOrIntention {
   showClusterMember?: Boolean,
   nominators?: number,
   nominatorsRating?: number,
-  nominations?: Vec<PalletStakingIndividualExposure> | { nominator: any; targets: any; }[],
+  nominations?: PalletStakingIndividualExposure[],
   commission?: number,
   commissionHistory?: CommisionHistoryItem[],
   commissionRating?: number,
