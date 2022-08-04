@@ -148,6 +148,14 @@
             }}</span>
           </div>
         </div>
+        <div v-if="validator.commission" class="row">
+          <div class="col-md-3 mb-1">
+            <strong>{{ $t('details.validator.commission') }}</strong>
+          </div>
+          <div class="col-md-9 mb-1 fee">
+            <span class="amount">{{ validator.commission }}%</span>
+          </div>
+        </div>
         <!-- session keys -->
         <div v-if="validator.sessionIds" class="row">
           <div class="col-md-3 mb-1">
