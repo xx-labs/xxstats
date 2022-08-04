@@ -43,7 +43,7 @@
           </h1>
           <h4 v-if="validator.cmixId">
             <a
-              :href="`https://dashboard.xx.network/nodes/${validator.cmixId}`"
+              :href="`https://dashboard.xx.network/nodes/${validator.dashboardInfo.base64Url}`"
               target="_blank"
               class="badge badge-pill badge-info"
               >Dashboard</a
@@ -102,7 +102,7 @@
           </div>
           <div class="col-md-9 mb-1 fee">
             <a
-              :href="`https://dashboard.xx.network/nodes/${validator.cmixId}`"
+              :href="`https://dashboard.xx.network/nodes/${validator.dashboardInfo.base64Url}`"
               target="_blank"
             >
               {{ validator.cmixId }}
