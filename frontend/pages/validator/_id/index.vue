@@ -163,7 +163,13 @@
             </p>
           </div>
         </div>
-        <div v-if="validator.nextSessionIds" class="row">
+        <div
+          v-if="
+            JSON.stringify(validator.sessionIds) !==
+            JSON.stringify(validator.nextSessionIds)
+          "
+          class="row"
+        >
           <div class="col-md-3 mb-1">
             <strong>{{ $t('details.validator.next_session_ids') }}</strong>
           </div>
