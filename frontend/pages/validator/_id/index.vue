@@ -105,7 +105,7 @@
               :href="`https://dashboard.xx.network/nodes/${validator.cmixId}`"
               target="_blank"
             >
-              {{ shortAddress(validator.cmixId) }}
+              {{ validator.cmixId }}
             </a>
           </div>
         </div>
