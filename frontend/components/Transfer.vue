@@ -70,10 +70,10 @@
           <td>{{ $t('components.transfer.amount') }}</td>
           <td>
             <span class="amount">{{ formatAmount(transfer.amount, 6) }}</span>
-            <!-- <FIATConversion
+            <FIATConversion
               :units="transfer.amount"
               :timestamp="transfer.timestamp"
-            /> -->
+            />
           </td>
         </tr>
         <tr>
@@ -83,10 +83,10 @@
               <span class="amount">{{
                 formatAmount(transfer.fee_amount, 6)
               }}</span>
-              <!-- <FIATConversion
+              <FIATConversion
                 :units="transfer.fee_amount"
                 :timestamp="transfer.timestamp"
-              /> -->
+              />
             </div>
           </td>
         </tr>
@@ -126,14 +126,14 @@ import commonMixin from '@/mixins/commonMixin.js'
 import Hash from '@/components/Hash.vue'
 import Status from '@/components/Status.vue'
 import Identicon from '@/components/Identicon.vue'
-// import FIATConversion from '@/components/FIATConversion.vue'
+import FIATConversion from '@/components/FIATConversion.vue'
 
 export default {
   components: {
     Hash,
     Status,
     Identicon,
-    // FIATConversion,
+    FIATConversion,
   },
   mixins: [commonMixin],
   props: {

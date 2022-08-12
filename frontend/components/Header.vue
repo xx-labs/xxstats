@@ -45,16 +45,18 @@
             <img class="logo" src="/img/xx-network.svg" />
           </nuxt-link>
         </b-navbar-brand>
-        <!-- <a
+        <a
           v-if="config.coinGeckoDenom && USDConversion && USD24hChange"
           :href="`https://www.coingecko.com/en/coins/${config.coinGeckoDenom}`"
           target="_blank"
           class="fiat mh-2"
         >
-          <strong>{{ config.tokenSymbol }}</strong> ${{ USDConversion }} ({{
-            USD24hChange
-          }}%)
-        </a> -->
+          <strong>{{ config.tokenSymbol }}</strong> ${{ USDConversion }}
+          <span v-if="USD24hChange > 0" class="text-success"
+            >+{{ USD24hChange }}%</span
+          >
+          <span v-else class="text-danger">-{{ USD24hChange }}%</span>
+        </a>
         <b-navbar-toggle target="nav-collapse" />
         <b-collapse id="nav-collapse" is-nav>
           <b-navbar-nav class="ml-auto">
@@ -142,12 +144,12 @@ export default {
   },
   created() {
     // Refresh fiat conversion values every minute
-    // if (this.config.coinGeckoDenom) {
-    //   this.$store.dispatch('fiat/update')
-    //   setInterval(() => {
-    //     this.$store.dispatch('fiat/update')
-    //   }, 60000)
-    // }
+    if (this.config.coinGeckoDenom) {
+      this.$store.dispatch('fiat/update')
+      setInterval(() => {
+        this.$store.dispatch('fiat/update')
+      }, 60000)
+    }
   },
 }
 </script>

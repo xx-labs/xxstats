@@ -4,7 +4,7 @@ export const config = {
   tokenSymbol: 'XX',
   tokenDecimals: 9,
   ss58Format: 55,
-  coinGeckoDenom: 'xx-network',
+  coinGeckoDenom: 'xxcoin',
   nodeWs: 'wss://dev.xx-network.polkastats.io/ws',
   backendWs: 'wss://dev.xx-network.polkastats.io/graphql',
   backendHttp: 'https://dev.xx-network.polkastats.io/graphql',

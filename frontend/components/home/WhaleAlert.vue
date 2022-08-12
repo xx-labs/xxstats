@@ -69,10 +69,10 @@
         <template #cell(amount)="data">
           <p class="mb-0">
             {{ formatAmount(data.item.amount) }}
-            <!-- <FIATConversion
+            <FIATConversion
               :units="data.item.amount"
               :timestamp="data.item.timestamp"
-            /> -->
+            />
           </p>
         </template>
       </b-table>
@@ -84,12 +84,12 @@
 import { gql } from 'graphql-tag'
 import commonMixin from '@/mixins/commonMixin.js'
 import Identicon from '@/components/Identicon.vue'
-// import FIATConversion from '@/components/FIATConversion.vue'
+import FIATConversion from '@/components/FIATConversion.vue'
 
 export default {
   components: {
     Identicon,
-    // FIATConversion,
+    FIATConversion,
   },
   mixins: [commonMixin],
   data() {

@@ -124,10 +124,10 @@
               <span class="amount">{{
                 formatAmount(JSON.parse(extrinsic.fee_info).partialFee, 6)
               }}</span>
-              <!-- <FIATConversion
+              <FIATConversion
                 :units="JSON.parse(extrinsic.fee_info).partialFee"
                 :timestamp="extrinsic.timestamp"
-              /> -->
+              />
             </div>
           </td>
         </tr>
@@ -139,13 +139,13 @@
 <script>
 import commonMixin from '@/mixins/commonMixin.js'
 import Status from '@/components/Status.vue'
-// import FIATConversion from '@/components/FIATConversion.vue'
+import FIATConversion from '@/components/FIATConversion.vue'
 import Hash from '@/components/Hash.vue'
 
 export default {
   components: {
     Status,
-    // FIATConversion,
+    FIATConversion,
     Hash,
   },
   mixins: [commonMixin],

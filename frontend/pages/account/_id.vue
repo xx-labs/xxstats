@@ -132,7 +132,7 @@
                         <span class="amount">{{
                           formatAmount(parsedAccount.totalBalance, 3, true)
                         }}</span>
-                        <!-- <FIATConversion :units="parsedAccount.totalBalance" /> -->
+                        <FIATConversion :units="parsedAccount.totalBalance" />
                       </td>
                     </tr>
                     <tr>
@@ -145,7 +145,7 @@
                             true
                           )
                         }}</span>
-                        <!-- <FIATConversion :units="parsedAccount.freeBalance" /> -->
+                        <FIATConversion :units="parsedAccount.freeBalance" />
                       </td>
                     </tr>
                     <tr>
@@ -158,9 +158,9 @@
                             true
                           )
                         }}</span>
-                        <!-- <FIATConversion
+                        <FIATConversion
                           :units="parsedAccount.availableBalance"
-                        /> -->
+                        />
                       </td>
                     </tr>
                     <tr>
@@ -173,7 +173,7 @@
                             true
                           )
                         }}</span>
-                        <!-- <FIATConversion :units="parsedAccount.lockedBalance" /> -->
+                        <FIATConversion :units="parsedAccount.lockedBalance" />
                       </td>
                     </tr>
                     <tr>
@@ -186,9 +186,9 @@
                             true
                           )
                         }}</span>
-                        <!-- <FIATConversion
+                        <FIATConversion
                           :units="parsedAccount.reservedBalance"
-                        /> -->
+                        />
                       </td>
                     </tr>
                     <tr>
@@ -207,9 +207,9 @@
                             true
                           )
                         }}</span>
-                        <!-- <FIATConversion
+                        <FIATConversion
                           :units="parsedAccount.balances.vestedBalance"
-                        /> -->
+                        />
                       </td>
                     </tr>
                     <tr>
@@ -222,9 +222,9 @@
                             true
                           )
                         }}</span>
-                        <!-- <FIATConversion
+                        <FIATConversion
                           :units="parsedAccount.balances.vestingTotal"
-                        /> -->
+                        />
                       </td>
                     </tr>
                     <tr>
@@ -237,9 +237,9 @@
                             true
                           )
                         }}</span>
-                        <!-- <FIATConversion
+                        <FIATConversion
                           :units="parsedAccount.balances.votingBalance"
-                        /> -->
+                        />
                       </td>
                     </tr>
                   </tbody>
