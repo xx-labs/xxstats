@@ -43,8 +43,8 @@ max_parallel_maintenance_workers = 4
 # Stop crawler and web server
 
 ```
-docker stop backend_crawler_1
 systemctl stop nginx
+docker stop backend_crawler_1 backend_api_1 backend_graphql-engine_1
 ```
 
 # Init pgbench
