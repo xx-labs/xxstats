@@ -42,11 +42,11 @@ services:
     #
     # Optimized for:
     #
-    # DB Version: 13
+    # DB Version: 14
     # OS Type: linux
     # DB Type: web
-    # Total Memory (RAM): 128 GB
-    # CPUs num: 32
+    # Total Memory (RAM): 64 GB
+    # CPUs num: 12
     # Connections num: 200
     # Data Storage: ssd
 
@@ -55,9 +55,9 @@ services:
       - "-c"
       - "max_connections=200"
       - "-c"
-      - "shared_buffers=32GB"
+      - "shared_buffers=16GB"
       - "-c"
-      - "effective_cache_size=96GB"
+      - "effective_cache_size=48GB"
       - "-c"
       - "maintenance_work_mem=2GB"
       - "-c"
@@ -71,17 +71,17 @@ services:
       - "-c"
       - "effective_io_concurrency=200"
       - "-c"
-      - "work_mem=41943kB"
+      - "work_mem=20971kB"
       - "-c"
       - "min_wal_size=1GB"
       - "-c"
       - "max_wal_size=4GB"
       - "-c"
-      - "max_worker_processes=32"
+      - "max_worker_processes=12"
       - "-c"
       - "max_parallel_workers_per_gather=4"
       - "-c"
-      - "max_parallel_workers=32"
+      - "max_parallel_workers=12"
       - "-c"
       - "max_parallel_maintenance_workers=4"
       - "-c"
