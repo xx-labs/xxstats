@@ -40,7 +40,7 @@ max_parallel_workers = 12
 max_parallel_maintenance_workers = 4
 ```
 
-# Stop crawler and web server
+# Stop web server and dockers 
 
 ```
 systemctl stop nginx
