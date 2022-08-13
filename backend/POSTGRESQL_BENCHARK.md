@@ -40,10 +40,17 @@ max_parallel_workers = 12
 max_parallel_maintenance_workers = 4
 ```
 
+# Stop crawler and web server
+
+```
+docker stop backend_crawler_1
+systemctl stop nginx
+```
+
 # Init pgbench
 
 ```
-docker exec backend_postgres_1 pgbench -i -p 5432 -d xxstats -U xxstats
+docker exec backend_postgres_1 pgbench -p 5432 -d postgres -U xxstats -i
 ```
 
 ```
@@ -64,7 +71,7 @@ done in 0.20 s (drop tables 0.00 s, create tables 0.01 s, client-side generate 0
 # 10 client test
 
 ```
-docker exec backend_postgres_1 pgbench -c 10 -d xxstats -U xxstats
+docker exec backend_postgres_1 pgbench -d postgres -U xxstats -c 10
 ```
 
 ```
@@ -76,9 +83,70 @@ number of clients: 10
 number of threads: 1
 number of transactions per client: 10
 number of transactions actually processed: 100/100
-latency average = 9.900 ms
-initial connection time = 17.445 ms
-tps = 1010.080604 (without initial connection time)
+latency average = 10.668 ms
+initial connection time = 20.115 ms
+tps = 937.382827 (without initial connection time)
+```
+
+# 100 client test
+
+```
+docker exec backend_postgres_1 pgbench -d postgres -U xxstats -c 100
+```
+
+```
+...
+transaction type: <builtin: TPC-B (sort of)>
+scaling factor: 1
+query mode: simple
+number of clients: 100
+number of threads: 1
+number of transactions per client: 10
+number of transactions actually processed: 1000/1000
+latency average = 124.522 ms
+initial connection time = 184.773 ms
+tps = 803.071588 (without initial connection time)
+```
+
+# 200 client test
+
+```
+docker exec backend_postgres_1 pgbench -d postgres -U xxstats -c 200
+```
+
+```
+...
+transaction type: <builtin: TPC-B (sort of)>
+scaling factor: 1
+query mode: simple
+number of clients: 200
+number of threads: 1
+number of transactions per client: 10
+number of transactions actually processed: 2000/2000
+latency average = 258.616 ms
+initial connection time = 377.055 ms
+tps = 773.346161 (without initial connection time)
+```
+
+
+# read-only work loads
+
+```
+docker exec backend_postgres_1 pgbench -d postgres -U xxstats -c 100 -T 300 -S -n
+```
+
+```
+...
+transaction type: <builtin: select only>
+scaling factor: 1
+query mode: simple
+number of clients: 100
+number of threads: 1
+duration: 300 s
+number of transactions actually processed: 1908415
+latency average = 15.772 ms
+initial connection time = 189.914 ms
+tps = 6340.416632 (without initial connection time)
 ```
 
 
