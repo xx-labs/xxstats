@@ -448,6 +448,7 @@
       columns:
       - block_number
       - extrinsic_index
+      - extrinsic_call_index
       - section
       - method
       - hash

@@ -113,6 +113,7 @@ CREATE TABLE IF NOT EXISTS signed_extrinsic (
 CREATE TABLE IF NOT EXISTS transfer (  
   block_number BIGINT NOT NULL,
   extrinsic_index INT NOT NULL,
+  extrinsic_call_index INT NOT NULL,
   section TEXT NOT NULL,
   method TEXT NOT NULL,
   hash TEXT NOT NULL,
@@ -123,7 +124,7 @@ CREATE TABLE IF NOT EXISTS transfer (
   success BOOLEAN NOT NULL,
   error_message TEXT DEFAULT NULL,
   timestamp BIGINT NOT NULL,
-  PRIMARY KEY ( block_number, extrinsic_index ),
+  PRIMARY KEY ( block_number, extrinsic_index, extrinsic_call_index ),
   CONSTRAINT fk_block
     FOREIGN KEY (block_number)
       REFERENCES block(block_number)

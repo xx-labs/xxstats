@@ -5,8 +5,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 // Required imports
 const api_1 = require("@polkadot/api");
-// import { GenericExtrinsic } from '@polkadot/types';
-// import { AnyTuple } from '@polkadot/types/types';
 async function main() {
     const wsProvider = 'ws://dev.xx-network.polkastats.io:9944';
     // Initialise the provider to connect to the remote node
