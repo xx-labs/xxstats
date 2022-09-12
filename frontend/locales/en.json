@@ -300,10 +300,12 @@
     "dashboard_era_points": {
       "title": "Average era points",
       "avg_era_points": "avg. era points"
+      
     },
     "dashboard_performance": {
       "title": "Average performance",
-      "avg_performance": "avg. performance"
+      "avg_performance": "avg. performance",
+      "help": "The performance of a validator from the point of view of a nominator: determined by the amount of era-points, total stake and commission - read more about it:"
     },
     "dashboard_self_stake": {
       "title": "Average elected self stake",

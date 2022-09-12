@@ -1,14 +1,19 @@
 <template>
-  <ReactiveLineChart
-    :chart-data="chartData"
-    :options="chartOptions"
-    class="py-4"
-    :style="
-      config.themeVersion === 'dark'
-        ? 'height: 400px; background-color: rgba(0, 0, 0, 1)'
-        : 'height: 400px; background-color: rgba(255, 255, 255, 1)'
-    "
-  />
+  <div>
+    <h6 class="text-center">
+      {{ $t('components.dashboard_self_stake.title') }}
+    </h6>
+    <ReactiveLineChart
+      :chart-data="chartData"
+      :options="chartOptions"
+      class="pb-4"
+      :style="
+        config.themeVersion === 'dark'
+          ? 'height: 400px; background-color: rgba(0, 0, 0, 1)'
+          : 'height: 400px; background-color: rgba(255, 255, 255, 1)'
+      "
+    />
+  </div>
 </template>
 
 <script>
@@ -31,13 +36,6 @@ export default {
         maintainAspectRatio: false,
         legend: {
           display: true,
-        },
-        title: {
-          display: true,
-          text: this.$t('components.dashboard_self_stake.title'),
-          fontSize: 18,
-          fontColor: config.themeVersion === 'dark' ? '#fff' : '#000',
-          fontStyle: 'lighter',
         },
         tooltips: {
           backgroundColor: '#000000',

@@ -1,14 +1,34 @@
 <template>
-  <ReactiveLineChart
-    :chart-data="chartData"
-    :options="chartOptions"
-    class="py-4"
-    :style="
-      config.themeVersion === 'dark'
-        ? 'height: 400px; background-color: rgba(0, 0, 0, 1)'
-        : 'height: 400px; background-color: rgba(255, 255, 255, 1)'
-    "
-  />
+  <div>
+    <h6 id="dashboard-title" v-b-tooltip.hover class="text-center">
+      {{ $t('components.dashboard_performance.title') }}
+      <font-awesome-icon
+        icon="question-circle"
+        class="d-inline-block"
+        style="font-size: 1rem"
+      />
+    </h6>
+    <b-tooltip target="dashboard-title" placement="top">
+      {{ $t('components.dashboard_performance.help') }}
+      <a
+        href="https://research.web3.foundation/en/latest/polkadot/economics/1-validator-selection.html"
+        target="_blank"
+        class="text-white"
+      >
+        https://research.web3.foundation/en/latest/polkadot/economics/1-validator-selection.html
+      </a>
+    </b-tooltip>
+    <ReactiveLineChart
+      :chart-data="chartData"
+      :options="chartOptions"
+      class="pb-4"
+      :style="
+        config.themeVersion === 'dark'
+          ? 'height: 400px; background-color: rgba(0, 0, 0, 1)'
+          : 'height: 400px; background-color: rgba(255, 255, 255, 1)'
+      "
+    />
+  </div>
 </template>
 
 <script>
@@ -30,13 +50,6 @@ export default {
         maintainAspectRatio: false,
         legend: {
           display: true,
-        },
-        title: {
-          display: true,
-          text: this.$t('components.dashboard_performance.title'),
-          fontSize: 18,
-          fontColor: config.themeVersion === 'dark' ? '#fff' : '#000',
-          fontStyle: 'lighter',
         },
         tooltips: {
           backgroundColor: '#000000',
