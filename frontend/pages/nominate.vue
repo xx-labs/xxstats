@@ -78,7 +78,7 @@
               </div>
             </b-form-group>
             <b-alert
-              v-if="extrinsicHash && extrinsicStatus === 'Finalized'"
+              v-if="blockHash && extrinsicStatus === 'Finalized'"
               variant="success"
               class="text-center"
               fade
@@ -86,7 +86,7 @@
             >
               <h4>{{ extrinsicStatus }} transaction!</h4>
               <p>
-                Extrinsic with hash {{ extrinsicHash }} was included in block
+                Extrinsic was included in block
                 <Promised :promise="getBlockNumber(blockHash)">
                   <template #default="data">
                     <nuxt-link
@@ -102,9 +102,7 @@
             </b-alert>
             <b-alert
               v-else-if="
-                extrinsicHash &&
-                extrinsicStatus &&
-                extrinsicStatus !== 'Finalized'
+                blockHash && extrinsicStatus && extrinsicStatus !== 'Finalized'
               "
               variant="info"
               class="text-center"
@@ -113,7 +111,7 @@
               dismissible
             >
               <h4>Transaction {{ extrinsicStatus }}</h4>
-              <p>Transaction hash {{ extrinsicHash }}</p>
+              <p>Transaction included in block hash {{ blockHash }}</p>
             </b-alert>
             <b-alert v-if="clusterAlert" variant="warning" show dismissible>
               You have more than one member of the same cluster in your set. If
@@ -157,7 +155,6 @@ export default {
       allInjected: null,
       api: null,
       error: null,
-      extrinsicHash: null,
       extrinsicStatus: null,
       blockHash: null,
       success: null,
@@ -246,7 +243,7 @@ export default {
               ({ events = [], status }) => {
                 vm.extrinsicStatus = status.type
                 if (status.isInBlock) {
-                  vm.extrinsicHash = status.asInBlock.toHex()
+                  vm.blockHash = status.asInBlock.toHex()
                 } else if (status.isFinalized) {
                   vm.blockHash = status.asFinalized.toHex()
                 }
