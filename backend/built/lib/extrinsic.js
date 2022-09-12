@@ -105,8 +105,7 @@ const getTransferAllAmount = (blockNumber, index, blockEvents) => {
     }
 };
 exports.getTransferAllAmount = getTransferAllAmount;
-// TODO: Use in multiple extrinsics included in utility.batch and proxy.proxy
-const processTransfer = async (client, blockNumber, extrinsicIndex, blockEvents, section, method, args, hash, signer, feeInfo, success, errorMessage, timestamp, loggerOptions) => {
+const processTransfer = async (client, blockNumber, extrinsicIndex, extrinsicCallIndex, blockEvents, section, method, args, hash, signer, feeInfo, success, errorMessage, timestamp, loggerOptions) => {
     // Store transfer
     const source = signer;
     let destination = '';
@@ -144,6 +143,7 @@ const processTransfer = async (client, blockNumber, extrinsicIndex, blockEvents,
     const data = [
         blockNumber,
         extrinsicIndex,
+        extrinsicCallIndex,
         section,
         method,
         hash,
@@ -158,6 +158,7 @@ const processTransfer = async (client, blockNumber, extrinsicIndex, blockEvents,
     const sql = `INSERT INTO transfer (
       block_number,
       extrinsic_index,
+      extrinsic_call_index,
       section,
       method,
       hash,
@@ -180,17 +181,18 @@ const processTransfer = async (client, blockNumber, extrinsicIndex, blockEvents,
       $9,
       $10,
       $11,
-      $12
+      $12,
+      $13
     )
     ON CONFLICT ON CONSTRAINT transfer_pkey 
     DO NOTHING;
     ;`;
     try {
         await client.query(sql, data);
-        logger_1.logger.debug(loggerOptions, `Added transfer ${blockNumber}-${extrinsicIndex} (${(0, utils_1.shortHash)(hash.toString())}) ${section} ➡ ${method}`);
+        logger_1.logger.debug(loggerOptions, `Added transfer ${blockNumber}-${extrinsicIndex}-${extrinsicCallIndex} (${(0, utils_1.shortHash)(hash.toString())}) ${section} ➡ ${method}`);
     }
     catch (error) {
-        logger_1.logger.error(loggerOptions, `Error adding transfer ${blockNumber}-${extrinsicIndex}: ${JSON.stringify(error)}`);
+        logger_1.logger.error(loggerOptions, `Error adding transfer ${blockNumber}-${extrinsicIndex}-${extrinsicCallIndex}: ${JSON.stringify(error)}`);
         const scope = new Sentry.Scope();
         scope.setTag('blockNumber', blockNumber);
         Sentry.captureException(error, scope);
@@ -344,7 +346,52 @@ const processExtrinsic = async (api, apiAt, client, blockNumber, blockHash, inde
                 method === 'transferAll' ||
                 method === 'transferKeepAlive')) {
             // Store transfer
-            (0, exports.processTransfer)(client, blockNumber, extrinsicIndex, blockEvents, section, method, args, hash.toString(), signer, feeInfo, success, errorMessage, timestamp, loggerOptions);
+            const extrinsicCallIndex = 0;
+            (0, exports.processTransfer)(client, blockNumber, extrinsicIndex, extrinsicCallIndex, blockEvents, section, method, args, hash.toString(), signer, feeInfo, success, errorMessage, timestamp, loggerOptions);
+        }
+        //
+        // Process balance transfers included in a proxy.proxy extrinsic
+        //
+        if (section === 'proxy' &&
+            method === 'proxy') {
+            const humanExtrinsic = extrinsic.toHuman();
+            const decoratedCalls = humanExtrinsic.method.args.calls.map((call, index) => ({
+                section: call.section,
+                method: call.method,
+                args: extrinsic.method.toJSON().args.calls[index].args,
+            }));
+            for (const [indextrinsicCallIndex, decoratedCall] of decoratedCalls.entries()) {
+                if (decoratedCall.section === 'balances' &&
+                    (decoratedCall.method === 'forceTransfer' ||
+                        decoratedCall.method === 'transfer' ||
+                        decoratedCall.method === 'transferAll' ||
+                        decoratedCall.method === 'transferKeepAlive')) {
+                    // Store transfer
+                    (0, exports.processTransfer)(client, blockNumber, extrinsicIndex, indextrinsicCallIndex, blockEvents, decoratedCall.section, decoratedCall.method, decoratedCall.args, hash.toString(), signer, feeInfo, success, errorMessage, timestamp, loggerOptions);
+                }
+            }
+        }
+        //
+        // Process balance transfers included in a utility.batch or utility.batchAll extrinsic
+        //
+        if (section === 'utility' &&
+            (method === 'batch' || method === 'batchAll')) {
+            const humanExtrinsic = extrinsic.toHuman();
+            const decoratedCalls = humanExtrinsic.method.args.calls.map((call, index) => ({
+                section: call.section,
+                method: call.method,
+                args: extrinsic.method.toJSON().args.calls[index].args,
+            }));
+            for (const [indextrinsicCallIndex, decoratedCall] of decoratedCalls.entries()) {
+                if (decoratedCall.section === 'balances' &&
+                    (decoratedCall.method === 'forceTransfer' ||
+                        decoratedCall.method === 'transfer' ||
+                        decoratedCall.method === 'transferAll' ||
+                        decoratedCall.method === 'transferKeepAlive')) {
+                    // Store transfer
+                    (0, exports.processTransfer)(client, blockNumber, extrinsicIndex, indextrinsicCallIndex, blockEvents, decoratedCall.section, decoratedCall.method, decoratedCall.args, hash.toString(), signer, feeInfo, success, errorMessage, timestamp, loggerOptions);
+                }
+            }
         }
     }
 };

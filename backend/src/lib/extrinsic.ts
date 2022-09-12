@@ -118,11 +118,11 @@ export const getTransferAllAmount = (
   }
 };
 
-// TODO: Use in multiple extrinsics included in utility.batch and proxy.proxy
 export const processTransfer = async (
   client: Client,
   blockNumber: number,
   extrinsicIndex: number,
+  extrinsicCallIndex: number,
   blockEvents: EventRecord[],
   section: string,
   method: string,
@@ -169,6 +169,7 @@ export const processTransfer = async (
   const data = [
     blockNumber,
     extrinsicIndex,
+    extrinsicCallIndex,
     section,
     method,
     hash,
@@ -183,6 +184,7 @@ export const processTransfer = async (
   const sql = `INSERT INTO transfer (
       block_number,
       extrinsic_index,
+      extrinsic_call_index,
       section,
       method,
       hash,
@@ -205,7 +207,8 @@ export const processTransfer = async (
       $9,
       $10,
       $11,
-      $12
+      $12,
+      $13
     )
     ON CONFLICT ON CONSTRAINT transfer_pkey 
     DO NOTHING;
@@ -214,14 +217,14 @@ export const processTransfer = async (
     await client.query(sql, data);
     logger.debug(
       loggerOptions,
-      `Added transfer ${blockNumber}-${extrinsicIndex} (${shortHash(
+      `Added transfer ${blockNumber}-${extrinsicIndex}-${extrinsicCallIndex} (${shortHash(
         hash.toString(),
       )}) ${section} ➡ ${method}`,
     );
   } catch (error) {
     logger.error(
       loggerOptions,
-      `Error adding transfer ${blockNumber}-${extrinsicIndex}: ${JSON.stringify(
+      `Error adding transfer ${blockNumber}-${extrinsicIndex}-${extrinsicCallIndex}: ${JSON.stringify(
         error,
       )}`,
     );
@@ -424,10 +427,12 @@ export const processExtrinsic = async (
         method === 'transferKeepAlive')
     ) {
       // Store transfer
+      const extrinsicCallIndex = 0;
       processTransfer(
         client,
         blockNumber,
         extrinsicIndex,
+        extrinsicCallIndex,
         blockEvents,
         section,
         method,
@@ -440,6 +445,92 @@ export const processExtrinsic = async (
         timestamp,
         loggerOptions,
       );
+    }
+    //
+    // Process balance transfers included in a proxy.proxy extrinsic
+    //
+    if (
+      section === 'proxy' &&
+      method === 'proxy'
+    ) {
+      const humanExtrinsic: any = extrinsic.toHuman();
+      const decoratedCalls = humanExtrinsic.method.args.calls.map((call: any, index: number) => (
+        {
+          section: call.section,
+          method: call.method,
+          args: extrinsic.method.toJSON().args.calls[index].args,
+        }));
+      for (const [indextrinsicCallIndex, decoratedCall] of decoratedCalls.entries()) {
+        if (
+          decoratedCall.section === 'balances' &&
+          (decoratedCall.method === 'forceTransfer' ||
+          decoratedCall.method === 'transfer' ||
+          decoratedCall.method === 'transferAll' ||
+          decoratedCall.method === 'transferKeepAlive')
+        ) {
+          // Store transfer
+          processTransfer(
+            client,
+            blockNumber,
+            extrinsicIndex,
+            indextrinsicCallIndex,
+            blockEvents,
+            decoratedCall.section,
+            decoratedCall.method,
+            decoratedCall.args,
+            hash.toString(),
+            signer,
+            feeInfo,
+            success,
+            errorMessage,
+            timestamp,
+            loggerOptions,
+          );
+        }
+      }
+    }
+    //
+    // Process balance transfers included in a utility.batch or utility.batchAll extrinsic
+    //
+    if (
+      section === 'utility' &&
+      (method === 'batch' || method === 'batchAll')
+    ) {
+      const humanExtrinsic: any = extrinsic.toHuman();
+      const decoratedCalls = humanExtrinsic.method.args.calls.map((call: any, index: number) => (
+        {
+          section: call.section,
+          method: call.method,
+          args: extrinsic.method.toJSON().args.calls[index].args,
+        }));
+      for (const [indextrinsicCallIndex, decoratedCall] of decoratedCalls.entries()) {
+        if (
+          decoratedCall.section === 'balances' &&
+          (decoratedCall.method === 'forceTransfer' ||
+          decoratedCall.method === 'transfer' ||
+          decoratedCall.method === 'transferAll' ||
+          decoratedCall.method === 'transferKeepAlive')
+        ) {
+          // Store transfer
+          processTransfer(
+            client,
+            blockNumber,
+            extrinsicIndex,
+            indextrinsicCallIndex,
+            blockEvents,
+            decoratedCall.section,
+            decoratedCall.method,
+            decoratedCall.args,
+            hash.toString(),
+            signer,
+            feeInfo,
+            success,
+            errorMessage,
+            timestamp,
+            loggerOptions,
+          );
+        }
+      }
     }
   }
 };
