@@ -303,7 +303,7 @@
       
     },
     "dashboard_performance": {
-      "title": "Average performance",
+      "title": "Average performance (nominator POV)",
       "avg_performance": "avg. performance",
       "help": "The performance of a validator from the point of view of a nominator: determined by the amount of era-points, total stake and commission - read more about it:"
     },
@@ -316,23 +316,23 @@
       "vrc_score": "score"
     },
     "commission_chart": {
-      "title": "commission",
+      "title": "Commission",
       "commission": "commission"
     },
     "era_points_chart": {
-      "title": "era points",
+      "title": "Era points",
       "era_points": "era points"
     },
     "payouts_chart": {
-      "title": "payouts",
+      "title": "Payouts",
       "payments": "payments"
     },
     "relative_performance_chart": {
-      "title": "performance (nominator POV)",
+      "title": "Performance (nominator POV)",
       "relative_performance": "performance (nominator POV)"
     },
     "stake_chart": {
-      "title": "elected own stake ({tokenSymbol})",
+      "title": "Elected own stake ({tokenSymbol})",
       "elected_own_stake": "elected own stake"
     },
     "address": {

@@ -1,5 +1,10 @@
 <template>
-  <BarChart :data="chartData" :options="chartOptions" :height="200" />
+  <div>
+    <h6 class="text-center">
+      {{ $t('components.payouts_chart.title') }}
+    </h6>
+    <BarChart :data="chartData" :options="chartOptions" :height="200" />
+  </div>
 </template>
 <script>
 import BarChart from '@/components/charts/BarChart.js'
@@ -23,13 +28,13 @@ export default {
         legend: {
           display: false,
         },
-        title: {
-          display: true,
-          text: this.$t('components.payouts_chart.title'),
-          fontSize: 18,
-          fontColor: '#000',
-          fontStyle: 'lighter',
-        },
+        // title: {
+        //   display: true,
+        //   text: this.$t('components.payouts_chart.title'),
+        //   fontSize: 18,
+        //   fontColor: '#000',
+        //   fontStyle: 'lighter',
+        // },
         tooltips: {
           backgroundColor: '#000000',
         },

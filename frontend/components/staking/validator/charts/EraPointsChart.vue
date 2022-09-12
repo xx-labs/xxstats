@@ -1,5 +1,10 @@
 <template>
-  <LineChart :data="chartData" :options="chartOptions" :height="200" />
+  <div>
+    <h6 class="text-center">
+      {{ $t('components.era_points_chart.title') }}
+    </h6>
+    <LineChart :data="chartData" :options="chartOptions" :height="200" />
+  </div>
 </template>
 <script>
 import LineChart from '@/components/charts/LineChart.js'
@@ -21,13 +26,13 @@ export default {
         legend: {
           display: false,
         },
-        title: {
-          display: true,
-          text: this.$t('components.era_points_chart.title'),
-          fontSize: 18,
-          fontColor: '#000',
-          fontStyle: 'lighter',
-        },
+        // title: {
+        //   display: true,
+        //   text: this.$t('components.era_points_chart.title'),
+        //   fontSize: 18,
+        //   fontColor: '#000',
+        //   fontStyle: 'lighter',
+        // },
         tooltips: {
           backgroundColor: '#000000',
         },

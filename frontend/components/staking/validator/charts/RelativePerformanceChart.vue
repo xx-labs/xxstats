@@ -1,5 +1,25 @@
 <template>
-  <LineChart :data="chartData" :options="chartOptions" :height="200" />
+  <div>
+    <h6 id="performance-chart-title" v-b-tooltip.hover class="text-center">
+      {{ $t('components.relative_performance_chart.title') }}
+      <font-awesome-icon
+        icon="question-circle"
+        class="d-inline-block"
+        style="font-size: 1rem"
+      />
+    </h6>
+    <LineChart :data="chartData" :options="chartOptions" :height="200" />
+    <b-tooltip target="performance-chart-title" placement="top">
+      {{ $t('components.dashboard_performance.help') }}
+      <a
+        href="https://research.web3.foundation/en/latest/polkadot/economics/1-validator-selection.html"
+        target="_blank"
+        class="text-white"
+      >
+        https://research.web3.foundation/en/latest/polkadot/economics/1-validator-selection.html
+      </a>
+    </b-tooltip>
+  </div>
 </template>
 <script>
 import LineChart from '@/components/charts/LineChart.js'
@@ -21,13 +41,13 @@ export default {
         legend: {
           display: false,
         },
-        title: {
-          display: true,
-          text: this.$t('components.relative_performance_chart.title'),
-          fontSize: 18,
-          fontColor: '#000',
-          fontStyle: 'lighter',
-        },
+        // title: {
+        //   display: true,
+        //   text: this.$t('components.relative_performance_chart.title'),
+        //   fontSize: 18,
+        //   fontColor: '#000',
+        //   fontStyle: 'lighter',
+        // },
         tooltips: {
           backgroundColor: '#000000',
         },

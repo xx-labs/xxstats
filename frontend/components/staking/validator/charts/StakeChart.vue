@@ -1,5 +1,14 @@
 <template>
-  <LineChart :data="chartData" :options="chartOptions" :height="200" />
+  <div>
+    <h6 class="text-center">
+      {{
+        $t('components.stake_chart.title', {
+          tokenSymbol: config.tokenSymbol,
+        })
+      }}
+    </h6>
+    <LineChart :data="chartData" :options="chartOptions" :height="200" />
+  </div>
 </template>
 <script>
 import { BigNumber } from 'bignumber.js'
@@ -18,20 +27,21 @@ export default {
   },
   data() {
     return {
+      config,
       chartOptions: {
         responsive: true,
         legend: {
           display: false,
         },
-        title: {
-          display: true,
-          text: this.$t('components.stake_chart.title', {
-            tokenSymbol: config.tokenSymbol,
-          }),
-          fontSize: 18,
-          fontColor: '#000',
-          fontStyle: 'lighter',
-        },
+        // title: {
+        //   display: true,
+        //   text: this.$t('components.stake_chart.title', {
+        //     tokenSymbol: config.tokenSymbol,
+        //   }),
+        //   fontSize: 18,
+        //   fontColor: '#000',
+        //   fontStyle: 'lighter',
+        // },
         tooltips: {
           backgroundColor: '#000000',
         },

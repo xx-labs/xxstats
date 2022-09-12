@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h6 id="dashboard-title" v-b-tooltip.hover class="text-center">
+    <h6 id="dashboard-performance-title" v-b-tooltip.hover class="text-center">
       {{ $t('components.dashboard_performance.title') }}
       <font-awesome-icon
         icon="question-circle"
@@ -8,7 +8,7 @@
         style="font-size: 1rem"
       />
     </h6>
-    <b-tooltip target="dashboard-title" placement="top">
+    <b-tooltip target="dashboard-performance-title" placement="top">
       {{ $t('components.dashboard_performance.help') }}
       <a
         href="https://research.web3.foundation/en/latest/polkadot/economics/1-validator-selection.html"

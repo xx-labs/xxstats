@@ -302,7 +302,7 @@
       "avg_era_points": "Media de puntos de era"
     },
     "dashboard_performance": {
-      "title": "Rendimiento medio",
+      "title": "Rendimiento medio para el nominador",
       "avg_performance": "rendimiento medio",
       "help": "The performance of a validator from the point of view of a nominator: determined by the amount of era-points, total stake and commission - read more about it:"
     },
@@ -315,23 +315,23 @@
       "vrc_score": "puntuación"
     },
     "commission_chart": {
-      "title": "comisión",
+      "title": "Comisión",
       "commission": "comisión"
     },
     "era_points_chart": {
-      "title": "puntos de era",
+      "title": "Puntos de era",
       "era_points": "puntos de era"
     },
     "payouts_chart": {
-      "title": "pagos de recompensas",
+      "title": "Pago de recompensas",
       "payments": "pagos"
     },
     "relative_performance_chart": {
-      "title": "rendimiento para el nominador",
+      "title": "Rendimiento para el nominador",
       "relative_performance": "rendimiento para el nominador"
     },
     "stake_chart": {
-      "title": "stake electo propio ({tokenSymbol})",
+      "title": "Stake electo propio ({tokenSymbol})",
       "elected_own_stake": "stake electo propio"
     },
     "address": {
