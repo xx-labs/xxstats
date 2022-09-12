@@ -55,7 +55,7 @@
           <span v-if="USD24hChange > 0" class="text-success"
             >+{{ USD24hChange }}%</span
           >
-          <span v-else class="text-danger">-{{ USD24hChange }}%</span>
+          <span v-else class="text-danger">{{ USD24hChange }}%</span>
         </a>
         <b-navbar-toggle target="nav-collapse" />
         <b-collapse id="nav-collapse" is-nav>
