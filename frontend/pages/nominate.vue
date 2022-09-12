@@ -87,18 +87,17 @@
               <h4>{{ extrinsicStatus }} transaction!</h4>
               <p>
                 Extrinsic with hash {{ extrinsicHash }} was included in block
-                <a
-                  v-b-tooltip.hover
-                  :href="`https://polkascan.io/kusama/block/${blockHash}`"
-                  :title="$t('common.block_details')"
-                  target="_blank"
-                >
-                  <Promised :promise="getBlockNumber(blockHash)">
-                    <template #default="data"
-                      >#{{ formatNumber(data) }}</template
+                <Promised :promise="getBlockNumber(blockHash)">
+                  <template #default="data">
+                    <nuxt-link
+                      v-b-tooltip.hover
+                      :to="localePath(`/block?blockNumber=${data}`)"
+                      :title="$t('common.block_details')"
                     >
-                  </Promised>
-                </a>
+                      #{{ formatNumber(data) }}
+                    </nuxt-link>
+                  </template>
+                </Promised>
               </p>
             </b-alert>
             <b-alert
@@ -113,8 +112,8 @@
               show
               dismissible
             >
-              <h4>Transaction hash {{ extrinsicHash }}</h4>
-              <p>Transaction status: {{ extrinsicStatus }}</p>
+              <h4>Transaction {{ extrinsicStatus }}</h4>
+              <p>Transaction hash {{ extrinsicHash }}</p>
             </b-alert>
             <b-alert v-if="clusterAlert" variant="warning" show dismissible>
               You have more than one member of the same cluster in your set. If
@@ -188,11 +187,13 @@ export default {
       )
       const vm = this
       list.forEach((validator) => {
-        const includedClusterMembers = list.filter(
-          ({ clusterName }) => clusterName === validator.clusterName
-        )
-        if (includedClusterMembers.length > 1) {
-          vm.clusterAlert = true
+        if (validator.clusterName !== '') {
+          const includedClusterMembers = list.filter(
+            ({ clusterName }) => clusterName === validator.clusterName
+          )
+          if (includedClusterMembers.length > 1) {
+            vm.clusterAlert = true
+          }
         }
       })
       return list
