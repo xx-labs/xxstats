@@ -56,10 +56,10 @@ app.get('/api/v1/charts/transfers', async (_req, res) => {
       iterator.valueOf(), // timestamp in ms
     ]);
   }
-  timestamps.push([
-    now.format('YYYY-MM-DD'),
-    now.valueOf(), // timestamp in ms
-  ]);
+  // timestamps.push([
+  //   now.format('YYYY-MM-DD'),
+  //   now.valueOf(), // timestamp in ms
+  // ]);
 
   for (let index = 0; index < timestamps.length - 1; index++) {
     timePeriods.push({
