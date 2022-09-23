@@ -48,14 +48,7 @@ export default {
         scales: {
           xAxes: [
             {
-              gridLines: {
-                display: true,
-                color: 'rgba(200, 200, 200, 0.4)',
-              },
-              scaleLabel: {
-                display: true,
-                labelString: this.$t('components.transfers_chart.date'),
-              },
+              display: false,
             },
           ],
           yAxes: [
@@ -64,10 +57,6 @@ export default {
                 beginAtZero: true,
                 suggestedMin: 0,
                 // suggestedMax: 100,
-              },
-              gridLines: {
-                display: true,
-                color: 'rgba(200, 200, 200, 0.4)',
               },
               scaleLabel: {
                 display: true,
@@ -96,6 +85,7 @@ export default {
             hoverBackgroundColor: 'rgba(255, 255, 255, 0.8)',
             fill: false,
             showLine: true,
+            lineTension: 0,
           },
         ],
       }
