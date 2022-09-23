@@ -3,10 +3,13 @@
     <Loading />
   </div>
   <div v-else>
+    <h5 class="text-center mb-3">
+      {{ $t('components.transfers_chart.title') }}
+    </h5>
     <ReactiveLineChart
       :chart-data="chartData"
       :options="chartOptions"
-      :height="100"
+      :height="80"
       class="mb-4"
     />
   </div>
@@ -36,7 +39,7 @@ export default {
           display: false,
         },
         title: {
-          display: true,
+          display: false,
           text: this.$t('components.transfers_chart.title'),
           fontSize: 18,
           fontColor: '#000',
