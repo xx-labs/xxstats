@@ -30,16 +30,8 @@
             <hr />
             <ul class="list-unstyled social text-center">
               <li class="mr-2">
-                <a target="_blank" href="https://xx.network">XX Network</a>
-              </li>
-              <li class="mr-2">
                 <a target="_blank" href="https://wallet.xx.network"
                   >Web wallet</a
-                >
-              </li>
-              <li class="mr-2">
-                <a target="_blank" href="https://xx.network/contact/"
-                  >Contact us</a
                 >
               </li>
               <li>
