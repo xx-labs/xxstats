@@ -108,12 +108,12 @@ export default {
           .finally(() => {
             return 0
           })
-        return (
-          response.data.market_data.current_price.usd *
-          new BigNumber(this.units).div(
-            new BigNumber(10).pow(config.tokenDecimals)
-          )
-        )
+        return response === 0
+          ? 0
+          : response.data.market_data.current_price.usd *
+              new BigNumber(this.units).div(
+                new BigNumber(10).pow(config.tokenDecimals)
+              )
       }
     },
   },
