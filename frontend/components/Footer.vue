@@ -14,11 +14,87 @@
         <div class="row mt-4 pt-5">
           <div
             class="col-xs-12 col-sm-12 col-md-4 mt-2 mb-4 pb-4 mt-sm-2 text-center text-white"
-            data-testid="footer-getInContact"
+            data-testid="footer-xx-network"
           >
-            <h3 class="mb-3">
-              {{ $t('layout.default.get_in_contact') }}
-            </h3>
+            <a
+              href="https://xx.network"
+              aria-label="XX Network"
+              title="XX Network"
+              target="_blank"
+            >
+              <img
+                class="xx-network-logo-footer"
+                src="/img/xx-network-dark.svg"
+              />
+            </a>
+            <hr />
+            <ul class="list-unstyled social text-center">
+              <li class="mr-2">
+                <a target="_blank" href="https://xx.network">XX Network</a>
+              </li>
+              <li class="mr-2">
+                <a target="_blank" href="https://wallet.xx.network"
+                  >Web wallet</a
+                >
+              </li>
+              <li class="mr-2">
+                <a target="_blank" href="https://xx.network/contact/"
+                  >Contact us</a
+                >
+              </li>
+              <li>
+                <a target="_blank" href="https://twitter.com/xx_network">
+                  <font-awesome-layers
+                    class="xx-social-icon align-middle mt-2 mr-2"
+                  >
+                    <font-awesome-icon icon="circle" style="color: #84898d" />
+                    <font-awesome-icon
+                      :icon="['fab', 'twitter']"
+                      transform="shrink-6"
+                    />
+                  </font-awesome-layers>
+                </a>
+                <a target="_blank" href="https://discord.gg/Y8pCkbK">
+                  <font-awesome-layers
+                    class="xx-social-icon align-middle mt-2 mr-2"
+                  >
+                    <font-awesome-icon icon="circle" style="color: #84898d" />
+                    <font-awesome-icon
+                      :icon="['fab', 'discord']"
+                      transform="shrink-6"
+                    />
+                  </font-awesome-layers>
+                </a>
+                <a target="_blank" href="https://t.me/xxnetwork">
+                  <font-awesome-layers
+                    class="xx-social-icon align-middle mt-2 mr-2"
+                  >
+                    <font-awesome-icon icon="circle" style="color: #84898d" />
+                    <font-awesome-icon
+                      :icon="['fab', 'telegram-plane']"
+                      transform="shrink-6"
+                    />
+                  </font-awesome-layers>
+                </a>
+                <a target="_blank" href="https://www.youtube.com/c/xxnetwork">
+                  <font-awesome-layers
+                    class="xx-social-icon align-middle mt-2 mr-2"
+                  >
+                    <font-awesome-icon icon="circle" style="color: #84898d" />
+                    <font-awesome-icon
+                      :icon="['fab', 'youtube']"
+                      transform="shrink-6"
+                    />
+                  </font-awesome-layers>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div
+            class="col-xs-12 col-sm-12 col-md-4 mt-2 mb-4 pb-4 mt-sm-2 text-center text-white"
+            data-testid="footer-polkadot"
+          >
+            <h3 class="mb-3">PolkaStats</h3>
             <hr />
             <ul class="list-unstyled social text-center">
               <li class="mr-2" data-testid="footer-twitter">
@@ -36,40 +112,17 @@
           </div>
           <div
             class="col-xs-12 col-sm-12 col-md-4 mt-2 mb-4 pb-4 mt-sm-2 text-center text-white"
-            data-testid="footer-polkadot"
-          >
-            <h3 class="mb-3">PolkaStats</h3>
-            <hr />
-            <nuxt-link
-              to="/team"
-              active-class="nuxt-link-exact-active"
-              class="nav-link"
-              data-testid="aboutUs"
-            >
-              {{ $t('layout.default.about_us') }}
-            </nuxt-link>
-            <nuxt-link
-              to="/support-us"
-              active-class="nuxt-link-exact-active"
-              class="nav-link"
-              data-testid="supportPolkastats"
-            >
-              {{ $t('layout.default.support_polkastats') }}
-            </nuxt-link>
-          </div>
-          <div
-            class="col-xs-12 col-sm-12 col-md-4 mt-2 mb-4 pb-4 mt-sm-2 text-center text-white"
             data-testid="footer-builtFor"
           >
             <h3 class="mb-3">
               {{ $t('layout.default.built_with') }}
             </h3>
             <hr />
-            <a href="https://web3.foundation/grants/" target="_blank">
+            <a href="https://xxfoundation.org" target="_blank">
               <img
-                src="/img/grant_badge.png"
-                class="grant-badge"
-                alt="Web3 foundation grants program"
+                src="/img/xx-foundation-logo-color.svg"
+                class="grant-badge mt-2"
+                alt="XX Foundation"
               />
             </a>
           </div>

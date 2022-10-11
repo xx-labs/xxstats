@@ -167,12 +167,9 @@ h1 {
   padding-top: 1.125rem;
   padding-bottom: 1.125rem;
 }
-
-
 .nav-tabs .nav-item a {
   color: $light;
 }
-
 .identicon {
   cursor: pointer;
 }
@@ -182,6 +179,12 @@ h1 {
 .chain-info h4 {
   color: $body-color;
   font-weight: 100;
+}
+.xx-network-logo-footer {
+  height: 33px;
+}
+.xx-social-icon {
+  font-size: 1.7rem;
 }
 
 // network
