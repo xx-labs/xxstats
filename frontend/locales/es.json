@@ -214,7 +214,8 @@
       "loading": "Cargando",
       "no_validators_selected": "Ningún validador seleccionado",
       "clear": "Limpiar",
-      "nominate": "Nominar"
+      "nominate": "Nominar",
+      "compare": "Comparar"
     },
     "rating": {
       "very_good": "Muy bueno",

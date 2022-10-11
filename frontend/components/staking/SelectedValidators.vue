@@ -53,17 +53,35 @@
     </div>
     <div v-if="list.length > 0" class="row mt-3 mb-0">
       <div class="col-4">
-        <b-button variant="danger" class="clear btn-block" @click="clean()">
+        <b-button
+          variant="danger"
+          class="clear btn-block text-center"
+          :title="$t('components.selected_validators.clear')"
+          @click="clean()"
+        >
           <font-awesome-icon icon="trash-alt" />
           {{ $t('components.selected_validators.clear') }}
         </b-button>
       </div>
-      <div class="col-8">
+      <div class="col-4">
         <b-button
           variant="primary2"
-          class="nominate btn-block"
+          class="clear btn-block text-center"
+          :to="localePath(`/staking/dashboard`)"
+          :title="$t('components.selected_validators.compare')"
+        >
+          <font-awesome-icon icon="chart-bar" />
+          {{ $t('components.selected_validators.compare') }}
+        </b-button>
+      </div>
+      <div class="col-4">
+        <b-button
+          variant="primary2"
+          class="nominate btn-block text-center"
           to="/nominate"
-          >{{ $t('components.selected_validators.nominate') }}</b-button
+        >
+          <font-awesome-icon icon="arrow-right" />
+          {{ $t('components.selected_validators.nominate') }}</b-button
         >
       </div>
     </div>

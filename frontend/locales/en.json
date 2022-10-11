@@ -214,7 +214,8 @@
       "loading": "Loading",
       "no_validators_selected": "No validators selected",
       "clear": "Clear",
-      "nominate": "Nominate"
+      "nominate": "Nominate",
+      "compare": "Compare"
     },
     "rating": {
       "very_good": "Very good",
