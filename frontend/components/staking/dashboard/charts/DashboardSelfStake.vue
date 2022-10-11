@@ -193,7 +193,7 @@ export default {
             })
             const dataset = {
               id: 'chain',
-              label: 'on-chain validators',
+              label: 'current on-chain validators',
               data: [
                 ...items.map((row) =>
                   new BigNumber(row)

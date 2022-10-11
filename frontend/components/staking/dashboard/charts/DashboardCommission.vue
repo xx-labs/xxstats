@@ -188,7 +188,7 @@ export default {
             })
             const dataset = {
               id: 'chain',
-              label: 'on-chain validators',
+              label: 'current on-chain validators',
               data: items,
               backgroundColor: 'rgba(255, 255, 255, 0.8)',
               borderColor: 'rgba(184, 162, 23, 0.8)',
