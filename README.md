@@ -65,11 +65,20 @@ That will build and start all the required dockers:
 
 After that you can access to Hasura console at http://server_ip_address:8082 and login as admin using the password you previously set in `HASURA_GRAPHQL_ADMIN_SECRET` environment variable.
 
-### Nginx configuration
+### Frontend
 
 You can use Nginx as a inverse proxy for Hasura GraphQL and also to serve the static frontend.
 
-Example nginx config `/etc/nginx/sites-available/default` with SSL enabled using Certbot:
+To install nginx:
+
+```
+apt install nginx
+```
+
+NOTE: If you want to configure a free SSL certificate for your domain you can use [Certbot](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-20-04).
+
+
+Here is an example nginx config `/etc/nginx/sites-available/default` with SSL enabled:
 
 ```
 server {
