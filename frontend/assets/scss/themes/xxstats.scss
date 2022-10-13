@@ -799,3 +799,12 @@ section .section-title {
   background-color: #001c71;
   border-color: #001c71;
 }
+
+.dropdown-item {
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 0.9rem;
+}
+
+.dropdown-item.active, .dropdown-item:active {
+  color: rgba(0, 0, 0, 0.9);
+}
