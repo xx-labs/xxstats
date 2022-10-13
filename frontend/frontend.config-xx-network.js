@@ -1,6 +1,6 @@
 export const config = {
   id: 'xx-network',
-  name: 'xx-network',
+  name: 'XX Network',
   tokenSymbol: 'XX',
   tokenDecimals: 9,
   ss58Format: 55,
