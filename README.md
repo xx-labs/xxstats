@@ -97,6 +97,13 @@ server {
         proxy_set_header Connection "upgrade";
     }
 
+    location /ws {
+        proxy_pass http://localhost:9944;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+    }
+
     location ~ ^/api/ {
         proxy_pass http://localhost:8000;
         proxy_http_version 1.1;
