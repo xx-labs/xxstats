@@ -14,8 +14,10 @@
         href="https://research.web3.foundation/en/latest/polkadot/economics/1-validator-selection.html"
         target="_blank"
         class="text-white"
+        style="text-decoration: underline"
       >
-        https://research.web3.foundation/en/latest/polkadot/economics/1-validator-selection.html
+        <span v-if="$i18n.locale === 'en'">here</span>
+        <span v-if="$i18n.locale === 'es'">aquí</span>
       </a>
     </b-tooltip>
     <ReactiveLineChart

@@ -306,7 +306,7 @@
     "dashboard_performance": {
       "title": "Average performance (nominator POV)",
       "avg_performance": "avg. performance",
-      "help": "The performance of a validator from the point of view of a nominator: determined by the amount of era-points, total stake and commission - read more about it:"
+      "help": "The performance of a validator from the point of view of a nominator: determined by the amount of era-points, total stake and commission - read more about it"
     },
     "dashboard_self_stake": {
       "title": "Average elected self stake",
