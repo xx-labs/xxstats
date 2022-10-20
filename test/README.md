@@ -1,6 +1,6 @@
-# xxstats e2e tests
+# Cypress e2e tests
 
-## Run all Cypress e2e tests
+## Run all tests
 
 Run production, development and local tests:
 
