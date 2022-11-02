@@ -42,12 +42,19 @@ describe('xxstats-dev', () => {
     .then((row) => {
       expect(row.length).to.equal(10)
     });
+  });
 
+  it(`successfully loads accounts page`, () => {
+    cy.visit(`${baseUrl}/accounts`);
   });
 
   it(`successfully loads account ${account} page`, () => {
     cy.visit(`${baseUrl}/account/${account}`);
     cy.get('h4').should('contain', '6XmmX…iprJ7');
+  });
+
+  it(`successfully loads transfers page`, () => {
+    cy.visit(`${baseUrl}/transfers`);
   });
 
   it(`successfully load transfer ${transferHash} page`, () => {
@@ -71,6 +78,18 @@ describe('xxstats-dev', () => {
   it(`successfully loads validator ${validator} page`, () => {
     cy.visit(`${baseUrl}/validator/${validator}`);
     cy.get('h1 span').should('contain', 'Hotchick');
+  });
+
+  it(`successfully loads blocks page`, () => {
+    cy.visit(`${baseUrl}/blocks`);
+  });
+
+  it(`successfully loads extrinsics page`, () => {
+    cy.visit(`${baseUrl}/extrinsics`);
+  });
+
+  it(`successfully loads extrinsics page`, () => {
+    cy.visit(`${baseUrl}/events`);
   });
 
   it(`successfully loads block #${blockNumber} page`, () => {
