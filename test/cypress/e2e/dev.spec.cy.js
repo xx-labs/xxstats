@@ -11,6 +11,42 @@ describe('xxstats-dev', () => {
 
   it('successfully loads home page', () => {
     cy.visit(baseUrl);
+
+    // check home tables
+    cy.get('.last-blocks .table-responsive .table tbody')
+    .find('tr')
+    .then((row) => {
+      cy.log(`number of rows: ${row.length}`);
+      expect(row.length).to.equal(10)
+    });
+
+    cy.get('.last-transfers .table-responsive .table tbody')
+    .find('tr')
+    .then((row) => {
+      cy.log(`number of rows: ${row.length}`);
+      expect(row.length).to.equal(10)
+    });
+
+    cy.get('.last-extrinsics .table-responsive .table tbody')
+    .find('tr')
+    .then((row) => {
+      cy.log(`number of rows: ${row.length}`);
+      expect(row.length).to.equal(10)
+    });
+
+    cy.get('.last-events .table-responsive .table tbody')
+    .find('tr')
+    .then((row) => {
+      cy.log(`number of rows: ${row.length}`);
+      expect(row.length).to.equal(10)
+    });
+
+    cy.get('.whale-alert .table-responsive .table tbody')
+    .find('tr')
+    .then((row) => {
+      expect(row.length).to.equal(10)
+    });
+
   });
 
   it(`successfully loads account ${account} page`, () => {
