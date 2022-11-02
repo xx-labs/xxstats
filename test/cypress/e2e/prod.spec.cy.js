@@ -19,28 +19,24 @@ describe('xxstats-prod', () => {
       cy.log(`number of rows: ${row.length}`);
       expect(row.length).to.equal(10)
     });
-
     cy.get('.last-transfers .table-responsive .table tbody')
     .find('tr')
     .then((row) => {
       cy.log(`number of rows: ${row.length}`);
       expect(row.length).to.equal(10)
     });
-
     cy.get('.last-extrinsics .table-responsive .table tbody')
     .find('tr')
     .then((row) => {
       cy.log(`number of rows: ${row.length}`);
       expect(row.length).to.equal(10)
     });
-
     cy.get('.last-events .table-responsive .table tbody')
     .find('tr')
     .then((row) => {
       cy.log(`number of rows: ${row.length}`);
       expect(row.length).to.equal(10)
     });
-
     cy.get('.whale-alert .table-responsive .table tbody')
     .find('tr')
     .then((row) => {
@@ -64,6 +60,11 @@ describe('xxstats-prod', () => {
 
   it('successfully loads staking validators page', () => {
     cy.visit(`${baseUrl}/staking/validators`);
+    cy.get('.ranking .table tbody')
+    .find('tr')
+    .then((row) => {
+      expect(row.length).to.equal(10)
+    });
   });
 
   it(`successfully loads validator ${validator} page`, () => {
