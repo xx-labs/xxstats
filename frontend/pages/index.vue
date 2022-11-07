@@ -1,7 +1,7 @@
 <template>
   <div>
     <section>
-      <b-container class="main py-5 dashboard">
+      <b-container class="page-home main py-5 dashboard">
         <Search />
         <Chain />
         <TransfersChart />

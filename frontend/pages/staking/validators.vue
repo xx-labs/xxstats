@@ -1,5 +1,5 @@
 <template>
-  <div class="page container pt-3">
+  <div class="page-validators container pt-3">
     <div>
       <Ranking />
     </div>

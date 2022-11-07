@@ -1,5 +1,5 @@
 <template>
-  <div class="page validator-page container pt-3">
+  <div class="page-validator container pt-3">
     <div v-if="loading || !validator">
       <Loading />
     </div>

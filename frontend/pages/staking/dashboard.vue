@@ -1,5 +1,5 @@
 <template>
-  <div class="page container pt-3">
+  <div class="page-staking-dashboard container pt-3">
     <div>
       <StakingStats />
       <Suggestions :validators="chainValidatorAddresses" />

@@ -276,23 +276,23 @@ h1 {
 .block-table tr td .identicon {
   display: inline-block;
 }
-.block-page .amount {
+.page-block .amount {
   color: $primary2;
   font-weight: 700;
 }
-.block-page .clipboard {
+.page-block .clipboard {
   display: inline-block;
 }
 
 // account page
-.account-page .table tr td .identicon {
+.page-account .table tr td .identicon {
   display: inline-block;
 }
-.account-page .amount {
+.page-account .amount {
   color: $primary2;
   font-weight: 700;
 }
-.account-page .fiat {
+.page-account .fiat {
   color: $primary2;
   font-size: 1rem;
   font-weight: 200;
@@ -306,11 +306,11 @@ h1 {
 .extrinsic-table tr td:nth-child(2) {
   width: 70%;
 }
-.extrinsic-page .amount {
+.page-extrinsic .amount {
   color: $primary2;
   font-weight: 700;
 }
-.extrinsic-page .clipboard {
+.page-extrinsic .clipboard {
   display: inline-block;
 }
 
@@ -570,10 +570,10 @@ section .section-title {
   border-radius: $border-radius;
   padding: 1rem;
 }
-.validator-page .card-body {
+.page-validator .card-body {
   position: relative;
 }
-.validator-page .verified {
+.page-validator .verified {
   font-size: 2rem;
   cursor: pointer;
 }

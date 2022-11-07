@@ -1,5 +1,5 @@
 <template>
-  <b-container class="pt-4">
+  <b-container class="page-team pt-4">
     <h1 class="mb-4">Polkastats team</h1>
     <b-row class="pt-4">
       <b-card-group deck>

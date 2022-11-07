@@ -1,7 +1,7 @@
 <template>
   <div>
     <section>
-      <b-container class="main py-5 support-us">
+      <b-container class="page-support main py-5 support-us">
         <h1 class="mb-4">
           {{ $t('pages.support-us.support_polkastats') }}
         </h1>

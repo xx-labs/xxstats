@@ -1,5 +1,5 @@
 <template>
-  <b-container fluid class="page py-5">
+  <b-container fluid class="page-nominate py-5">
     <h1 class="mb-4 text-center">Nominate</h1>
     <div class="row">
       <div

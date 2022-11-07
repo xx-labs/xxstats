@@ -1,7 +1,7 @@
 <template>
   <div>
     <section>
-      <b-container class="block-page main py-5">
+      <b-container class="page-block main py-5">
         <Block :block-number="blockNumber" />
       </b-container>
     </section>

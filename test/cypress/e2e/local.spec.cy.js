@@ -7,7 +7,7 @@ const validator = '6ZjtGawffFWrRttNBvYWmHv1Teg1Sa4twzmt8yPMDEkf7Ygr';
 const extrinsicHash = '0xcd3f5ca6741c7212db281e8578f83bc9ea930979378a2a7564dd1952464401d0';
 const eventId = '4808812/0';
 
-describe('xxstats-local', () => {
+describe(`xxstats-local -> ${baseUrl}`, () => {
 
   it('successfully loads home page', () => {
     cy.visit(baseUrl);
@@ -51,7 +51,7 @@ describe('xxstats-local', () => {
   it(`successfully loads accounts page`, () => {
     cy.visit(`${baseUrl}/accounts`);
     // accounts table should have 10 rows
-    cy.get('#accounts-table tbody')
+    cy.get('.page-accounts #accounts-table tbody')
       .find('tr[role=row]')
       .then((row) => {
         cy.log(row)
@@ -61,13 +61,13 @@ describe('xxstats-local', () => {
 
   it(`successfully loads account ${account} page`, () => {
     cy.visit(`${baseUrl}/account/${account}`);
-    cy.get('h4').should('contain', '6XmmX…iprJ7');
+    cy.get('.page-account h4').should('contain', '6XmmX…iprJ7');
   });
 
   it(`successfully loads transfers page`, () => {
     cy.visit(`${baseUrl}/transfers`);
     // transfers table should have 10 rows
-    cy.get('.last-transfers .table-responsive .table tbody')
+    cy.get('.page-transfers .table-responsive .table tbody')
       .find('tr[role=row]')
       .then((row) => {
         cy.log(row)
@@ -77,7 +77,7 @@ describe('xxstats-local', () => {
 
   it(`successfully load transfer ${transferHash} page`, () => {
     cy.visit(`${baseUrl}/transfer/${transferHash}`);
-    cy.get('h4').should('contain', 'Transfer 0xd8ec…ae9b')
+    cy.get('.page-transfer h4').should('contain', 'Transfer 0xd8ec…ae9b')
   });
 
   it('successfully loads staking dashboard page', () => {
@@ -87,7 +87,7 @@ describe('xxstats-local', () => {
   it('successfully loads staking validators page', () => {
     cy.visit(`${baseUrl}/staking/validators`);
     // validator ranking table should have 10 rows
-    cy.get('.ranking .table tbody')
+    cy.get('.page-validators.ranking .table tbody')
       .find('tr')
       .then((row) => {
         expect(row.length).to.equal(10)
@@ -96,13 +96,13 @@ describe('xxstats-local', () => {
 
   it(`successfully loads validator ${validator} page`, () => {
     cy.visit(`${baseUrl}/validator/${validator}`);
-    cy.get('h1 span').should('contain', 'Hotchick');
+    cy.get('.page-validator h1 span').should('contain', 'Hotchick');
   });
 
   it(`successfully loads blocks page`, () => {
     cy.visit(`${baseUrl}/blocks`);
     // blocks table should have 10 rows
-    cy.get('.last-blocks .table tbody')
+    cy.get('.page-blocks .last-blocks .table tbody')
       .find('tr')
       .then((row) => {
         expect(row.length).to.equal(10)
@@ -112,7 +112,7 @@ describe('xxstats-local', () => {
   it(`successfully loads extrinsics page`, () => {
     cy.visit(`${baseUrl}/extrinsics`);
     // extrinsics table should have 10 rows
-    cy.get('.last-extrinsics .table tbody')
+    cy.get('.page-extrinsics .table tbody')
       .find('tr')
       .then((row) => {
         expect(row.length).to.equal(10)
@@ -122,7 +122,7 @@ describe('xxstats-local', () => {
   it(`successfully loads events page`, () => {
     cy.visit(`${baseUrl}/events`);
     // events table should have 10 rows
-    cy.get('.last-events .table tbody')
+    cy.get('.page-events .table tbody')
       .find('tr')
       .then((row) => {
         expect(row.length).to.equal(10)
@@ -131,17 +131,17 @@ describe('xxstats-local', () => {
 
   it(`successfully loads block #${blockNumber} page`, () => {
     cy.visit(`${baseUrl}/block?blockNumber=${blockNumber}`);
-    cy.get('h4').should('contain', 'block #100,000');
+    cy.get('.page-block h4').should('contain', 'block #100,000');
   });
 
   it(`successfully loads extrinsic ${extrinsicHash} page`, () => {
     cy.visit(`${baseUrl}/extrinsic/${extrinsicHash}`);
-    cy.get('h4').should('contain', 'Extrinsic').should('contain', '4809391-0');
+    cy.get('.page-extrinsic h4').should('contain', 'Extrinsic').should('contain', '4809391-0');
   });
 
   it(`successfully loads event ${eventId} page`, () => {
     cy.visit(`${baseUrl}/event/${eventId}`);
-    cy.get('h4').should('contain', 'Event 4808812-0');
+    cy.get('.page-event h4').should('contain', 'Event 4808812-0');
   });
 
 });

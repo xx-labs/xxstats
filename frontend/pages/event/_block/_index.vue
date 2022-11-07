@@ -1,7 +1,7 @@
 <template>
   <div>
     <section>
-      <b-container class="event-page main py-5">
+      <b-container class="page-event main py-5">
         <div v-if="loading" class="text-center py-4">
           <Loading />
         </div>
