@@ -87,7 +87,7 @@ describe(`xxstats-dev -> ${baseUrl}`, () => {
   it('successfully loads staking validators page', () => {
     cy.visit(`${baseUrl}/staking/validators`);
     // validator ranking table should have 10 rows
-    cy.get('.page-validators.ranking .table tbody')
+    cy.get('.page-validators .ranking .table tbody')
       .find('tr')
       .then((row) => {
         expect(row.length).to.equal(10)
