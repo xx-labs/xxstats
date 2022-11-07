@@ -5,7 +5,7 @@
 Run production, development and local tests:
 
 ```
-yarn workspace test run
+yarn workspace test start
 ```
 
 ## Run development test:

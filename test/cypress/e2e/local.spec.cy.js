@@ -12,49 +12,67 @@ describe('xxstats-local', () => {
   it('successfully loads home page', () => {
     cy.visit(baseUrl);
 
-    // check home tables
+    // last blocks table should have 10 rows
     cy.get('.last-blocks .table-responsive .table tbody')
-    .find('tr')
-    .then((row) => {
-      cy.log(`number of rows: ${row.length}`);
-      expect(row.length).to.equal(10)
-    });
+      .find('tr')
+      .then((row) => {
+        cy.log(`number of rows: ${row.length}`);
+        expect(row.length).to.equal(10)
+      });
+    // last transfers table should have 10 rows
     cy.get('.last-transfers .table-responsive .table tbody')
-    .find('tr')
-    .then((row) => {
-      cy.log(`number of rows: ${row.length}`);
-      expect(row.length).to.equal(10)
-    });
+      .find('tr')
+      .then((row) => {
+        cy.log(`number of rows: ${row.length}`);
+        expect(row.length).to.equal(10)
+      });
+    // last extrinsics table should have 10 rows
     cy.get('.last-extrinsics .table-responsive .table tbody')
-    .find('tr')
-    .then((row) => {
-      cy.log(`number of rows: ${row.length}`);
-      expect(row.length).to.equal(10)
-    });
+      .find('tr')
+      .then((row) => {
+        cy.log(`number of rows: ${row.length}`);
+        expect(row.length).to.equal(10)
+      });
+    // last events table should have 10 rows
     cy.get('.last-events .table-responsive .table tbody')
-    .find('tr')
-    .then((row) => {
-      cy.log(`number of rows: ${row.length}`);
-      expect(row.length).to.equal(10)
-    });
+      .find('tr')
+      .then((row) => {
+        cy.log(`number of rows: ${row.length}`);
+        expect(row.length).to.equal(10)
+      });
+    // whale alert table should have 10 rows
     cy.get('.whale-alert .table-responsive .table tbody')
-    .find('tr')
-    .then((row) => {
-      expect(row.length).to.equal(10)
-    });
+      .find('tr')
+      .then((row) => {
+        expect(row.length).to.equal(10)
+      });
   });
 
   it(`successfully loads accounts page`, () => {
     cy.visit(`${baseUrl}/accounts`);
+    // accounts table should have 10 rows
+    cy.get('#accounts-table tbody')
+      .find('tr[role=row]')
+      .then((row) => {
+        cy.log(row)
+        expect(row.length).to.equal(10)
+      });
   });
 
   it(`successfully loads account ${account} page`, () => {
     cy.visit(`${baseUrl}/account/${account}`);
     cy.get('h4').should('contain', '6XmmX…iprJ7');
   });
-  
+
   it(`successfully loads transfers page`, () => {
     cy.visit(`${baseUrl}/transfers`);
+    // transfers table should have 10 rows
+    cy.get('.last-transfers .table-responsive .table tbody')
+      .find('tr[role=row]')
+      .then((row) => {
+        cy.log(row)
+        expect(row.length).to.equal(10)
+      });
   });
 
   it(`successfully load transfer ${transferHash} page`, () => {
@@ -68,11 +86,12 @@ describe('xxstats-local', () => {
 
   it('successfully loads staking validators page', () => {
     cy.visit(`${baseUrl}/staking/validators`);
+    // validator ranking table should have 10 rows
     cy.get('.ranking .table tbody')
-    .find('tr')
-    .then((row) => {
-      expect(row.length).to.equal(10)
-    });
+      .find('tr')
+      .then((row) => {
+        expect(row.length).to.equal(10)
+      });
   });
 
   it(`successfully loads validator ${validator} page`, () => {
@@ -82,14 +101,32 @@ describe('xxstats-local', () => {
 
   it(`successfully loads blocks page`, () => {
     cy.visit(`${baseUrl}/blocks`);
+    // blocks table should have 10 rows
+    cy.get('.last-blocks .table tbody')
+      .find('tr')
+      .then((row) => {
+        expect(row.length).to.equal(10)
+      });
   });
 
   it(`successfully loads extrinsics page`, () => {
     cy.visit(`${baseUrl}/extrinsics`);
+    // extrinsics table should have 10 rows
+    cy.get('.last-extrinsics .table tbody')
+      .find('tr')
+      .then((row) => {
+        expect(row.length).to.equal(10)
+      });
   });
 
-  it(`successfully loads extrinsics page`, () => {
+  it(`successfully loads events page`, () => {
     cy.visit(`${baseUrl}/events`);
+    // events table should have 10 rows
+    cy.get('.last-events .table tbody')
+      .find('tr')
+      .then((row) => {
+        expect(row.length).to.equal(10)
+      });
   });
 
   it(`successfully loads block #${blockNumber} page`, () => {
