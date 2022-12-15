@@ -10,7 +10,7 @@ services:
     build:
       context: ./substrate-node
       args:
-        XXNETWORK_VERSION: v0.2.4
+        XXNETWORK_VERSION: v0.2.5-1
     volumes:
       - 'substrate-data:/data'
     ports:
