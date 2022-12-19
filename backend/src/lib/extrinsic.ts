@@ -26,7 +26,7 @@ Sentry.init({
 const chunkSize = 20;
 
 export const getExtrinsicFeeInfo = async (
-  api: ApiPromise,
+  apiAt: ApiDecoration<'promise'>,
   hexExtrinsic: string,
   blockHash: BlockHash,
   loggerOptions: LoggerOptions,
@@ -36,7 +36,7 @@ export const getExtrinsicFeeInfo = async (
     // https://substrate.stackexchange.com/questions/4835/rpc-core-queryinfoextrinsic-bytes-at-blockhash-failed-on-weight-u64
     // https://github.com/polkadot-js/api/blob/master/CHANGELOG.md#922-aug-16-2022
     // const feeInfo = await api.rpc.payment.queryInfo(hexExtrinsic, blockHash);
-    const feeInfo = await api.call.transactionPaymentApi.queryInfo(hexExtrinsic, hexExtrinsic.length);
+    const feeInfo = await apiAt.call.transactionPaymentApi.queryInfo(hexExtrinsic, hexExtrinsic.length);
     return feeInfo;
   } catch (error) {
     logger.debug(loggerOptions, `Error getting extrinsic fee info (blockHash: ${blockHash}): ${error}`);
@@ -271,7 +271,7 @@ export const processExtrinsic = async (
   let feeDetails = null;
   if (isSigned) {
     feeInfo = await getExtrinsicFeeInfo(
-      api,
+      apiAt,
       extrinsic.toHex(),
       blockHash,
       loggerOptions,
