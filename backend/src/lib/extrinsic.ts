@@ -139,6 +139,8 @@ export const processTransfer = async (
   const source = signer;
   let destination = '';
 
+  console.log('DEBUG args:', JSON.stringify(args));
+  
   if (JSON.parse(args)[0].id) {
     destination = JSON.parse(args)[0].id;
   } else if (JSON.parse(args)[0].address20) {
