@@ -35,7 +35,7 @@ export const getExtrinsicFeeInfo = async (
     const feeInfo = await api.rpc.payment.queryInfo(hexExtrinsic, blockHash);
     return feeInfo;
   } catch (error) {
-    logger.debug(loggerOptions, `Error getting extrinsic fee info: ${error}`);
+    logger.debug(loggerOptions, `Error getting extrinsic fee info (blockHash: ${blockHash}): ${error}`);
   }
   return null;
 };
@@ -55,7 +55,7 @@ export const getExtrinsicFeeDetails = async (
   } catch (error) {
     logger.debug(
       loggerOptions,
-      `Error getting extrinsic fee details: ${error}`,
+      `Error getting extrinsic fee details (blockHash: ${blockHash}): ${error}`,
     );
   }
   return null;
@@ -140,7 +140,7 @@ export const processTransfer = async (
   let destination = '';
 
   console.log('DEBUG args:', JSON.stringify(args));
-  
+
   if (JSON.parse(args)[0].id) {
     destination = JSON.parse(args)[0].id;
   } else if (JSON.parse(args)[0].address20) {
