@@ -35,6 +35,7 @@ export const getExtrinsicFeeInfo = async (
     
     // https://substrate.stackexchange.com/questions/4835/rpc-core-queryinfoextrinsic-bytes-at-blockhash-failed-on-weight-u64
     // https://github.com/polkadot-js/api/blob/master/CHANGELOG.md#922-aug-16-2022
+    // https://substrate.stackexchange.com/questions/6403/question-for-api-call-transactionpaymentapi-queryinfo-state-call
     // const feeInfo = await api.rpc.payment.queryInfo(hexExtrinsic, blockHash);
     const feeInfo = await apiAt.call.transactionPaymentApi.queryInfo(hexExtrinsic, hexExtrinsic.length);
     return feeInfo;
@@ -142,8 +143,6 @@ export const processTransfer = async (
   // Store transfer
   const source = signer;
   let destination = '';
-
-  console.log('DEBUG args:', JSON.stringify(args));
 
   if (JSON.parse(args)[0].id) {
     destination = JSON.parse(args)[0].id;
