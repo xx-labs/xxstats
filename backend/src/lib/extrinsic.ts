@@ -32,7 +32,11 @@ export const getExtrinsicFeeInfo = async (
   loggerOptions: LoggerOptions,
 ): Promise<RuntimeDispatchInfo> | null => {
   try {
-    const feeInfo = await api.rpc.payment.queryInfo(hexExtrinsic, blockHash);
+    
+    // https://substrate.stackexchange.com/questions/4835/rpc-core-queryinfoextrinsic-bytes-at-blockhash-failed-on-weight-u64
+    // https://github.com/polkadot-js/api/blob/master/CHANGELOG.md#922-aug-16-2022
+    // const feeInfo = await api.rpc.payment.queryInfo(hexExtrinsic, blockHash);
+    const feeInfo = await api.call.transactionPaymentApi.queryInfo(hexExtrinsic, hexExtrinsic.length);
     return feeInfo;
   } catch (error) {
     logger.debug(loggerOptions, `Error getting extrinsic fee info (blockHash: ${blockHash}): ${error}`);
