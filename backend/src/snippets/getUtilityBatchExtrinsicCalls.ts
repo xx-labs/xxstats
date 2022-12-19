@@ -8,7 +8,7 @@ import type { Block } from '@polkadot/types/interfaces/runtime';
 
 async function main() {
 
-  const wsProvider = 'ws://dev.xx-network.polkastats.io:9944';
+  const wsProvider = 'ws://dev.xx.polkastats.io:9944';
 
   // Initialise the provider to connect to the remote node
   const provider = new WsProvider(wsProvider);

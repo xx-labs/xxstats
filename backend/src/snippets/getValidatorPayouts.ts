@@ -7,7 +7,7 @@ import { ApiPromise, WsProvider } from '@polkadot/api';
 
 async function main() {
 
-  const wsProvider = 'ws://dev.xx-network.polkastats.io:9944';
+  const wsProvider = 'ws://dev.xx.polkastats.io:9944';
   const authorityId = '6YJNRiCq8za9aYDFL3nzDZxsE72CqciVDptvirLesDBk4Fks';
   const stakingQueryFlags = {
     withController: true,
