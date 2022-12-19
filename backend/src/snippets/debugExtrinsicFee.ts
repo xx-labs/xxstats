@@ -1,5 +1,5 @@
 //
-// docker exec backend_crawler_1 node /usr/app/crawler/built/snippets/getUtilityBatchExtrinsicCalls.js
+// docker exec backend_crawler_1 node /usr/app/crawler/built/snippets/debugExtrinsicFee.js
 //
 
 // Required imports
